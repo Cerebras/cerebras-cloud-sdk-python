@@ -6,7 +6,7 @@ from dirty_equals import IsDict, IsList, IsBytes, IsTuple
 
 from cerebras_minus_cloud._files import to_httpx_files, async_to_httpx_files
 
-readme_path = Path(__file__).parent.parent.joinpath("README.md")
+readme_path =Path(__file__).parent.parent.joinpath("README.md")
 
 
 def test_pathlib_includes_file_name() -> None:
@@ -16,9 +16,9 @@ def test_pathlib_includes_file_name() -> None:
 
 
 def test_tuple_input() -> None:
-    result = to_httpx_files([("file", readme_path)])
+    result = to_httpx_files([('file', readme_path)])
     print(result)
-    assert result == IsList(IsTuple("file", IsTuple("README.md", IsBytes())))
+    assert result == IsList(IsTuple('file', IsTuple('README.md', IsBytes())))
 
 
 @pytest.mark.asyncio
@@ -37,9 +37,9 @@ async def test_async_supports_anyio_path() -> None:
 
 @pytest.mark.asyncio
 async def test_async_tuple_input() -> None:
-    result = await async_to_httpx_files([("file", readme_path)])
+    result = await async_to_httpx_files([('file', readme_path)])
     print(result)
-    assert result == IsList(IsTuple("file", IsTuple("README.md", IsBytes())))
+    assert result == IsList(IsTuple('file', IsTuple('README.md', IsBytes())))
 
 
 def test_string_not_allowed() -> None:
@@ -49,3 +49,4 @@ def test_string_not_allowed() -> None:
                 "file": "foo",  # type: ignore
             }
         )
+

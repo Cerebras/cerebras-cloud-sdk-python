@@ -65,7 +65,7 @@ def asyncify(
         # In `v4.1.0` anyio added the `abandon_on_cancel` argument and deprecated the old
         # `cancellable` argument, so we need to use the new `abandon_on_cancel` to avoid
         # surfacing deprecation warnings.
-        if function_has_argument(anyio.to_thread.run_sync, "abandon_on_cancel"):
+        if function_has_argument(anyio.to_thread.run_sync, 'abandon_on_cancel'):
             return await anyio.to_thread.run_sync(
                 partial_f,
                 abandon_on_cancel=cancellable,

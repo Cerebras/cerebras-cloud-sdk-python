@@ -6,7 +6,7 @@ import httpx
 import pytest
 import pydantic
 
-from cerebras_minus_cloud import Petstore, BaseModel, AsyncPetstore
+from cerebras_minus_cloud import BaseModel, Petstore, AsyncPetstore
 from cerebras_minus_cloud._response import (
     APIResponse,
     BaseAPIResponse,
