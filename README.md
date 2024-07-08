@@ -8,13 +8,14 @@ and offers both synchronous and asynchronous clients powered by [httpx](https://
 
 It is generated with [Stainless](https://www.stainlessapi.com/).
 
+<!--
 ## Documentation
 
 The REST API documentation can be found [on docs.cerebras.net](https://docs.cerebras.net). The full API of this library can be found in [api.md](api.md).
-
+-->
 ## Installation
 > [!NOTE]
-> Once this package is [published to PyPI](https://app.stainlessapi.com/docs/guides/publish), this will become: `pip install --pre cerebras_cloud_sdk`
+> Once this package is published to PyPI, this will become: `pip install --pre cerebras_cloud_sdk`
 
 ## Usage
 
@@ -78,6 +79,62 @@ asyncio.run(main())
 ```
 
 Functionality between the synchronous and asynchronous clients is otherwise identical.
+
+## Streaming responses
+
+We provide support for streaming responses using Server Side Events (SSE).
+
+```python
+import os
+from cerebras.cloud.sdk import Cerebras
+
+client = Cerebras(
+    # This is the default and can be omitted
+    cerebras_api_key=os.environ.get("CEREBRAS_API_KEY"),
+)
+
+stream = client.chat.completions.create(
+    messages=[
+        {
+            "role": "user",
+            "content": "Why is fast inference important?",
+        }
+    ],
+    model="llama3-8b-8192",
+    stream=True,
+)
+for chunk in stream:
+    print(chunk.messages[0].content or "", end="")
+```
+
+The async client uses the exact same interface.
+
+```python
+import os
+import asyncio
+from cerebras.cloud.sdk import AsyncCerebras
+
+client = AsyncCerebras(
+    # This is the default and can be omitted
+    cerebras_api_key=os.environ.get("CEREBRAS_API_KEY"),
+)
+
+async def main() -> None:
+    stream = await client.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": "Why is fast inference important?",
+            }
+        ],
+        model="llama3-8b-8192",
+        stream=True,
+    )
+    async for chunk in stream:
+        print(chunk.messages[0].content or "", end="")
+
+asyncio.run(main())
+```
 
 ## Using types
 
@@ -250,6 +307,7 @@ These methods return an [`APIResponse`](https://github.com/Cerebras/cerebras-clo
 
 The async client returns an [`AsyncAPIResponse`](https://github.com/Cerebras/cerebras-cloud-sdk-python/tree/staging/src/cerebras_cloud_sdk/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
 
+<!--
 #### `.with_streaming_response`
 
 The above interface eagerly reads the full response body when you make the request, which may not always be what you want.
@@ -273,6 +331,7 @@ with client.chat.completions.with_streaming_response.create(
 ```
 
 The context manager is required so that the response will reliably be closed.
+-->
 
 ### Making custom/undocumented requests
 
