@@ -39,8 +39,8 @@ classifiers = [
 
 
 [project.urls]
-Homepage = "https://github.com/Cerebras/cerebras-api-python"
-Repository = "https://github.com/Cerebras/cerebras-api-python"
+Homepage = "https://github.com/Cerebras/cerebras-cloud-sdk-python"
+Repository = "https://github.com/Cerebras/cerebras-cloud-sdk-python"
 
 
 
@@ -124,7 +124,7 @@ path = "README.md"
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 # replace relative links with absolute links
 pattern = '\[(.+?)\]\(((?!https?://)\S+?)\)'
-replacement = '[\1](https://github.com/Cerebras/cerebras-api-python/tree/staging/\g<2>)'
+replacement = '[\1](https://github.com/Cerebras/cerebras-cloud-sdk-python/tree/staging/\g<2>)'
 
 [tool.black]
 line-length = 120
