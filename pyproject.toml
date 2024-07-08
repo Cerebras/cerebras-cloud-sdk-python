@@ -98,7 +98,7 @@ include = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/cerebras_cloud_sdk"]
+packages = ["src/cerebras", "src/cerebras_cloud_sdk"]
 
 [tool.hatch.build.targets.sdist]
 # Basically everything except hidden files/directories (such as .github, .devcontainers, .python-version, etc)

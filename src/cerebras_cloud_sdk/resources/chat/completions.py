@@ -20,6 +20,7 @@ from ..._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
+from ..._streaming import Stream, AsyncStream
 from ...types.chat import completion_create_params
 from ..._base_client import (
     make_request_options,
@@ -56,7 +57,7 @@ class CompletionsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ChatCompletion:
+    ) -> ChatCompletion | Stream[ChatCompletion]:
         """
         Chat Completion
 
@@ -89,6 +90,8 @@ class CompletionsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ChatCompletion,
+            stream=stream or False,
+            stream_cls=Stream[ChatCompletion],
         )
 
 
@@ -119,7 +122,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ChatCompletion:
+    ) -> ChatCompletion | AsyncStream[ChatCompletion]:
         """
         Chat Completion
 
@@ -152,6 +155,8 @@ class AsyncCompletionsResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=ChatCompletion,
+            stream=stream or False,
+            stream_cls=AsyncStream[ChatCompletion],
         )
 
 

@@ -9,6 +9,7 @@ from typing_extensions import Self, Protocol, TypeGuard, override, get_origin, r
 
 import httpx
 
+from .lib.json_stream_decoder import JSONStreamDecoder
 from ._utils import extract_type_var_from_base
 
 if TYPE_CHECKING:
@@ -35,7 +36,7 @@ class Stream(Generic[_T]):
         self.response = response
         self._cast_to = cast_to
         self._client = client
-        self._decoder = client._make_sse_decoder()
+        self._decoder = JSONStreamDecoder()
         self._iterator = self.__stream__()
 
     def __next__(self) -> _T:
@@ -98,7 +99,7 @@ class AsyncStream(Generic[_T]):
         self.response = response
         self._cast_to = cast_to
         self._client = client
-        self._decoder = client._make_sse_decoder()
+        self._decoder = JSONStreamDecoder()
         self._iterator = self.__stream__()
 
     async def __anext__(self) -> _T:

@@ -13,12 +13,6 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 The REST API documentation can be found [on docs.cerebras.net](https://docs.cerebras.net). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
-
-```sh
-# install from the production repo
-pip install git+ssh://git@github.com/Cerebras/cerebras-api-python#staging.git
-```
-
 > [!NOTE]
 > Once this package is [published to PyPI](https://app.stainlessapi.com/docs/guides/publish), this will become: `pip install --pre cerebras_cloud_sdk`
 
@@ -28,7 +22,7 @@ The full API of this library can be found in [api.md](api.md).
 
 ```python
 import os
-from cerebras_cloud_sdk import Cerebras
+from cerebras.cloud.sdk import Cerebras
 
 client = Cerebras(
     # This is the default and can be omitted
@@ -59,7 +53,7 @@ Simply import `AsyncCerebras` instead of `Cerebras` and use `await` with each AP
 ```python
 import os
 import asyncio
-from cerebras_cloud_sdk import AsyncCerebras
+from cerebras.cloud.sdk import AsyncCerebras
 
 client = AsyncCerebras(
     # This is the default and can be omitted
@@ -105,7 +99,7 @@ All errors inherit from `cerebras_cloud_sdk.APIError`.
 
 ```python
 import cerebras_cloud_sdk
-from cerebras_cloud_sdk import Cerebras
+from cerebras.cloud.sdk import Cerebras
 
 client = Cerebras()
 
@@ -152,7 +146,7 @@ Connection errors (for example, due to a network connectivity problem), 408 Requ
 You can use the `max_retries` option to configure or disable retry settings:
 
 ```python
-from cerebras_cloud_sdk import Cerebras
+from cerebras.cloud.sdk import Cerebras
 
 # Configure the default for all requests:
 client = Cerebras(
@@ -178,7 +172,7 @@ By default requests time out after 1 minute. You can configure this with a `time
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/#fine-tuning-the-configuration) object:
 
 ```python
-from cerebras_cloud_sdk import Cerebras
+from cerebras.cloud.sdk import Cerebras
 
 # Configure the default for all requests:
 client = Cerebras(
@@ -236,7 +230,7 @@ if response.my_field is None:
 The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
 
 ```py
-from cerebras_cloud_sdk import Cerebras
+from cerebras.cloud.sdk import Cerebras
 
 client = Cerebras()
 response = client.chat.completions.with_raw_response.create(
@@ -324,7 +318,7 @@ You can directly override the [httpx client](https://www.python-httpx.org/api/#c
 - Additional [advanced](https://www.python-httpx.org/advanced/clients/) functionality
 
 ```python
-from cerebras_cloud_sdk import Cerebras, DefaultHttpxClient
+from cerebras.cloud.sdk import Cerebras, DefaultHttpxClient
 
 client = Cerebras(
     # Or use the `CEREBRAS_BASE_URL` env var
@@ -349,9 +343,9 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 3. Changes that we do not expect to impact the vast majority of users in practice.
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
-
+<!---
 We are keen for your feedback; please open an [issue](https://www.github.com/Cerebras/cerebras-api-python/issues) with questions, bugs, or suggestions.
-
+-->
 ## Requirements
 
 Python 3.7 or higher.
