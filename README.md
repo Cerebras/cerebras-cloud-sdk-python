@@ -1,8 +1,8 @@
-# Petstore Python API library
+# Cerebras Python API library
 
-[![PyPI version](https://img.shields.io/pypi/v/cerebras-cloud.svg)](https://pypi.org/project/cerebras-cloud/)
+[![PyPI version](https://img.shields.io/pypi/v/cerebras_cloud_sdk.svg)](https://pypi.org/project/cerebras_cloud_sdk/)
 
-The Petstore Python library provides convenient access to the Petstore REST API from any Python 3.7+
+The Cerebras Python library provides convenient access to the Cerebras REST API from any Python 3.7+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
@@ -10,17 +10,17 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 
 ## Documentation
 
-The REST API documentation can be found [on app.stainlessapi.com](https://app.stainlessapi.com/docs). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found [on docs.cerebras.net](https://docs.cerebras.net). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
 ```sh
-# install from this staging repo
-pip install git+ssh://git@github.com/stainless-sdks/cerebras-cloud-python.git
+# install from the production repo
+pip install git+ssh://git@github.com/Cerebras/cerebras-api-python#staging.git
 ```
 
 > [!NOTE]
-> Once this package is [published to PyPI](https://app.stainlessapi.com/docs/guides/publish), this will become: `pip install --pre cerebras-cloud`
+> Once this package is [published to PyPI](https://app.stainlessapi.com/docs/guides/publish), this will become: `pip install --pre cerebras_cloud_sdk`
 
 ## Usage
 
@@ -28,48 +28,56 @@ The full API of this library can be found in [api.md](api.md).
 
 ```python
 import os
-from cerebras_minus_cloud import Petstore
+from cerebras_cloud_sdk import Cerebras
 
-client = Petstore(
+client = Cerebras(
     # This is the default and can be omitted
-    api_key=os.environ.get("PETSTORE_API_KEY"),
+    cerebras_api_key=os.environ.get("CEREBRAS_API_KEY"),
 )
 
-order = client.store.create_order(
-    pet_id=1,
-    quantity=1,
-    status="placed",
+chat_completion = client.chat.completions.create(
+    messages=[
+        {
+            "role": "user",
+            "content": "Why is fast inference important?",
+        }
+    ],
+    model="llama3-8b-8192",
 )
-print(order.id)
+print(chat_completion.messages)
 ```
 
-While you can provide an `api_key` keyword argument,
+While you can provide a `cerebras_api_key` keyword argument,
 we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `PETSTORE_API_KEY="My API Key"` to your `.env` file
-so that your API Key is not stored in source control.
+to add `CEREBRAS_API_KEY="My Cerebras API Key"` to your `.env` file
+so that your Cerebras API Key is not stored in source control.
 
 ## Async usage
 
-Simply import `AsyncPetstore` instead of `Petstore` and use `await` with each API call:
+Simply import `AsyncCerebras` instead of `Cerebras` and use `await` with each API call:
 
 ```python
 import os
 import asyncio
-from cerebras_minus_cloud import AsyncPetstore
+from cerebras_cloud_sdk import AsyncCerebras
 
-client = AsyncPetstore(
+client = AsyncCerebras(
     # This is the default and can be omitted
-    api_key=os.environ.get("PETSTORE_API_KEY"),
+    cerebras_api_key=os.environ.get("CEREBRAS_API_KEY"),
 )
 
 
 async def main() -> None:
-    order = await client.store.create_order(
-        pet_id=1,
-        quantity=1,
-        status="placed",
+    chat_completion = await client.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": "Why is fast inference important?",
+            }
+        ],
+        model="llama3-8b-8192",
     )
-    print(order.id)
+    print(chat_completion.messages)
 
 
 asyncio.run(main())
@@ -88,27 +96,35 @@ Typed requests and responses provide autocomplete and documentation within your 
 
 ## Handling errors
 
-When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `cerebras_minus_cloud.APIConnectionError` is raised.
+When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `cerebras_cloud_sdk.APIConnectionError` is raised.
 
 When the API returns a non-success status code (that is, 4xx or 5xx
-response), a subclass of `cerebras_minus_cloud.APIStatusError` is raised, containing `status_code` and `response` properties.
+response), a subclass of `cerebras_cloud_sdk.APIStatusError` is raised, containing `status_code` and `response` properties.
 
-All errors inherit from `cerebras_minus_cloud.APIError`.
+All errors inherit from `cerebras_cloud_sdk.APIError`.
 
 ```python
-import cerebras_minus_cloud
-from cerebras_minus_cloud import Petstore
+import cerebras_cloud_sdk
+from cerebras_cloud_sdk import Cerebras
 
-client = Petstore()
+client = Cerebras()
 
 try:
-    client.store.inventory()
-except cerebras_minus_cloud.APIConnectionError as e:
+    client.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": "This should cause an error!",
+            }
+        ],
+        model="some-model-that-doesnt-exist",
+    )
+except cerebras_cloud_sdk.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
-except cerebras_minus_cloud.RateLimitError as e:
+except cerebras_cloud_sdk.RateLimitError as e:
     print("A 429 status code was received; we should back off a bit.")
-except cerebras_minus_cloud.APIStatusError as e:
+except cerebras_cloud_sdk.APIStatusError as e:
     print("Another non-200-range status code was received")
     print(e.status_code)
     print(e.response)
@@ -136,16 +152,24 @@ Connection errors (for example, due to a network connectivity problem), 408 Requ
 You can use the `max_retries` option to configure or disable retry settings:
 
 ```python
-from cerebras_minus_cloud import Petstore
+from cerebras_cloud_sdk import Cerebras
 
 # Configure the default for all requests:
-client = Petstore(
+client = Cerebras(
     # default is 2
     max_retries=0,
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).store.inventory()
+client.with_options(max_retries=5).chat.completions.create(
+    messages=[
+        {
+            "role": "user",
+            "content": "Why is fast inference important?",
+        }
+    ],
+    model="llama3-8b-8192",
+)
 ```
 
 ### Timeouts
@@ -154,21 +178,29 @@ By default requests time out after 1 minute. You can configure this with a `time
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/#fine-tuning-the-configuration) object:
 
 ```python
-from cerebras_minus_cloud import Petstore
+from cerebras_cloud_sdk import Cerebras
 
 # Configure the default for all requests:
-client = Petstore(
+client = Cerebras(
     # 20 seconds (default is 1 minute)
     timeout=20.0,
 )
 
 # More granular control:
-client = Petstore(
+client = Cerebras(
     timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).store.inventory()
+client.with_options(timeout=5.0).chat.completions.create(
+    messages=[
+        {
+            "role": "user",
+            "content": "Why is fast inference important?",
+        }
+    ],
+    model="llama3-8b-8192",
+)
 ```
 
 On timeout, an `APITimeoutError` is thrown.
@@ -181,10 +213,10 @@ Note that requests that time out are [retried twice by default](#retries).
 
 We use the standard library [`logging`](https://docs.python.org/3/library/logging.html) module.
 
-You can enable logging by setting the environment variable `PETSTORE_LOG` to `debug`.
+You can enable logging by setting the environment variable `CEREBRAS_LOG` to `debug`.
 
 ```shell
-$ export PETSTORE_LOG=debug
+$ export CEREBRAS_LOG=debug
 ```
 
 ### How to tell whether `None` means `null` or missing
@@ -204,19 +236,25 @@ if response.my_field is None:
 The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
 
 ```py
-from cerebras_minus_cloud import Petstore
+from cerebras_cloud_sdk import Cerebras
 
-client = Petstore()
-response = client.store.with_raw_response.inventory()
+client = Cerebras()
+response = client.chat.completions.with_raw_response.create(
+    messages=[{
+        "role": "user",
+        "content": "Why is fast inference important?",
+    }],
+    model="llama3-8b-8192",
+)
 print(response.headers.get('X-My-Header'))
 
-store = response.parse()  # get the object that `store.inventory()` would have returned
-print(store)
+completion = response.parse()  # get the object that `chat.completions.create()` would have returned
+print(completion.messages)
 ```
 
-These methods return an [`APIResponse`](https://github.com/stainless-sdks/cerebras-cloud-python/tree/main/src/cerebras_minus_cloud/_response.py) object.
+These methods return an [`APIResponse`](https://github.com/Cerebras/cerebras-api-python/tree/staging/src/cerebras_cloud_sdk/_response.py) object.
 
-The async client returns an [`AsyncAPIResponse`](https://github.com/stainless-sdks/cerebras-cloud-python/tree/main/src/cerebras_minus_cloud/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+The async client returns an [`AsyncAPIResponse`](https://github.com/Cerebras/cerebras-api-python/tree/staging/src/cerebras_cloud_sdk/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
 
 #### `.with_streaming_response`
 
@@ -225,7 +263,15 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.store.with_streaming_response.inventory() as response:
+with client.chat.completions.with_streaming_response.create(
+    messages=[
+        {
+            "role": "user",
+            "content": "Why is fast inference important?",
+        }
+    ],
+    model="llama3-8b-8192",
+) as response:
     print(response.headers.get("X-My-Header"))
 
     for line in response.iter_lines():
@@ -278,10 +324,10 @@ You can directly override the [httpx client](https://www.python-httpx.org/api/#c
 - Additional [advanced](https://www.python-httpx.org/advanced/clients/) functionality
 
 ```python
-from cerebras_minus_cloud import Petstore, DefaultHttpxClient
+from cerebras_cloud_sdk import Cerebras, DefaultHttpxClient
 
-client = Petstore(
-    # Or use the `PETSTORE_BASE_URL` env var
+client = Cerebras(
+    # Or use the `CEREBRAS_BASE_URL` env var
     base_url="http://my.test.server.example.com:8083",
     http_client=DefaultHttpxClient(
         proxies="http://my.test.proxy.example.com",
@@ -304,7 +350,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/cerebras-cloud-python/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/Cerebras/cerebras-api-python/issues) with questions, bugs, or suggestions.
 
 ## Requirements
 

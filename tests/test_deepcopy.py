@@ -1,4 +1,4 @@
-from cerebras_minus_cloud._utils import deepcopy_minimal
+from cerebras_cloud_sdk._utils import deepcopy_minimal
 
 
 def assert_different_identities(obj1: object, obj2: object) -> None:

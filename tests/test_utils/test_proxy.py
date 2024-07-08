@@ -2,7 +2,7 @@ import operator
 from typing import Any
 from typing_extensions import override
 
-from cerebras_minus_cloud._utils import LazyProxy
+from cerebras_cloud_sdk._utils import LazyProxy
 
 
 class RecursiveLazyProxy(LazyProxy[Any]):

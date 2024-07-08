@@ -7,9 +7,9 @@ import pytest
 import pydantic
 from pydantic import Field
 
-from cerebras_minus_cloud._utils import PropertyInfo
-from cerebras_minus_cloud._compat import PYDANTIC_V2, parse_obj, model_dump, model_json
-from cerebras_minus_cloud._models import BaseModel, construct_type
+from cerebras_cloud_sdk._utils import PropertyInfo
+from cerebras_cloud_sdk._compat import PYDANTIC_V2, parse_obj, model_dump, model_json
+from cerebras_cloud_sdk._models import BaseModel, construct_type
 
 
 class BasicModel(BaseModel):

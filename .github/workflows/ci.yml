@@ -2,10 +2,10 @@ name: CI
 on:
   push:
     branches:
-      - main
+      - staging
   pull_request:
     branches:
-      - main
+      - staging
 
 jobs:
   lint:
