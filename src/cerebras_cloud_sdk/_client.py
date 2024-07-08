@@ -91,7 +91,7 @@ class Cerebras(SyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("CEREBRAS_BASE_URL")
         if base_url is None:
-            base_url = f"https://d1n704mb908frr.cloudfront.net"
+            base_url = f"https://d1n704mb908frr.cloudfront.net/dev/"
 
         super().__init__(
             version=__version__,
@@ -259,7 +259,7 @@ class AsyncCerebras(AsyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("CEREBRAS_BASE_URL")
         if base_url is None:
-            base_url = f"https://d1n704mb908frr.cloudfront.net"
+            base_url = f"https://d1n704mb908frr.cloudfront.net/dev/"
 
         super().__init__(
             version=__version__,
