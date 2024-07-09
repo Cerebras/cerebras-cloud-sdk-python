@@ -71,7 +71,7 @@ class CompletionsResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._post(
-            "/v1/chat",
+            "/v1/chat/completions",
             body=maybe_transform(
                 {
                     "messages": messages,
@@ -136,7 +136,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._post(
-            "/v1/chat",
+            "/v1/chat/completions",
             body=await async_maybe_transform(
                 {
                     "messages": messages,

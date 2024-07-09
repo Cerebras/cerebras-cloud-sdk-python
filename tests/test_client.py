@@ -749,11 +749,11 @@ class TestCerebras:
     @mock.patch("cerebras_cloud_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/chat").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/v1/chat/completions").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             self.client.post(
-                "/v1/chat",
+                "/v1/chat/completions",
                 body=cast(
                     object,
                     dict(
@@ -775,11 +775,11 @@ class TestCerebras:
     @mock.patch("cerebras_cloud_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/chat").mock(return_value=httpx.Response(500))
+        respx_mock.post("/v1/chat/completions").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             self.client.post(
-                "/v1/chat",
+                "/v1/chat/completions",
                 body=cast(
                     object,
                     dict(
@@ -1505,11 +1505,11 @@ class TestAsyncCerebras:
     @mock.patch("cerebras_cloud_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/chat").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/v1/chat/completions").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             await self.client.post(
-                "/v1/chat",
+                "/v1/chat/completions",
                 body=cast(
                     object,
                     dict(
@@ -1531,11 +1531,11 @@ class TestAsyncCerebras:
     @mock.patch("cerebras_cloud_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/chat").mock(return_value=httpx.Response(500))
+        respx_mock.post("/v1/chat/completions").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             await self.client.post(
-                "/v1/chat",
+                "/v1/chat/completions",
                 body=cast(
                     object,
                     dict(
