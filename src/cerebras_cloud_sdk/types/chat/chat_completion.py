@@ -5,29 +5,31 @@ from typing_extensions import Literal
 
 from ..._models import BaseModel
 
-__all__ = ["ChatCompletion", "Message", "TimeInfo", "TokenInfo"]
+__all__ = ["ChatCompletion", "Message", "TimeInfo", "Usage"]
 
 
 class Message(BaseModel):
-    role: Literal["user", "assistant"]
+    role: object
 
     content: Optional[str] = None
 
 
 class TimeInfo(BaseModel):
-    input_inference_time: Optional[int] = None
+    completion_time: Optional[float] = None
 
-    output_inference_time: Optional[int] = None
+    creation: Optional[int] = None
 
-    start_time: Optional[int] = None
+    prompt_time: Optional[float] = None
 
-    total_inference_time: Optional[int] = None
+    queue_time: Optional[float] = None
+
+    total_time: Optional[float] = None
 
 
-class TokenInfo(BaseModel):
-    input_tokens: Optional[int] = None
+class Usage(BaseModel):
+    completion_tokens: Optional[int] = None
 
-    output_tokens: Optional[int] = None
+    prompt_tokens: Optional[int] = None
 
     total_tokens: Optional[int] = None
 
@@ -35,8 +37,10 @@ class TokenInfo(BaseModel):
 class ChatCompletion(BaseModel):
     messages: List[Message]
 
-    model: str
+    model: Literal["llama3-8b-8192"]
 
-    time_info: TimeInfo
+    finish_reason: Optional[object] = None
 
-    token_info: TokenInfo
+    time_info: Optional[TimeInfo] = None
+
+    usage: Optional[Usage] = None
