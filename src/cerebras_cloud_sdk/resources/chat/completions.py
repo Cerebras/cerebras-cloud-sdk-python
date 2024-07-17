@@ -81,8 +81,8 @@ class CompletionsResource(SyncAPIResource):
               means only the tokens comprising the top 10% probability mass are considered. We
               generally recommend altering this or `temperature` but not both.
 
-          user: A unique identifier representing your end-user, which can help OpenAI to monitor
-              and detect abuse.
+          user: A unique identifier representing your end-user, which can help Cerebras to
+              monitor and detect abuse.
 
           extra_headers: Send extra headers
 
@@ -175,8 +175,8 @@ class AsyncCompletionsResource(AsyncAPIResource):
               means only the tokens comprising the top 10% probability mass are considered. We
               generally recommend altering this or `temperature` but not both.
 
-          user: A unique identifier representing your end-user, which can help OpenAI to monitor
-              and detect abuse.
+          user: A unique identifier representing your end-user, which can help Cerebras to
+              monitor and detect abuse.
 
           extra_headers: Send extra headers
 

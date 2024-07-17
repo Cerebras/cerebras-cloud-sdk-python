@@ -60,8 +60,8 @@ class CompletionCreateParams(TypedDict, total=False):
 
     user: Optional[str]
     """
-    A unique identifier representing your end-user, which can help OpenAI to monitor
-    and detect abuse.
+    A unique identifier representing your end-user, which can help Cerebras to
+    monitor and detect abuse.
     """
 
 

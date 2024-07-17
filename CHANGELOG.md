@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 (2024-07-17)
+
+Full Changelog: [v0.1.0-alpha.3...v0.2.0](https://github.com/Cerebras/cerebras-cloud-sdk-python/compare/v0.1.0-alpha.3...v0.2.0)
+
+### Features
+
+* **api:** update via SDK Studio ([#104](https://github.com/Cerebras/cerebras-cloud-sdk-python/issues/104)) ([77309a9](https://github.com/Cerebras/cerebras-cloud-sdk-python/commit/77309a9a1eb911d906ed069984faf50d17efd489))
+
 ## 0.1.0-alpha.3 (2024-07-17)
 
 Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/Cerebras/cerebras-cloud-sdk-python/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
