@@ -879,9 +879,9 @@ class SyncAPIClient(BaseClient[httpx.Client, Stream[Any]]):
     def _prepare_options(
         self,
         options: FinalRequestOptions,  # noqa: ARG002
-    ) -> None:
+    ) -> FinalRequestOptions:
         """Hook for mutating the given options"""
-        return None
+        return options
 
     def _prepare_request(
         self,
@@ -955,8 +955,13 @@ class SyncAPIClient(BaseClient[httpx.Client, Stream[Any]]):
         stream: bool,
         stream_cls: type[_StreamT] | None,
     ) -> ResponseT | _StreamT:
+        # create a copy of the options we were given so that if the
+        # options are mutated later & we then retry, the retries are
+        # given the original options
+        input_options = model_copy(options)
+
         cast_to = self._maybe_override_cast_to(cast_to, options)
-        self._prepare_options(options)
+        options = self._prepare_options(options)
 
         retries = self._remaining_retries(remaining_retries, options)
         request = self._build_request(options)
@@ -979,7 +984,7 @@ class SyncAPIClient(BaseClient[httpx.Client, Stream[Any]]):
 
             if retries > 0:
                 return self._retry_request(
-                    options,
+                    input_options,
                     cast_to,
                     retries,
                     stream=stream,
@@ -994,7 +999,7 @@ class SyncAPIClient(BaseClient[httpx.Client, Stream[Any]]):
 
             if retries > 0:
                 return self._retry_request(
-                    options,
+                    input_options,
                     cast_to,
                     retries,
                     stream=stream,
@@ -1022,7 +1027,7 @@ class SyncAPIClient(BaseClient[httpx.Client, Stream[Any]]):
             if retries > 0 and self._should_retry(err.response):
                 err.response.close()
                 return self._retry_request(
-                    options,
+                    input_options,
                     cast_to,
                     retries,
                     err.response.headers,
@@ -1437,9 +1442,9 @@ class AsyncAPIClient(BaseClient[httpx.AsyncClient, AsyncStream[Any]]):
     async def _prepare_options(
         self,
         options: FinalRequestOptions,  # noqa: ARG002
-    ) -> None:
+    ) -> FinalRequestOptions:
         """Hook for mutating the given options"""
-        return None
+        return options
 
     async def _prepare_request(
         self,
@@ -1518,8 +1523,13 @@ class AsyncAPIClient(BaseClient[httpx.AsyncClient, AsyncStream[Any]]):
             # execute it earlier while we are in an async context
             self._platform = await asyncify(get_platform)()
 
+        # create a copy of the options we were given so that if the
+        # options are mutated later & we then retry, the retries are
+        # given the original options
+        input_options = model_copy(options)
+
         cast_to = self._maybe_override_cast_to(cast_to, options)
-        await self._prepare_options(options)
+        options = await self._prepare_options(options)
 
         retries = self._remaining_retries(remaining_retries, options)
         request = self._build_request(options)
@@ -1540,7 +1550,7 @@ class AsyncAPIClient(BaseClient[httpx.AsyncClient, AsyncStream[Any]]):
 
             if retries > 0:
                 return await self._retry_request(
-                    options,
+                    input_options,
                     cast_to,
                     retries,
                     stream=stream,
@@ -1555,7 +1565,7 @@ class AsyncAPIClient(BaseClient[httpx.AsyncClient, AsyncStream[Any]]):
 
             if retries > 0:
                 return await self._retry_request(
-                    options,
+                    input_options,
                     cast_to,
                     retries,
                     stream=stream,
@@ -1578,7 +1588,7 @@ class AsyncAPIClient(BaseClient[httpx.AsyncClient, AsyncStream[Any]]):
             if retries > 0 and self._should_retry(err.response):
                 await err.response.aclose()
                 return await self._retry_request(
-                    options,
+                    input_options,
                     cast_to,
                     retries,
                     err.response.headers,

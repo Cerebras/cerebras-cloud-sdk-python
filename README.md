@@ -13,6 +13,7 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 
 The REST API documentation can be found [on docs.cerebras.net](https://docs.cerebras.net). The full API of this library can be found in [api.md](api.md).
 -->
+
 ## Installation
 > [!NOTE]
 > Once this package is published to PyPI, this will become: `pip install --pre cerebras_cloud_sdk`
@@ -27,10 +28,10 @@ from cerebras.cloud.sdk import Cerebras
 
 client = Cerebras(
     # This is the default and can be omitted
-    cerebras_api_key=os.environ.get("CEREBRAS_API_KEY"),
+    api_key=os.environ.get("CEREBRAS_API_KEY"),
 )
 
-chat_completion = client.chat.completions.create(
+completion_create_response = client.chat.completions.create(
     messages=[
         {
             "role": "user",
@@ -39,13 +40,14 @@ chat_completion = client.chat.completions.create(
     ],
     model="llama3-8b-8192",
 )
-print(chat_completion.messages)
+
+print(completion_create_response)
 ```
 
-While you can provide a `cerebras_api_key` keyword argument,
+While you can provide an `api_key` keyword argument,
 we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `CEREBRAS_API_KEY="My Cerebras API Key"` to your `.env` file
-so that your Cerebras API Key is not stored in source control.
+to add `CEREBRAS_API_KEY="My API Key"` to your `.env` file
+so that your API Key is not stored in source control.
 
 ## Async usage
 
@@ -58,12 +60,12 @@ from cerebras.cloud.sdk import AsyncCerebras
 
 client = AsyncCerebras(
     # This is the default and can be omitted
-    cerebras_api_key=os.environ.get("CEREBRAS_API_KEY"),
+    api_key=os.environ.get("CEREBRAS_API_KEY"),
 )
 
 
 async def main() -> None:
-    chat_completion = await client.chat.completions.create(
+    completion_create_response = await client.chat.completions.create(
         messages=[
             {
                 "role": "user",
@@ -72,8 +74,7 @@ async def main() -> None:
         ],
         model="llama3-8b-8192",
     )
-    print(chat_completion.messages)
-
+    print(completion_create_response)
 
 asyncio.run(main())
 ```
@@ -90,7 +91,7 @@ from cerebras.cloud.sdk import Cerebras
 
 client = Cerebras(
     # This is the default and can be omitted
-    cerebras_api_key=os.environ.get("CEREBRAS_API_KEY"),
+    api_key=os.environ.get("CEREBRAS_API_KEY"),
 )
 
 stream = client.chat.completions.create(
@@ -103,8 +104,9 @@ stream = client.chat.completions.create(
     model="llama3-8b-8192",
     stream=True,
 )
+
 for chunk in stream:
-    print(chunk.messages[0].content or "", end="")
+    print(chunk.choices[0].delta.content or "", end="")
 ```
 
 The async client uses the exact same interface.
@@ -116,7 +118,7 @@ from cerebras.cloud.sdk import AsyncCerebras
 
 client = AsyncCerebras(
     # This is the default and can be omitted
-    cerebras_api_key=os.environ.get("CEREBRAS_API_KEY"),
+    api_key=os.environ.get("CEREBRAS_API_KEY"),
 )
 
 async def main() -> None:
@@ -131,7 +133,7 @@ async def main() -> None:
         stream=True,
     )
     async for chunk in stream:
-        print(chunk.messages[0].content or "", end="")
+        print(chunk.choices[0].delta.content or "", end="")
 
 asyncio.run(main())
 ```
@@ -300,7 +302,7 @@ response = client.chat.completions.with_raw_response.create(
 print(response.headers.get('X-My-Header'))
 
 completion = response.parse()  # get the object that `chat.completions.create()` would have returned
-print(completion.messages)
+print(completion)
 ```
 
 These methods return an [`APIResponse`](https://github.com/Cerebras/cerebras-cloud-sdk-python/tree/staging/src/cerebras_cloud_sdk/_response.py) object.

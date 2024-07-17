@@ -51,12 +51,12 @@ class Cerebras(SyncAPIClient):
     with_streaming_response: CerebrasWithStreamedResponse
 
     # client options
-    cerebras_api_key: str
+    api_key: str
 
     def __init__(
         self,
         *,
-        cerebras_api_key: str | None = None,
+        api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -78,15 +78,15 @@ class Cerebras(SyncAPIClient):
     ) -> None:
         """Construct a new synchronous cerebras client instance.
 
-        This automatically infers the `cerebras_api_key` argument from the `CEREBRAS_API_KEY` environment variable if it is not provided.
+        This automatically infers the `api_key` argument from the `CEREBRAS_API_KEY` environment variable if it is not provided.
         """
-        if cerebras_api_key is None:
-            cerebras_api_key = os.environ.get("CEREBRAS_API_KEY")
-        if cerebras_api_key is None:
+        if api_key is None:
+            api_key = os.environ.get("CEREBRAS_API_KEY")
+        if api_key is None:
             raise CerebrasError(
-                "The cerebras_api_key client option must be set either by passing cerebras_api_key to the client or by setting the CEREBRAS_API_KEY environment variable"
+                "The api_key client option must be set either by passing api_key to the client or by setting the CEREBRAS_API_KEY environment variable"
             )
-        self.cerebras_api_key = cerebras_api_key
+        self.api_key = api_key
 
         if base_url is None:
             base_url = os.environ.get("CEREBRAS_BASE_URL")
@@ -116,8 +116,8 @@ class Cerebras(SyncAPIClient):
     @property
     @override
     def auth_headers(self) -> dict[str, str]:
-        cerebras_api_key = self.cerebras_api_key
-        return {"Authorization": f"Bearer {cerebras_api_key}"}
+        api_key = self.api_key
+        return {"Authorization": f"Bearer {api_key}"}
 
     @property
     @override
@@ -131,7 +131,7 @@ class Cerebras(SyncAPIClient):
     def copy(
         self,
         *,
-        cerebras_api_key: str | None = None,
+        api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.Client | None = None,
@@ -165,7 +165,7 @@ class Cerebras(SyncAPIClient):
 
         http_client = http_client or self._client
         return self.__class__(
-            cerebras_api_key=cerebras_api_key or self.cerebras_api_key,
+            api_key=api_key or self.api_key,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -219,12 +219,12 @@ class AsyncCerebras(AsyncAPIClient):
     with_streaming_response: AsyncCerebrasWithStreamedResponse
 
     # client options
-    cerebras_api_key: str
+    api_key: str
 
     def __init__(
         self,
         *,
-        cerebras_api_key: str | None = None,
+        api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -246,15 +246,15 @@ class AsyncCerebras(AsyncAPIClient):
     ) -> None:
         """Construct a new async cerebras client instance.
 
-        This automatically infers the `cerebras_api_key` argument from the `CEREBRAS_API_KEY` environment variable if it is not provided.
+        This automatically infers the `api_key` argument from the `CEREBRAS_API_KEY` environment variable if it is not provided.
         """
-        if cerebras_api_key is None:
-            cerebras_api_key = os.environ.get("CEREBRAS_API_KEY")
-        if cerebras_api_key is None:
+        if api_key is None:
+            api_key = os.environ.get("CEREBRAS_API_KEY")
+        if api_key is None:
             raise CerebrasError(
-                "The cerebras_api_key client option must be set either by passing cerebras_api_key to the client or by setting the CEREBRAS_API_KEY environment variable"
+                "The api_key client option must be set either by passing api_key to the client or by setting the CEREBRAS_API_KEY environment variable"
             )
-        self.cerebras_api_key = cerebras_api_key
+        self.api_key = api_key
 
         if base_url is None:
             base_url = os.environ.get("CEREBRAS_BASE_URL")
@@ -284,8 +284,8 @@ class AsyncCerebras(AsyncAPIClient):
     @property
     @override
     def auth_headers(self) -> dict[str, str]:
-        cerebras_api_key = self.cerebras_api_key
-        return {"Authorization": f"Bearer {cerebras_api_key}"}
+        api_key = self.api_key
+        return {"Authorization": f"Bearer {api_key}"}
 
     @property
     @override
@@ -299,7 +299,7 @@ class AsyncCerebras(AsyncAPIClient):
     def copy(
         self,
         *,
-        cerebras_api_key: str | None = None,
+        api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.AsyncClient | None = None,
@@ -333,7 +333,7 @@ class AsyncCerebras(AsyncAPIClient):
 
         http_client = http_client or self._client
         return self.__class__(
-            cerebras_api_key=cerebras_api_key or self.cerebras_api_key,
+            api_key=api_key or self.api_key,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,

@@ -30,7 +30,7 @@ from cerebras_cloud_sdk._base_client import (
 from .utils import update_env
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
-cerebras_api_key = "My Cerebras API Key"
+api_key = "My API Key"
 
 
 def _get_params(client: BaseClient[Any, Any]) -> dict[str, str]:
@@ -52,7 +52,7 @@ def _get_open_connections(client: Cerebras | AsyncCerebras) -> int:
 
 
 class TestCerebras:
-    client = Cerebras(base_url=base_url, cerebras_api_key=cerebras_api_key, _strict_response_validation=True)
+    client = Cerebras(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
     @pytest.mark.respx(base_url=base_url)
     def test_raw_response(self, respx_mock: MockRouter) -> None:
@@ -78,9 +78,9 @@ class TestCerebras:
         copied = self.client.copy()
         assert id(copied) != id(self.client)
 
-        copied = self.client.copy(cerebras_api_key="another My Cerebras API Key")
-        assert copied.cerebras_api_key == "another My Cerebras API Key"
-        assert self.client.cerebras_api_key == "My Cerebras API Key"
+        copied = self.client.copy(api_key="another My API Key")
+        assert copied.api_key == "another My API Key"
+        assert self.client.api_key == "My API Key"
 
     def test_copy_default_options(self) -> None:
         # options that have a default are overridden correctly
@@ -100,10 +100,7 @@ class TestCerebras:
 
     def test_copy_default_headers(self) -> None:
         client = Cerebras(
-            base_url=base_url,
-            cerebras_api_key=cerebras_api_key,
-            _strict_response_validation=True,
-            default_headers={"X-Foo": "bar"},
+            base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         assert client.default_headers["X-Foo"] == "bar"
 
@@ -137,10 +134,7 @@ class TestCerebras:
 
     def test_copy_default_query(self) -> None:
         client = Cerebras(
-            base_url=base_url,
-            cerebras_api_key=cerebras_api_key,
-            _strict_response_validation=True,
-            default_query={"foo": "bar"},
+            base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"foo": "bar"}
         )
         assert _get_params(client)["foo"] == "bar"
 
@@ -265,10 +259,7 @@ class TestCerebras:
 
     def test_client_timeout_option(self) -> None:
         client = Cerebras(
-            base_url=base_url,
-            cerebras_api_key=cerebras_api_key,
-            _strict_response_validation=True,
-            timeout=httpx.Timeout(0),
+            base_url=base_url, api_key=api_key, _strict_response_validation=True, timeout=httpx.Timeout(0)
         )
 
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -279,10 +270,7 @@ class TestCerebras:
         # custom timeout given to the httpx client should be used
         with httpx.Client(timeout=None) as http_client:
             client = Cerebras(
-                base_url=base_url,
-                cerebras_api_key=cerebras_api_key,
-                _strict_response_validation=True,
-                http_client=http_client,
+                base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
             request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -292,10 +280,7 @@ class TestCerebras:
         # no timeout given to the httpx client should not use the httpx default
         with httpx.Client() as http_client:
             client = Cerebras(
-                base_url=base_url,
-                cerebras_api_key=cerebras_api_key,
-                _strict_response_validation=True,
-                http_client=http_client,
+                base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
             request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -305,10 +290,7 @@ class TestCerebras:
         # explicitly passing the default timeout currently results in it being ignored
         with httpx.Client(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
             client = Cerebras(
-                base_url=base_url,
-                cerebras_api_key=cerebras_api_key,
-                _strict_response_validation=True,
-                http_client=http_client,
+                base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
             request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -320,17 +302,14 @@ class TestCerebras:
             async with httpx.AsyncClient() as http_client:
                 Cerebras(
                     base_url=base_url,
-                    cerebras_api_key=cerebras_api_key,
+                    api_key=api_key,
                     _strict_response_validation=True,
                     http_client=cast(Any, http_client),
                 )
 
     def test_default_headers_option(self) -> None:
         client = Cerebras(
-            base_url=base_url,
-            cerebras_api_key=cerebras_api_key,
-            _strict_response_validation=True,
-            default_headers={"X-Foo": "bar"},
+            base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "bar"
@@ -338,7 +317,7 @@ class TestCerebras:
 
         client2 = Cerebras(
             base_url=base_url,
-            cerebras_api_key=cerebras_api_key,
+            api_key=api_key,
             _strict_response_validation=True,
             default_headers={
                 "X-Foo": "stainless",
@@ -350,20 +329,17 @@ class TestCerebras:
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
 
     def test_validate_headers(self) -> None:
-        client = Cerebras(base_url=base_url, cerebras_api_key=cerebras_api_key, _strict_response_validation=True)
+        client = Cerebras(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-        assert request.headers.get("Authorization") == f"Bearer {cerebras_api_key}"
+        assert request.headers.get("Authorization") == f"Bearer {api_key}"
 
         with pytest.raises(CerebrasError):
-            client2 = Cerebras(base_url=base_url, cerebras_api_key=None, _strict_response_validation=True)
+            client2 = Cerebras(base_url=base_url, api_key=None, _strict_response_validation=True)
             _ = client2
 
     def test_default_query_option(self) -> None:
         client = Cerebras(
-            base_url=base_url,
-            cerebras_api_key=cerebras_api_key,
-            _strict_response_validation=True,
-            default_query={"query_param": "bar"},
+            base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"query_param": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         url = httpx.URL(request.url)
@@ -563,11 +539,7 @@ class TestCerebras:
         assert response.foo == 2
 
     def test_base_url_setter(self) -> None:
-        client = Cerebras(
-            base_url="https://example.com/from_init",
-            cerebras_api_key=cerebras_api_key,
-            _strict_response_validation=True,
-        )
+        client = Cerebras(base_url="https://example.com/from_init", api_key=api_key, _strict_response_validation=True)
         assert client.base_url == "https://example.com/from_init/"
 
         client.base_url = "https://example.com/from_setter"  # type: ignore[assignment]
@@ -576,20 +548,16 @@ class TestCerebras:
 
     def test_base_url_env(self) -> None:
         with update_env(CEREBRAS_BASE_URL="http://localhost:5000/from/env"):
-            client = Cerebras(cerebras_api_key=cerebras_api_key, _strict_response_validation=True)
+            client = Cerebras(api_key=api_key, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
     @pytest.mark.parametrize(
         "client",
         [
+            Cerebras(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
             Cerebras(
                 base_url="http://localhost:5000/custom/path/",
-                cerebras_api_key=cerebras_api_key,
-                _strict_response_validation=True,
-            ),
-            Cerebras(
-                base_url="http://localhost:5000/custom/path/",
-                cerebras_api_key=cerebras_api_key,
+                api_key=api_key,
                 _strict_response_validation=True,
                 http_client=httpx.Client(),
             ),
@@ -609,14 +577,10 @@ class TestCerebras:
     @pytest.mark.parametrize(
         "client",
         [
+            Cerebras(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
             Cerebras(
                 base_url="http://localhost:5000/custom/path/",
-                cerebras_api_key=cerebras_api_key,
-                _strict_response_validation=True,
-            ),
-            Cerebras(
-                base_url="http://localhost:5000/custom/path/",
-                cerebras_api_key=cerebras_api_key,
+                api_key=api_key,
                 _strict_response_validation=True,
                 http_client=httpx.Client(),
             ),
@@ -636,14 +600,10 @@ class TestCerebras:
     @pytest.mark.parametrize(
         "client",
         [
+            Cerebras(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
             Cerebras(
                 base_url="http://localhost:5000/custom/path/",
-                cerebras_api_key=cerebras_api_key,
-                _strict_response_validation=True,
-            ),
-            Cerebras(
-                base_url="http://localhost:5000/custom/path/",
-                cerebras_api_key=cerebras_api_key,
+                api_key=api_key,
                 _strict_response_validation=True,
                 http_client=httpx.Client(),
             ),
@@ -661,7 +621,7 @@ class TestCerebras:
         assert request.url == "https://myapi.com/foo"
 
     def test_copied_client_does_not_close_http(self) -> None:
-        client = Cerebras(base_url=base_url, cerebras_api_key=cerebras_api_key, _strict_response_validation=True)
+        client = Cerebras(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         assert not client.is_closed()
 
         copied = client.copy()
@@ -672,7 +632,7 @@ class TestCerebras:
         assert not client.is_closed()
 
     def test_client_context_manager(self) -> None:
-        client = Cerebras(base_url=base_url, cerebras_api_key=cerebras_api_key, _strict_response_validation=True)
+        client = Cerebras(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         with client as c2:
             assert c2 is client
             assert not c2.is_closed()
@@ -693,12 +653,7 @@ class TestCerebras:
 
     def test_client_max_retries_validation(self) -> None:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
-            Cerebras(
-                base_url=base_url,
-                cerebras_api_key=cerebras_api_key,
-                _strict_response_validation=True,
-                max_retries=cast(Any, None),
-            )
+            Cerebras(base_url=base_url, api_key=api_key, _strict_response_validation=True, max_retries=cast(Any, None))
 
     @pytest.mark.respx(base_url=base_url)
     def test_received_text_for_expected_json(self, respx_mock: MockRouter) -> None:
@@ -707,12 +662,12 @@ class TestCerebras:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
-        strict_client = Cerebras(base_url=base_url, cerebras_api_key=cerebras_api_key, _strict_response_validation=True)
+        strict_client = Cerebras(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
         with pytest.raises(APIResponseValidationError):
             strict_client.get("/foo", cast_to=Model)
 
-        client = Cerebras(base_url=base_url, cerebras_api_key=cerebras_api_key, _strict_response_validation=False)
+        client = Cerebras(base_url=base_url, api_key=api_key, _strict_response_validation=False)
 
         response = client.get("/foo", cast_to=Model)
         assert isinstance(response, str)  # type: ignore[unreachable]
@@ -739,7 +694,7 @@ class TestCerebras:
     )
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
     def test_parse_retry_after_header(self, remaining_retries: int, retry_after: str, timeout: float) -> None:
-        client = Cerebras(base_url=base_url, cerebras_api_key=cerebras_api_key, _strict_response_validation=True)
+        client = Cerebras(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
         headers = httpx.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)
@@ -800,7 +755,7 @@ class TestCerebras:
 
 
 class TestAsyncCerebras:
-    client = AsyncCerebras(base_url=base_url, cerebras_api_key=cerebras_api_key, _strict_response_validation=True)
+    client = AsyncCerebras(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
@@ -828,9 +783,9 @@ class TestAsyncCerebras:
         copied = self.client.copy()
         assert id(copied) != id(self.client)
 
-        copied = self.client.copy(cerebras_api_key="another My Cerebras API Key")
-        assert copied.cerebras_api_key == "another My Cerebras API Key"
-        assert self.client.cerebras_api_key == "My Cerebras API Key"
+        copied = self.client.copy(api_key="another My API Key")
+        assert copied.api_key == "another My API Key"
+        assert self.client.api_key == "My API Key"
 
     def test_copy_default_options(self) -> None:
         # options that have a default are overridden correctly
@@ -850,10 +805,7 @@ class TestAsyncCerebras:
 
     def test_copy_default_headers(self) -> None:
         client = AsyncCerebras(
-            base_url=base_url,
-            cerebras_api_key=cerebras_api_key,
-            _strict_response_validation=True,
-            default_headers={"X-Foo": "bar"},
+            base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         assert client.default_headers["X-Foo"] == "bar"
 
@@ -887,10 +839,7 @@ class TestAsyncCerebras:
 
     def test_copy_default_query(self) -> None:
         client = AsyncCerebras(
-            base_url=base_url,
-            cerebras_api_key=cerebras_api_key,
-            _strict_response_validation=True,
-            default_query={"foo": "bar"},
+            base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"foo": "bar"}
         )
         assert _get_params(client)["foo"] == "bar"
 
@@ -1015,10 +964,7 @@ class TestAsyncCerebras:
 
     async def test_client_timeout_option(self) -> None:
         client = AsyncCerebras(
-            base_url=base_url,
-            cerebras_api_key=cerebras_api_key,
-            _strict_response_validation=True,
-            timeout=httpx.Timeout(0),
+            base_url=base_url, api_key=api_key, _strict_response_validation=True, timeout=httpx.Timeout(0)
         )
 
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -1029,10 +975,7 @@ class TestAsyncCerebras:
         # custom timeout given to the httpx client should be used
         async with httpx.AsyncClient(timeout=None) as http_client:
             client = AsyncCerebras(
-                base_url=base_url,
-                cerebras_api_key=cerebras_api_key,
-                _strict_response_validation=True,
-                http_client=http_client,
+                base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
             request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -1042,10 +985,7 @@ class TestAsyncCerebras:
         # no timeout given to the httpx client should not use the httpx default
         async with httpx.AsyncClient() as http_client:
             client = AsyncCerebras(
-                base_url=base_url,
-                cerebras_api_key=cerebras_api_key,
-                _strict_response_validation=True,
-                http_client=http_client,
+                base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
             request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -1055,10 +995,7 @@ class TestAsyncCerebras:
         # explicitly passing the default timeout currently results in it being ignored
         async with httpx.AsyncClient(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
             client = AsyncCerebras(
-                base_url=base_url,
-                cerebras_api_key=cerebras_api_key,
-                _strict_response_validation=True,
-                http_client=http_client,
+                base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
             request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -1070,17 +1007,14 @@ class TestAsyncCerebras:
             with httpx.Client() as http_client:
                 AsyncCerebras(
                     base_url=base_url,
-                    cerebras_api_key=cerebras_api_key,
+                    api_key=api_key,
                     _strict_response_validation=True,
                     http_client=cast(Any, http_client),
                 )
 
     def test_default_headers_option(self) -> None:
         client = AsyncCerebras(
-            base_url=base_url,
-            cerebras_api_key=cerebras_api_key,
-            _strict_response_validation=True,
-            default_headers={"X-Foo": "bar"},
+            base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "bar"
@@ -1088,7 +1022,7 @@ class TestAsyncCerebras:
 
         client2 = AsyncCerebras(
             base_url=base_url,
-            cerebras_api_key=cerebras_api_key,
+            api_key=api_key,
             _strict_response_validation=True,
             default_headers={
                 "X-Foo": "stainless",
@@ -1100,20 +1034,17 @@ class TestAsyncCerebras:
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
 
     def test_validate_headers(self) -> None:
-        client = AsyncCerebras(base_url=base_url, cerebras_api_key=cerebras_api_key, _strict_response_validation=True)
+        client = AsyncCerebras(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-        assert request.headers.get("Authorization") == f"Bearer {cerebras_api_key}"
+        assert request.headers.get("Authorization") == f"Bearer {api_key}"
 
         with pytest.raises(CerebrasError):
-            client2 = AsyncCerebras(base_url=base_url, cerebras_api_key=None, _strict_response_validation=True)
+            client2 = AsyncCerebras(base_url=base_url, api_key=None, _strict_response_validation=True)
             _ = client2
 
     def test_default_query_option(self) -> None:
         client = AsyncCerebras(
-            base_url=base_url,
-            cerebras_api_key=cerebras_api_key,
-            _strict_response_validation=True,
-            default_query={"query_param": "bar"},
+            base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"query_param": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         url = httpx.URL(request.url)
@@ -1314,9 +1245,7 @@ class TestAsyncCerebras:
 
     def test_base_url_setter(self) -> None:
         client = AsyncCerebras(
-            base_url="https://example.com/from_init",
-            cerebras_api_key=cerebras_api_key,
-            _strict_response_validation=True,
+            base_url="https://example.com/from_init", api_key=api_key, _strict_response_validation=True
         )
         assert client.base_url == "https://example.com/from_init/"
 
@@ -1326,20 +1255,18 @@ class TestAsyncCerebras:
 
     def test_base_url_env(self) -> None:
         with update_env(CEREBRAS_BASE_URL="http://localhost:5000/from/env"):
-            client = AsyncCerebras(cerebras_api_key=cerebras_api_key, _strict_response_validation=True)
+            client = AsyncCerebras(api_key=api_key, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
     @pytest.mark.parametrize(
         "client",
         [
             AsyncCerebras(
-                base_url="http://localhost:5000/custom/path/",
-                cerebras_api_key=cerebras_api_key,
-                _strict_response_validation=True,
+                base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
             AsyncCerebras(
                 base_url="http://localhost:5000/custom/path/",
-                cerebras_api_key=cerebras_api_key,
+                api_key=api_key,
                 _strict_response_validation=True,
                 http_client=httpx.AsyncClient(),
             ),
@@ -1360,13 +1287,11 @@ class TestAsyncCerebras:
         "client",
         [
             AsyncCerebras(
-                base_url="http://localhost:5000/custom/path/",
-                cerebras_api_key=cerebras_api_key,
-                _strict_response_validation=True,
+                base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
             AsyncCerebras(
                 base_url="http://localhost:5000/custom/path/",
-                cerebras_api_key=cerebras_api_key,
+                api_key=api_key,
                 _strict_response_validation=True,
                 http_client=httpx.AsyncClient(),
             ),
@@ -1387,13 +1312,11 @@ class TestAsyncCerebras:
         "client",
         [
             AsyncCerebras(
-                base_url="http://localhost:5000/custom/path/",
-                cerebras_api_key=cerebras_api_key,
-                _strict_response_validation=True,
+                base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
             AsyncCerebras(
                 base_url="http://localhost:5000/custom/path/",
-                cerebras_api_key=cerebras_api_key,
+                api_key=api_key,
                 _strict_response_validation=True,
                 http_client=httpx.AsyncClient(),
             ),
@@ -1411,7 +1334,7 @@ class TestAsyncCerebras:
         assert request.url == "https://myapi.com/foo"
 
     async def test_copied_client_does_not_close_http(self) -> None:
-        client = AsyncCerebras(base_url=base_url, cerebras_api_key=cerebras_api_key, _strict_response_validation=True)
+        client = AsyncCerebras(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         assert not client.is_closed()
 
         copied = client.copy()
@@ -1423,7 +1346,7 @@ class TestAsyncCerebras:
         assert not client.is_closed()
 
     async def test_client_context_manager(self) -> None:
-        client = AsyncCerebras(base_url=base_url, cerebras_api_key=cerebras_api_key, _strict_response_validation=True)
+        client = AsyncCerebras(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         async with client as c2:
             assert c2 is client
             assert not c2.is_closed()
@@ -1446,10 +1369,7 @@ class TestAsyncCerebras:
     async def test_client_max_retries_validation(self) -> None:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
             AsyncCerebras(
-                base_url=base_url,
-                cerebras_api_key=cerebras_api_key,
-                _strict_response_validation=True,
-                max_retries=cast(Any, None),
+                base_url=base_url, api_key=api_key, _strict_response_validation=True, max_retries=cast(Any, None)
             )
 
     @pytest.mark.respx(base_url=base_url)
@@ -1460,14 +1380,12 @@ class TestAsyncCerebras:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
-        strict_client = AsyncCerebras(
-            base_url=base_url, cerebras_api_key=cerebras_api_key, _strict_response_validation=True
-        )
+        strict_client = AsyncCerebras(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
         with pytest.raises(APIResponseValidationError):
             await strict_client.get("/foo", cast_to=Model)
 
-        client = AsyncCerebras(base_url=base_url, cerebras_api_key=cerebras_api_key, _strict_response_validation=False)
+        client = AsyncCerebras(base_url=base_url, api_key=api_key, _strict_response_validation=False)
 
         response = await client.get("/foo", cast_to=Model)
         assert isinstance(response, str)  # type: ignore[unreachable]
@@ -1495,7 +1413,7 @@ class TestAsyncCerebras:
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
     @pytest.mark.asyncio
     async def test_parse_retry_after_header(self, remaining_retries: int, retry_after: str, timeout: float) -> None:
-        client = AsyncCerebras(base_url=base_url, cerebras_api_key=cerebras_api_key, _strict_response_validation=True)
+        client = AsyncCerebras(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
         headers = httpx.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)

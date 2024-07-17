@@ -26,7 +26,7 @@ def event_loop() -> Iterator[asyncio.AbstractEventLoop]:
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
-cerebras_api_key = "My Cerebras API Key"
+api_key = "My API Key"
 
 
 @pytest.fixture(scope="session")
@@ -35,7 +35,7 @@ def client(request: FixtureRequest) -> Iterator[Cerebras]:
     if not isinstance(strict, bool):
         raise TypeError(f"Unexpected fixture parameter type {type(strict)}, expected {bool}")
 
-    with Cerebras(base_url=base_url, cerebras_api_key=cerebras_api_key, _strict_response_validation=strict) as client:
+    with Cerebras(base_url=base_url, api_key=api_key, _strict_response_validation=strict) as client:
         yield client
 
 
@@ -45,7 +45,5 @@ async def async_client(request: FixtureRequest) -> AsyncIterator[AsyncCerebras]:
     if not isinstance(strict, bool):
         raise TypeError(f"Unexpected fixture parameter type {type(strict)}, expected {bool}")
 
-    async with AsyncCerebras(
-        base_url=base_url, cerebras_api_key=cerebras_api_key, _strict_response_validation=strict
-    ) as client:
+    async with AsyncCerebras(base_url=base_url, api_key=api_key, _strict_response_validation=strict) as client:
         yield client
