@@ -4,8 +4,8 @@ from typing import Sequence
 
 import pytest
 
-from cerebras_cloud_sdk._types import FileTypes
-from cerebras_cloud_sdk._utils import extract_files
+from cerebras.cloud.sdk._types import FileTypes
+from cerebras.cloud.sdk._utils import extract_files
 
 
 def test_removes_files_from_input() -> None:

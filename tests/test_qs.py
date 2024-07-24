@@ -4,7 +4,7 @@ from urllib.parse import unquote
 
 import pytest
 
-from cerebras_cloud_sdk._qs import Querystring, stringify
+from cerebras.cloud.sdk._qs import Querystring, stringify
 
 
 def test_empty() -> None:

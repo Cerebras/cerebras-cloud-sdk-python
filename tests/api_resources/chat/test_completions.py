@@ -8,8 +8,8 @@ from typing import Any, cast
 import pytest
 
 from tests.utils import assert_matches_type
-from cerebras_cloud_sdk import Cerebras, AsyncCerebras
-from cerebras_cloud_sdk.types.chat import CompletionCreateResponse
+from cerebras.cloud.sdk import Cerebras, AsyncCerebras
+from cerebras.cloud.sdk.types.chat import CompletionCreateResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -48,6 +48,7 @@ class TestCompletions:
             temperature=0,
             top_p=0,
             user="user",
+            x_amz_cf_id="X-Amz-Cf-Id",
         )
         assert_matches_type(CompletionCreateResponse, completion, path=["response"])
 
@@ -122,6 +123,7 @@ class TestAsyncCompletions:
             temperature=0,
             top_p=0,
             user="user",
+            x_amz_cf_id="X-Amz-Cf-Id",
         )
         assert_matches_type(CompletionCreateResponse, completion, path=["response"])
 

@@ -8,15 +8,15 @@ from typing_extensions import Required, Annotated, TypedDict
 
 import pytest
 
-from cerebras_cloud_sdk._types import Base64FileInput
-from cerebras_cloud_sdk._utils import (
+from cerebras.cloud.sdk._types import Base64FileInput
+from cerebras.cloud.sdk._utils import (
     PropertyInfo,
     transform as _transform,
     parse_datetime,
     async_transform as _async_transform,
 )
-from cerebras_cloud_sdk._compat import PYDANTIC_V2
-from cerebras_cloud_sdk._models import BaseModel
+from cerebras.cloud.sdk._compat import PYDANTIC_V2
+from cerebras.cloud.sdk._models import BaseModel
 
 _T = TypeVar("_T")
 

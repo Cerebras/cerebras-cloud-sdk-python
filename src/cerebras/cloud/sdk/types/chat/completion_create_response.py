@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Union, Optional
+from typing import TYPE_CHECKING, List, Union, Optional
 from typing_extensions import Literal
 
 from ..._models import BaseModel
@@ -11,6 +11,9 @@ __all__ = [
     "ChatChunkResponse",
     "ChatChunkResponseChoice",
     "ChatChunkResponseChoiceDelta",
+    "ChatChunkResponseChoiceLogprobs",
+    "ChatChunkResponseChoiceLogprobsContent",
+    "ChatChunkResponseChoiceLogprobsContentTopLogprobs",
     "ChatChunkResponseTimeInfo",
     "ChatChunkResponseUsage",
     "ErrorChunkResponse",
@@ -23,6 +26,35 @@ class ChatChunkResponseChoiceDelta(BaseModel):
 
     role: Optional[Literal["assistant"]] = None
 
+    if TYPE_CHECKING:
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object:
+            ...
+
+
+class ChatChunkResponseChoiceLogprobsContentTopLogprobs(BaseModel):
+    token: str
+
+    logprob: float
+
+    bytes: Optional[List[int]] = None
+
+
+class ChatChunkResponseChoiceLogprobsContent(BaseModel):
+    token: str
+
+    logprob: float
+
+    top_logprobs: ChatChunkResponseChoiceLogprobsContentTopLogprobs
+
+    bytes: Optional[List[int]] = None
+
+
+class ChatChunkResponseChoiceLogprobs(BaseModel):
+    content: ChatChunkResponseChoiceLogprobsContent
+
 
 class ChatChunkResponseChoice(BaseModel):
     delta: ChatChunkResponseChoiceDelta
@@ -30,6 +62,15 @@ class ChatChunkResponseChoice(BaseModel):
     index: int
 
     finish_reason: Optional[Literal["stop", "length", "content_filter", "tool_calls"]] = None
+
+    logprobs: Optional[ChatChunkResponseChoiceLogprobs] = None
+
+    if TYPE_CHECKING:
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object:
+            ...
 
 
 class ChatChunkResponseTimeInfo(BaseModel):
@@ -57,7 +98,7 @@ class ChatChunkResponse(BaseModel):
 
     created: int
 
-    model: Literal["llama3-8b-8192"]
+    model: Literal["llama3-8b-8192", "llama3-70b-8192"]
 
     object: Literal["chat.completion.chunk"]
 

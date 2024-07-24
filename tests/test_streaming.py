@@ -5,8 +5,8 @@ from typing import Iterator, AsyncIterator
 import httpx
 import pytest
 
-from cerebras_cloud_sdk import Cerebras, AsyncCerebras
-from cerebras_cloud_sdk._streaming import Stream, AsyncStream, ServerSentEvent
+from cerebras.cloud.sdk import Cerebras, AsyncCerebras
+from cerebras.cloud.sdk._streaming import Stream, AsyncStream, ServerSentEvent
 
 
 @pytest.mark.asyncio

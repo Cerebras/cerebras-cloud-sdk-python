@@ -16,11 +16,11 @@ import pytest
 from respx import MockRouter
 from pydantic import ValidationError
 
-from cerebras_cloud_sdk import Cerebras, AsyncCerebras, APIResponseValidationError
-from cerebras_cloud_sdk._models import BaseModel, FinalRequestOptions
-from cerebras_cloud_sdk._constants import RAW_RESPONSE_HEADER
-from cerebras_cloud_sdk._exceptions import CerebrasError, APIStatusError, APITimeoutError, APIResponseValidationError
-from cerebras_cloud_sdk._base_client import (
+from cerebras.cloud.sdk import Cerebras, AsyncCerebras, APIResponseValidationError
+from cerebras.cloud.sdk._models import BaseModel, FinalRequestOptions
+from cerebras.cloud.sdk._constants import RAW_RESPONSE_HEADER
+from cerebras.cloud.sdk._exceptions import CerebrasError, APIStatusError, APITimeoutError, APIResponseValidationError
+from cerebras.cloud.sdk._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
     BaseClient,
@@ -224,10 +224,10 @@ class TestCerebras:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "cerebras_cloud_sdk/_legacy_response.py",
-                        "cerebras_cloud_sdk/_response.py",
+                        "cerebras/cloud/sdk/_legacy_response.py",
+                        "cerebras/cloud/sdk/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "cerebras_cloud_sdk/_compat.py",
+                        "cerebras/cloud/sdk/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -701,7 +701,7 @@ class TestCerebras:
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("cerebras_cloud_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("cerebras.cloud.sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/chat/completions").mock(side_effect=httpx.TimeoutException("Test timeout error"))
@@ -727,7 +727,7 @@ class TestCerebras:
 
         assert _get_open_connections(self.client) == 0
 
-    @mock.patch("cerebras_cloud_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("cerebras.cloud.sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/chat/completions").mock(return_value=httpx.Response(500))
@@ -929,10 +929,10 @@ class TestAsyncCerebras:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "cerebras_cloud_sdk/_legacy_response.py",
-                        "cerebras_cloud_sdk/_response.py",
+                        "cerebras/cloud/sdk/_legacy_response.py",
+                        "cerebras/cloud/sdk/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "cerebras_cloud_sdk/_compat.py",
+                        "cerebras/cloud/sdk/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -1420,7 +1420,7 @@ class TestAsyncCerebras:
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("cerebras_cloud_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("cerebras.cloud.sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/chat/completions").mock(side_effect=httpx.TimeoutException("Test timeout error"))
@@ -1446,7 +1446,7 @@ class TestAsyncCerebras:
 
         assert _get_open_connections(self.client) == 0
 
-    @mock.patch("cerebras_cloud_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("cerebras.cloud.sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/chat/completions").mock(return_value=httpx.Response(500))

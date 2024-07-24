@@ -1,11 +1,11 @@
 [project]
 name = "cerebras_cloud_sdk"
-version = "0.2.0"
+version = "0.3.0"
 description = "The official Python library for the cerebras API"
 dynamic = ["readme"]
 license = "Apache-2.0"
 authors = [
-{ name = "Cerebras", email = "support@cerebras.net" },
+{ name = "Cerebras", email = "inference-beta-feedback@cerebras.net" },
 ]
 dependencies = [
     "httpx>=0.23.0, <1",
@@ -85,7 +85,7 @@ typecheck = { chain = [
   "typecheck:mypy"
 ]}
 "typecheck:pyright" = "pyright"
-"typecheck:verify-types" = "pyright --verifytypes cerebras_cloud_sdk --ignoreexternal"
+"typecheck:verify-types" = "pyright --verifytypes cerebras.cloud.sdk --ignoreexternal"
 "typecheck:mypy" = "mypy ."
 
 [build-system]
@@ -98,7 +98,7 @@ include = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/cerebras", "src/cerebras_cloud_sdk"]
+packages = ["src/cerebras"]
 
 [tool.hatch.build.targets.sdist]
 # Basically everything except hidden files/directories (such as .github, .devcontainers, .python-version, etc)
@@ -124,7 +124,7 @@ path = "README.md"
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 # replace relative links with absolute links
 pattern = '\[(.+?)\]\(((?!https?://)\S+?)\)'
-replacement = '[\1](https://github.com/Cerebras/cerebras-cloud-sdk-python/tree/staging/\g<2>)'
+replacement = '[\1](https://github.com/Cerebras/cerebras-cloud-sdk-python/tree/main/\g<2>)'
 
 [tool.black]
 line-length = 120
@@ -203,7 +203,7 @@ length-sort = true
 length-sort-straight = true
 combine-as-imports = true
 extra-standard-library = ["typing_extensions"]
-known-first-party = ["cerebras_cloud_sdk", "tests"]
+known-first-party = ["cerebras.cloud.sdk", "tests"]
 
 [tool.ruff.per-file-ignores]
 "bin/**.py" = ["T201", "T203"]

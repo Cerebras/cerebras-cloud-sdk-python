@@ -10,6 +10,7 @@ import httpx
 from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from ..._utils import (
     maybe_transform,
+    strip_not_given,
     async_maybe_transform,
 )
 from ..._compat import cached_property
@@ -41,7 +42,7 @@ class CompletionsResource(SyncAPIResource):
         self,
         *,
         messages: Iterable[completion_create_params.Message],
-        model: Literal["llama3-8b-8192"],
+        model: Literal["llama3-8b-8192", "llama3-70b-8192"],
         max_tokens: Optional[int] | NotGiven = NOT_GIVEN,
         seed: Optional[int] | NotGiven = NOT_GIVEN,
         stop: Union[str, List[str], None] | NotGiven = NOT_GIVEN,
@@ -49,6 +50,7 @@ class CompletionsResource(SyncAPIResource):
         temperature: Optional[float] | NotGiven = NOT_GIVEN,
         top_p: Optional[float] | NotGiven = NOT_GIVEN,
         user: Optional[str] | NotGiven = NOT_GIVEN,
+        x_amz_cf_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -60,8 +62,8 @@ class CompletionsResource(SyncAPIResource):
         Chat
 
         Args:
-          max_tokens: The maximum number of [tokens](/tokenizer) that can be generated in the
-              completion. The token count of your plus `max_tokens` cannot exceed the model's
+          max_tokens: The maximum number of tokens that can be generated in the chat completion. The
+              total length of input tokens and generated tokens is limited by the model's
               context length.
 
           seed: If specified, our system will make a best effort to sample deterministically,
@@ -92,6 +94,7 @@ class CompletionsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"X-Amz-Cf-Id": x_amz_cf_id}), **(extra_headers or {})}
         return cast(
             CompletionCreateResponse,
             self._post(
@@ -135,7 +138,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
         self,
         *,
         messages: Iterable[completion_create_params.Message],
-        model: Literal["llama3-8b-8192"],
+        model: Literal["llama3-8b-8192", "llama3-70b-8192"],
         max_tokens: Optional[int] | NotGiven = NOT_GIVEN,
         seed: Optional[int] | NotGiven = NOT_GIVEN,
         stop: Union[str, List[str], None] | NotGiven = NOT_GIVEN,
@@ -143,6 +146,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
         temperature: Optional[float] | NotGiven = NOT_GIVEN,
         top_p: Optional[float] | NotGiven = NOT_GIVEN,
         user: Optional[str] | NotGiven = NOT_GIVEN,
+        x_amz_cf_id: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -154,8 +158,8 @@ class AsyncCompletionsResource(AsyncAPIResource):
         Chat
 
         Args:
-          max_tokens: The maximum number of [tokens](/tokenizer) that can be generated in the
-              completion. The token count of your plus `max_tokens` cannot exceed the model's
+          max_tokens: The maximum number of tokens that can be generated in the chat completion. The
+              total length of input tokens and generated tokens is limited by the model's
               context length.
 
           seed: If specified, our system will make a best effort to sample deterministically,
@@ -186,6 +190,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"X-Amz-Cf-Id": x_amz_cf_id}), **(extra_headers or {})}
         return cast(
             CompletionCreateResponse,
             await self._post(

@@ -8,15 +8,33 @@ and offers both synchronous and asynchronous clients powered by [httpx](https://
 
 It is generated with [Stainless](https://www.stainlessapi.com/).
 
-<!--
+## About Cerebras
+
+At Cerebras, we've developed the world's largest and fastest AI processor, the Wafer-Scale Engine-3 (WSE-3). The Cerebras CS-3 system, powered by the WSE-3, represents a new class of AI supercomputer that sets the standard for generative AI training and inference with unparalleled performance and scalability.
+
+With Cerebras as your inference provider, you can:
+- Achieve unprecedented speed for AI inference workloads
+- Build commercially with high throughput
+- Effortlessly scale your AI workloads with our seamless clustering technology
+
+Our CS-3 systems can be quickly and easily clustered to create the largest AI supercomputers in the world, making it simple to place and run the largest models. Leading corporations, research institutions, and governments are already using Cerebras solutions to develop proprietary models and train popular open-source models.
+
+Want to experience the power of Cerebras? Check out our [website](https://cerebras.net) for more resources and explore options for accessing our technology through the Cerebras Cloud or on-premise deployments!
+
 ## Documentation
 
-The REST API documentation can be found [on docs.cerebras.net](https://docs.cerebras.net). The full API of this library can be found in [api.md](api.md).
--->
+The REST API documentation can be found on [cloud.cerebras.ai/docs](https://cloud.cerebras.ai/docs). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
-> [!NOTE]
-> Once this package is published to PyPI, this will become: `pip install --pre cerebras_cloud_sdk`
+```
+pip install cerebras_cloud_sdk
+```
+
+## API Key
+Get an API Key from [cloud.cerebras.ai](https://cloud.cerebras.ai/) and add it to your environment variables:
+```
+export CEREBRAS_API_KEY="your-api-key-here"
+```
 
 ## Usage
 
@@ -63,7 +81,6 @@ client = AsyncCerebras(
     api_key=os.environ.get("CEREBRAS_API_KEY"),
 )
 
-
 async def main() -> None:
     completion_create_response = await client.chat.completions.create(
         messages=[
@@ -84,6 +101,8 @@ Functionality between the synchronous and asynchronous clients is otherwise iden
 ## Streaming responses
 
 We provide support for streaming responses using Server Side Events (SSE).
+
+Note that when streaming, `usage` and `time_info` will be information will only be included in the final chunk.
 
 ```python
 import os
@@ -149,15 +168,15 @@ Typed requests and responses provide autocomplete and documentation within your 
 
 ## Handling errors
 
-When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `cerebras_cloud_sdk.APIConnectionError` is raised.
+When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `cerebras.cloud.sdk.APIConnectionError` is raised.
 
 When the API returns a non-success status code (that is, 4xx or 5xx
-response), a subclass of `cerebras_cloud_sdk.APIStatusError` is raised, containing `status_code` and `response` properties.
+response), a subclass of `cerebras.cloud.sdk.APIStatusError` is raised, containing `status_code` and `response` properties.
 
-All errors inherit from `cerebras_cloud_sdk.APIError`.
+All errors inherit from `cerebras.cloud.sdk.APIError`.
 
 ```python
-import cerebras_cloud_sdk
+import cerebras.cloud.sdk
 from cerebras.cloud.sdk import Cerebras
 
 client = Cerebras()
@@ -172,12 +191,12 @@ try:
         ],
         model="some-model-that-doesnt-exist",
     )
-except cerebras_cloud_sdk.APIConnectionError as e:
+except cerebras.cloud.sdk.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
-except cerebras_cloud_sdk.RateLimitError as e:
+except cerebras.cloud.sdk.RateLimitError as e:
     print("A 429 status code was received; we should back off a bit.")
-except cerebras_cloud_sdk.APIStatusError as e:
+except cerebras.cloud.sdk.APIStatusError as e:
     print("Another non-200-range status code was received")
     print(e.status_code)
     print(e.response)
@@ -305,9 +324,9 @@ completion = response.parse()  # get the object that `chat.completions.create()`
 print(completion)
 ```
 
-These methods return an [`APIResponse`](https://github.com/Cerebras/cerebras-cloud-sdk-python/tree/staging/src/cerebras_cloud_sdk/_response.py) object.
+These methods return an [`APIResponse`](https://github.com/Cerebras/cerebras-cloud-sdk-python/tree/main/src/cerebras/cloud/sdk/_response.py) object.
 
-The async client returns an [`AsyncAPIResponse`](https://github.com/Cerebras/cerebras-cloud-sdk-python/tree/staging/src/cerebras_cloud_sdk/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+The async client returns an [`AsyncAPIResponse`](https://github.com/Cerebras/cerebras-cloud-sdk-python/tree/main/src/cerebras/cloud/sdk/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
 
 <!--
 #### `.with_streaming_response`
@@ -391,6 +410,12 @@ client = Cerebras(
 )
 ```
 
+You can also customize the client on a per-request basis by using `with_options()`:
+
+```python
+client.with_options(http_client=DefaultHttpxClient(...))
+```
+
 ### Managing HTTP resources
 
 By default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.
@@ -404,9 +429,8 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 3. Changes that we do not expect to impact the vast majority of users in practice.
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
-<!---
+
 We are keen for your feedback; please open an [issue](https://www.github.com/Cerebras/cerebras-cloud-sdk-python/issues) with questions, bugs, or suggestions.
--->
 
 ## Requirements
 

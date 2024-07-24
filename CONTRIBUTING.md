@@ -32,7 +32,7 @@ $ pip install -r requirements-dev.lock
 ## Modifying/Adding code
 
 Most of the SDK is generated code, and any modified code will be overridden on the next generation. The
-`src/cerebras_cloud_sdk/lib/` and `examples/` directories are exceptions and will never be overridden.
+`src/cerebras/cloud/sdk/lib/` and `examples/` directories are exceptions and will never be overridden.
 
 ## Adding and running examples
 
@@ -59,7 +59,7 @@ If you’d like to use the repository from source, you can either install from g
 To install via git:
 
 ```bash
-pip install git+ssh://git@github.com/Cerebras/cerebras-cloud-sdk-python#staging.git
+pip install git+ssh://git@github.com/Cerebras/cerebras-cloud-sdk-python.git
 ```
 
 Alternatively, you can build from source and install the wheel file:

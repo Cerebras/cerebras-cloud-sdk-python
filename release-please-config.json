@@ -61,6 +61,6 @@
   ],
   "release-type": "python",
   "extra-files": [
-    "src/cerebras_cloud_sdk/_version.py"
+    "src/cerebras/cloud/sdk/_version.py"
   ]
 }
