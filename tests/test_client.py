@@ -718,7 +718,7 @@ class TestCerebras:
                                 "content": "Why is fast inference important?",
                             }
                         ],
-                        model="llama3-8b-8192",
+                        model="llama3.1-8b",
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -744,7 +744,7 @@ class TestCerebras:
                                 "content": "Why is fast inference important?",
                             }
                         ],
-                        model="llama3-8b-8192",
+                        model="llama3.1-8b",
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -1437,7 +1437,7 @@ class TestAsyncCerebras:
                                 "content": "Why is fast inference important?",
                             }
                         ],
-                        model="llama3-8b-8192",
+                        model="llama3.1-8b",
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -1463,7 +1463,7 @@ class TestAsyncCerebras:
                                 "content": "Why is fast inference important?",
                             }
                         ],
-                        model="llama3-8b-8192",
+                        model="llama3.1-8b",
                     ),
                 ),
                 cast_to=httpx.Response,

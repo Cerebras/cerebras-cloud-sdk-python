@@ -56,7 +56,7 @@ completion_create_response = client.chat.completions.create(
             "content": "Why is fast inference important?",
         }
     ],
-    model="llama3-8b-8192",
+    model="llama3.1-8b",
 )
 
 print(completion_create_response)
@@ -89,7 +89,7 @@ async def main() -> None:
                 "content": "Why is fast inference important?",
             }
         ],
-        model="llama3-8b-8192",
+        model="llama3.1-8b",
     )
     print(completion_create_response)
 
@@ -120,7 +120,7 @@ stream = client.chat.completions.create(
             "content": "Why is fast inference important?",
         }
     ],
-    model="llama3-8b-8192",
+    model="llama3.1-8b",
     stream=True,
 )
 
@@ -148,7 +148,7 @@ async def main() -> None:
                 "content": "Why is fast inference important?",
             }
         ],
-        model="llama3-8b-8192",
+        model="llama3.1-8b",
         stream=True,
     )
     async for chunk in stream:
@@ -240,7 +240,7 @@ client.with_options(max_retries=5).chat.completions.create(
             "content": "Why is fast inference important?",
         }
     ],
-    model="llama3-8b-8192",
+    model="llama3.1-8b",
 )
 ```
 
@@ -271,7 +271,7 @@ client.with_options(timeout=5.0).chat.completions.create(
             "content": "Why is fast inference important?",
         }
     ],
-    model="llama3-8b-8192",
+    model="llama3.1-8b",
 )
 ```
 
@@ -316,7 +316,7 @@ response = client.chat.completions.with_raw_response.create(
         "role": "user",
         "content": "Why is fast inference important?",
     }],
-    model="llama3-8b-8192",
+    model="llama3.1-8b",
 )
 print(response.headers.get('X-My-Header'))
 
@@ -343,7 +343,7 @@ with client.chat.completions.with_streaming_response.create(
             "content": "Why is fast inference important?",
         }
     ],
-    model="llama3-8b-8192",
+    model="llama3.1-8b",
 ) as response:
     print(response.headers.get("X-My-Header"))
 
