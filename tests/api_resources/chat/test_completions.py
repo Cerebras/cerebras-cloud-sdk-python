@@ -41,14 +41,52 @@ class TestCompletions:
                 }
             ],
             model="llama3-8b-8192",
+            frequency_penalty=-2,
+            logit_bias={},
+            logprobs=True,
             max_tokens=0,
+            n=0,
+            parallel_tool_calls=True,
+            presence_penalty=-2,
+            response_format={"type": "text"},
             seed=0,
+            service_tier="auto",
             stop="string",
-            stream=True,
+            stream=False,
+            stream_options={"include_usage": True},
             temperature=0,
+            tool_choice="none",
+            tools=[
+                {
+                    "function": {
+                        "description": "description",
+                        "name": "name",
+                        "parameters": {},
+                    },
+                    "type": "type",
+                },
+                {
+                    "function": {
+                        "description": "description",
+                        "name": "name",
+                        "parameters": {},
+                    },
+                    "type": "type",
+                },
+                {
+                    "function": {
+                        "description": "description",
+                        "name": "name",
+                        "parameters": {},
+                    },
+                    "type": "type",
+                },
+            ],
+            top_logprobs=0,
             top_p=0,
             user="user",
             x_amz_cf_id="X-Amz-Cf-Id",
+            x_delay_time=0,
         )
         assert_matches_type(CompletionCreateResponse, completion, path=["response"])
 
@@ -116,14 +154,52 @@ class TestAsyncCompletions:
                 }
             ],
             model="llama3-8b-8192",
+            frequency_penalty=-2,
+            logit_bias={},
+            logprobs=True,
             max_tokens=0,
+            n=0,
+            parallel_tool_calls=True,
+            presence_penalty=-2,
+            response_format={"type": "text"},
             seed=0,
+            service_tier="auto",
             stop="string",
-            stream=True,
+            stream=False,
+            stream_options={"include_usage": True},
             temperature=0,
+            tool_choice="none",
+            tools=[
+                {
+                    "function": {
+                        "description": "description",
+                        "name": "name",
+                        "parameters": {},
+                    },
+                    "type": "type",
+                },
+                {
+                    "function": {
+                        "description": "description",
+                        "name": "name",
+                        "parameters": {},
+                    },
+                    "type": "type",
+                },
+                {
+                    "function": {
+                        "description": "description",
+                        "name": "name",
+                        "parameters": {},
+                    },
+                    "type": "type",
+                },
+            ],
+            top_logprobs=0,
             top_p=0,
             user="user",
             x_amz_cf_id="X-Amz-Cf-Id",
+            x_delay_time=0,
         )
         assert_matches_type(CompletionCreateResponse, completion, path=["response"])
 

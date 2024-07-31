@@ -1,5 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+import builtins
 from typing import TYPE_CHECKING, List, Union, Optional
 from typing_extensions import Literal
 
@@ -11,20 +12,54 @@ __all__ = [
     "ChatChunkResponse",
     "ChatChunkResponseChoice",
     "ChatChunkResponseChoiceDelta",
+    "ChatChunkResponseChoiceDeltaToolCall",
+    "ChatChunkResponseChoiceDeltaToolCallFunction",
     "ChatChunkResponseChoiceLogprobs",
     "ChatChunkResponseChoiceLogprobsContent",
     "ChatChunkResponseChoiceLogprobsContentTopLogprobs",
     "ChatChunkResponseTimeInfo",
     "ChatChunkResponseUsage",
     "ErrorChunkResponse",
-    "ErrorChunkResponseContent",
+    "ErrorChunkResponseError",
 ]
+
+
+class ChatChunkResponseChoiceDeltaToolCallFunction(BaseModel):
+    arguments: str
+
+    name: str
+
+    if TYPE_CHECKING:
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object:
+            ...
+
+
+class ChatChunkResponseChoiceDeltaToolCall(BaseModel):
+    id: str
+
+    function: ChatChunkResponseChoiceDeltaToolCallFunction
+
+    index: int
+
+    type: Literal["function"]
+
+    if TYPE_CHECKING:
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object:
+            ...
 
 
 class ChatChunkResponseChoiceDelta(BaseModel):
     content: Optional[str] = None
 
     role: Optional[Literal["assistant"]] = None
+
+    tool_calls: Optional[List[ChatChunkResponseChoiceDeltaToolCall]] = None
 
     if TYPE_CHECKING:
         # Stub to indicate that arbitrary properties are accepted.
@@ -41,6 +76,13 @@ class ChatChunkResponseChoiceLogprobsContentTopLogprobs(BaseModel):
 
     bytes: Optional[List[int]] = None
 
+    if TYPE_CHECKING:
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object:
+            ...
+
 
 class ChatChunkResponseChoiceLogprobsContent(BaseModel):
     token: str
@@ -51,9 +93,23 @@ class ChatChunkResponseChoiceLogprobsContent(BaseModel):
 
     bytes: Optional[List[int]] = None
 
+    if TYPE_CHECKING:
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object:
+            ...
+
 
 class ChatChunkResponseChoiceLogprobs(BaseModel):
     content: ChatChunkResponseChoiceLogprobsContent
+
+    if TYPE_CHECKING:
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object:
+            ...
 
 
 class ChatChunkResponseChoice(BaseModel):
@@ -82,6 +138,13 @@ class ChatChunkResponseTimeInfo(BaseModel):
 
     total_time: Optional[float] = None
 
+    if TYPE_CHECKING:
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object:
+            ...
+
 
 class ChatChunkResponseUsage(BaseModel):
     completion_tokens: Optional[int] = None
@@ -89,6 +152,13 @@ class ChatChunkResponseUsage(BaseModel):
     prompt_tokens: Optional[int] = None
 
     total_tokens: Optional[int] = None
+
+    if TYPE_CHECKING:
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object:
+            ...
 
 
 class ChatChunkResponse(BaseModel):
@@ -104,12 +174,21 @@ class ChatChunkResponse(BaseModel):
 
     system_fingerprint: str
 
+    service_tier: Optional[str] = None
+
     time_info: Optional[ChatChunkResponseTimeInfo] = None
 
     usage: Optional[ChatChunkResponseUsage] = None
 
+    if TYPE_CHECKING:
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> builtins.object:
+            ...
 
-class ErrorChunkResponseContent(BaseModel):
+
+class ErrorChunkResponseError(BaseModel):
     code: Optional[str] = None
 
     message: Optional[str] = None
@@ -118,11 +197,25 @@ class ErrorChunkResponseContent(BaseModel):
 
     type: Optional[str] = None
 
+    if TYPE_CHECKING:
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object:
+            ...
+
 
 class ErrorChunkResponse(BaseModel):
-    content: ErrorChunkResponseContent
+    error: ErrorChunkResponseError
 
     status_code: int
+
+    if TYPE_CHECKING:
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object:
+            ...
 
 
 CompletionCreateResponse = Union[ChatCompletion, ChatChunkResponse, ErrorChunkResponse]

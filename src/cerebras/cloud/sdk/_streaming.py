@@ -9,7 +9,7 @@ from typing_extensions import Self, Protocol, TypeGuard, override, get_origin, r
 
 import httpx
 
-from ._utils import extract_type_var_from_base
+from ._utils import is_mapping, extract_type_var_from_base
 
 if TYPE_CHECKING:
     from ._client import Cerebras, AsyncCerebras
@@ -55,7 +55,45 @@ class Stream(Generic[_T]):
         iterator = self._iter_events()
 
         for sse in iterator:
-            yield process_data(data=sse.json(), cast_to=cast_to, response=response)
+            if sse.data.startswith("[DONE]"):
+                break
+
+            if sse.event is None:
+                data = sse.json()
+                if is_mapping(data) and data.get("error"):
+                    message = None
+                    error = data.get("error")
+                    if is_mapping(error):
+                        message = error.get("message")
+                    if not message or not isinstance(message, str):
+                        message = "An error occurred during streaming"
+
+                    raise self._client._make_status_error(
+                        message,
+                        body=data,
+                        response=response
+                    )
+
+                yield process_data(data=data, cast_to=cast_to, response=response)
+
+            else:
+                data = sse.json()
+
+                if sse.event == "error" and is_mapping(data) and data.get("error"):
+                    message = None
+                    error = data.get("error")
+                    if is_mapping(error):
+                        message = error.get("message")
+                    if not message or not isinstance(message, str):
+                        message = "An error occurred during streaming"
+
+                    raise self._client._make_status_error(
+                        message,
+                        body=data,
+                        response=response
+                    )
+
+                yield process_data(data={"data": data, "event": sse.event}, cast_to=cast_to, response=response)
 
         # Ensure the entire stream is consumed
         for _sse in iterator:
@@ -119,7 +157,45 @@ class AsyncStream(Generic[_T]):
         iterator = self._iter_events()
 
         async for sse in iterator:
-            yield process_data(data=sse.json(), cast_to=cast_to, response=response)
+            if sse.data.startswith("[DONE]"):
+                break
+
+            if sse.event is None:
+                data = sse.json()
+                if is_mapping(data) and data.get("error"):
+                    message = None
+                    error = data.get("error")
+                    if is_mapping(error):
+                        message = error.get("message")
+                    if not message or not isinstance(message, str):
+                        message = "An error occurred during streaming"
+
+                    raise self._client._make_status_error(
+                        message,
+                        body=data,
+                        response=response
+                    )
+
+                yield process_data(data=data, cast_to=cast_to, response=response)
+
+            else:
+                data = sse.json()
+
+                if sse.event == "error" and is_mapping(data) and data.get("error"):
+                    message = None
+                    error = data.get("error")
+                    if is_mapping(error):
+                        message = error.get("message")
+                    if not message or not isinstance(message, str):
+                        message = "An error occurred during streaming"
+
+                    raise self._client._make_status_error(
+                        message,
+                        body=data,
+                        response=response
+                    )
+
+                yield process_data(data={"data": data, "event": sse.event}, cast_to=cast_to, response=response)
 
         # Ensure the entire stream is consumed
         async for _sse in iterator:

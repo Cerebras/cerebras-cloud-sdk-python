@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.4.0 (2024-07-31)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#158](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/158)) ([a608a4a](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/a608a4a1f28e8bb1e1262ec27666fa6cf2886454))
+* **api:** OpenAPI spec update via Stainless API ([#164](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/164)) ([76fb836](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/76fb8367f6288c182e498e94ac756939a4f0cf77))
+* **api:** update via SDK Studio ([#151](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/151)) ([0b561e8](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/0b561e88dae4b3f2662a8f60ed5aea3fb7b74a4c))
+* **api:** update via SDK Studio ([#155](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/155)) ([a688728](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/a688728fc4e449e9a7f0c5d6e9ec09cec96d7505))
+* **api:** update via SDK Studio ([#160](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/160)) ([6912da7](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/6912da73be26b8d89e19d3ad8493f6aefbc9421b))
+* **api:** update via SDK Studio ([#161](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/161)) ([304846d](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/304846d1d492b239bd88c85da94646c8c3e88d15))
+* **api:** update via SDK Studio ([#162](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/162)) ([d78d87c](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/d78d87c1b105c1ef7a7e9b7d29471ebf218dcec6))
+* **api:** update via SDK Studio ([#163](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/163)) ([23408ec](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/23408ecf80bc4cc5c36d3dde9d541e7b333b97e3))
+
+
+### Chores
+
+* **internal:** add type construction helper ([#154](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/154)) ([dba567a](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/dba567ad1dce557d32dce44856ba86f9767ab4ad))
+* **internal:** add type construction helper ([#156](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/156)) ([deb7737](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/deb7737b613600a23a27776e8c08c232a0a59dd9))
+* **internal:** codegen related update ([#152](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/152)) ([1d80cdb](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/1d80cdb4a29af8a98083695bbd42ca2f1e5bcdaa))
+* **internal:** codegen related update ([#153](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/153)) ([b9db8f0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/b9db8f0f404023d86f0602e67ed88b2df205ab6a))
+* **internal:** fix custom code ([8e3a9f8](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/8e3a9f811cddf0e42593368985840f1f7353f762))
+* **internal:** version bump ([#148](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/148)) ([012faf1](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/012faf1ff2154768faf03b379411a3e2e0826973))
+
 ## 0.3.0 (2024-07-24)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v0.2.0...v0.3.0)
