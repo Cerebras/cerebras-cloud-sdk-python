@@ -2,6 +2,14 @@
 
 ## 0.4.0 (2024-07-31)
 
+Full Changelog: [v0.4.0...v0.4.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v0.4.0...v0.4.0)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#166](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/166)) ([8f49a19](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/8f49a19d341b8ae40d5b0a889da3f0b51cfc8a22))
+
+## 0.4.0 (2024-07-31)
+
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v0.3.0...v0.4.0)
 
 ### Features

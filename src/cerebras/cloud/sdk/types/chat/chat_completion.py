@@ -162,7 +162,7 @@ class ChatCompletion(BaseModel):
 
     created: int
 
-    model: Literal["llama3-8b-8192", "llama3-70b-8192"]
+    model: Literal["llama3.1-8b", "llama3.1-70b"]
 
     object: Literal["chat.completion"]
 
