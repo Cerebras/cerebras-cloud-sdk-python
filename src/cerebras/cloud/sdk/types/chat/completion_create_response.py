@@ -164,8 +164,6 @@ class ChatChunkResponseUsage(BaseModel):
 class ChatChunkResponse(BaseModel):
     id: str
 
-    choices: List[ChatChunkResponseChoice]
-
     created: int
 
     model: Literal["llama3.1-8b", "llama3.1-70b"]
@@ -173,6 +171,8 @@ class ChatChunkResponse(BaseModel):
     object: Literal["chat.completion.chunk"]
 
     system_fingerprint: str
+
+    choices: Optional[List[ChatChunkResponseChoice]] = None
 
     service_tier: Optional[str] = None
 
