@@ -29,8 +29,7 @@ class ChoiceMessageToolCallFunction(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object:
-            ...
+        def __getattr__(self, attr: str) -> object: ...
 
 
 class ChoiceMessageToolCall(BaseModel):
@@ -44,8 +43,7 @@ class ChoiceMessageToolCall(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object:
-            ...
+        def __getattr__(self, attr: str) -> object: ...
 
 
 class ChoiceMessage(BaseModel):
@@ -59,8 +57,7 @@ class ChoiceMessage(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object:
-            ...
+        def __getattr__(self, attr: str) -> object: ...
 
 
 class ChoiceLogprobsContentTopLogprobs(BaseModel):
@@ -74,8 +71,7 @@ class ChoiceLogprobsContentTopLogprobs(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object:
-            ...
+        def __getattr__(self, attr: str) -> object: ...
 
 
 class ChoiceLogprobsContent(BaseModel):
@@ -91,8 +87,7 @@ class ChoiceLogprobsContent(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object:
-            ...
+        def __getattr__(self, attr: str) -> object: ...
 
 
 class ChoiceLogprobs(BaseModel):
@@ -102,8 +97,7 @@ class ChoiceLogprobs(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object:
-            ...
+        def __getattr__(self, attr: str) -> object: ...
 
 
 class Choice(BaseModel):
@@ -119,8 +113,7 @@ class Choice(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object:
-            ...
+        def __getattr__(self, attr: str) -> object: ...
 
 
 class TimeInfo(BaseModel):
@@ -136,8 +129,7 @@ class TimeInfo(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object:
-            ...
+        def __getattr__(self, attr: str) -> object: ...
 
 
 class Usage(BaseModel):
@@ -151,8 +143,7 @@ class Usage(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object:
-            ...
+        def __getattr__(self, attr: str) -> object: ...
 
 
 class ChatCompletion(BaseModel):
@@ -178,5 +169,4 @@ class ChatCompletion(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> builtins.object:
-            ...
+        def __getattr__(self, attr: str) -> builtins.object: ...

@@ -36,8 +36,8 @@ class TestCompletions:
             messages=[
                 {
                     "content": "content",
-                    "name": "name",
                     "role": "system",
+                    "name": "name",
                 }
             ],
             model="llama3.1-8b",
@@ -59,24 +59,24 @@ class TestCompletions:
             tools=[
                 {
                     "function": {
-                        "description": "description",
                         "name": "name",
+                        "description": "description",
                         "parameters": {},
                     },
                     "type": "type",
                 },
                 {
                     "function": {
-                        "description": "description",
                         "name": "name",
+                        "description": "description",
                         "parameters": {},
                     },
                     "type": "type",
                 },
                 {
                     "function": {
-                        "description": "description",
                         "name": "name",
+                        "description": "description",
                         "parameters": {},
                     },
                     "type": "type",
@@ -149,8 +149,8 @@ class TestAsyncCompletions:
             messages=[
                 {
                     "content": "content",
-                    "name": "name",
                     "role": "system",
+                    "name": "name",
                 }
             ],
             model="llama3.1-8b",
@@ -172,24 +172,24 @@ class TestAsyncCompletions:
             tools=[
                 {
                     "function": {
-                        "description": "description",
                         "name": "name",
+                        "description": "description",
                         "parameters": {},
                     },
                     "type": "type",
                 },
                 {
                     "function": {
-                        "description": "description",
                         "name": "name",
+                        "description": "description",
                         "parameters": {},
                     },
                     "type": "type",
                 },
                 {
                     "function": {
-                        "description": "description",
                         "name": "name",
+                        "description": "description",
                         "parameters": {},
                     },
                     "type": "type",

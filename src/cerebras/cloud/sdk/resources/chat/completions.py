@@ -113,7 +113,7 @@ class CompletionsResource(SyncAPIResource):
           stop: Up to 4 sequences where the API will stop generating further tokens. The
               returned text will not contain the stop sequence.
 
-          temperature: What sampling temperature to use, between 0 and 2. Higher values like 0.8 will
+          temperature: What sampling temperature to use, between 0 and 1.5. Higher values like 0.8 will
               make the output more random, while lower values like 0.2 will make it more
               focused and deterministic. We generally recommend altering this or `top_p` but
               not both.
@@ -272,7 +272,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
           stop: Up to 4 sequences where the API will stop generating further tokens. The
               returned text will not contain the stop sequence.
 
-          temperature: What sampling temperature to use, between 0 and 2. Higher values like 0.8 will
+          temperature: What sampling temperature to use, between 0 and 1.5. Higher values like 0.8 will
               make the output more random, while lower values like 0.2 will make it more
               focused and deterministic. We generally recommend altering this or `top_p` but
               not both.

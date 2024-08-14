@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.6.0 (2024-08-14)
+
+Full Changelog: [v0.5.0...v0.6.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v0.5.0...v0.6.0)
+
+### Features
+
+* **api:** Update to 0.6.0 ([#190](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/190)) ([fe31a0f](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/fe31a0fc81bceae366ae7243be26328a349453e5))
+* **api:** Update to 0.6.0 ([#192](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/192)) ([b8ec51e](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/b8ec51e11a3c692f60277f62b4f08fb6af5b887f))
+* **api:** Update URLs to use domain ([#185](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/185)) ([f9f9878](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/f9f98784c5b0dd97a0fd6e1b52a0b3d5b00a1d1a))
+* **api:** update via SDK Studio ([#172](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/172)) ([3cfe2ad](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/3cfe2adad22e85a7b0d7e015eeded0c76988668d))
+* **api:** update via SDK Studio ([#174](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/174)) ([e801e07](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/e801e07888bf8675a56ead5e1912ec4f10055664))
+* **api:** update via SDK Studio ([#175](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/175)) ([571068a](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/571068a747fba59dc007a6eb234830ba8a6f7b6a))
+* **client:** add `retry_count` to raw response class ([#181](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/181)) ([4dd38da](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/4dd38da86e5c9daff297c4d992a1c8a536b75aa0))
+
+
+### Chores
+
+* **ci:** bump prism mock server version ([#188](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/188)) ([204b655](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/204b65533992aec19199ef378f1136f66a00403b))
+* **examples:** minor formatting changes ([#191](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/191)) ([94b8fe3](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/94b8fe37df9a0ad7f511de1d4664a46b10743c28))
+* **internal:** bump pyright ([#180](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/180)) ([6960a03](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/6960a03eb849b36ca6e788cd9c9c685ae7012e2f))
+* **internal:** bump ruff version ([#183](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/183)) ([4305d55](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/4305d55b9bf00f1c920345ef96bf9b543fdf55b6))
+* **internal:** ensure package is importable in lint cmd ([#189](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/189)) ([9eecefa](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/9eecefa47a95acf5593b154d22179f21e4f6b43c))
+* **internal:** remove deprecated ruff config ([#187](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/187)) ([c95688a](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/c95688a39bb1cd035dec21da432ea626c366b0d1))
+* **internal:** test updates ([#182](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/182)) ([f46be76](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/f46be76bd47656f818d6a3740e1c8a0af1229fca))
+* **internal:** update pydantic compat helper function ([#184](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/184)) ([c65472a](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/c65472a6c9d9adf9aca240b5558cc88e89362bde))
+* **internal:** use `TypeAlias` marker for type assignments ([#179](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/179)) ([8d33cdf](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/8d33cdf608482ddd2ab73f237786f08a5b530856))
+
 ## 0.5.0 (2024-08-07)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v0.4.0...v0.5.0)

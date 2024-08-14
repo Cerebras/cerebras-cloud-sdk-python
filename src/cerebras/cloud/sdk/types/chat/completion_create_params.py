@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Dict, List, Union, Iterable, Optional
-from typing_extensions import Literal, Required, Annotated, TypedDict
+from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
 
 from ..._utils import PropertyInfo
 
@@ -101,7 +101,7 @@ class CompletionCreateParams(TypedDict, total=False):
     stream_options: Optional[StreamOptions]
 
     temperature: Optional[float]
-    """What sampling temperature to use, between 0 and 2.
+    """What sampling temperature to use, between 0 and 1.5.
 
     Higher values like 0.8 will make the output more random, while lower values like
     0.2 will make it more focused and deterministic. We generally recommend altering
@@ -146,7 +146,7 @@ class MessageSystemMessageRequestTyped(TypedDict, total=False):
     name: Optional[str]
 
 
-MessageSystemMessageRequest = Union[MessageSystemMessageRequestTyped, Dict[str, object]]
+MessageSystemMessageRequest: TypeAlias = Union[MessageSystemMessageRequestTyped, Dict[str, object]]
 
 
 class MessageUserMessageRequestContentUnionMember1Typed(TypedDict, total=False):
@@ -155,7 +155,7 @@ class MessageUserMessageRequestContentUnionMember1Typed(TypedDict, total=False):
     type: Required[Literal["text"]]
 
 
-MessageUserMessageRequestContentUnionMember1 = Union[
+MessageUserMessageRequestContentUnionMember1: TypeAlias = Union[
     MessageUserMessageRequestContentUnionMember1Typed, Dict[str, object]
 ]
 
@@ -168,7 +168,7 @@ class MessageUserMessageRequestTyped(TypedDict, total=False):
     name: Optional[str]
 
 
-MessageUserMessageRequest = Union[MessageUserMessageRequestTyped, Dict[str, object]]
+MessageUserMessageRequest: TypeAlias = Union[MessageUserMessageRequestTyped, Dict[str, object]]
 
 
 class MessageAssistantMessageRequestToolCallFunctionTyped(TypedDict, total=False):
@@ -177,7 +177,7 @@ class MessageAssistantMessageRequestToolCallFunctionTyped(TypedDict, total=False
     name: Required[str]
 
 
-MessageAssistantMessageRequestToolCallFunction = Union[
+MessageAssistantMessageRequestToolCallFunction: TypeAlias = Union[
     MessageAssistantMessageRequestToolCallFunctionTyped, Dict[str, object]
 ]
 
@@ -190,7 +190,9 @@ class MessageAssistantMessageRequestToolCallTyped(TypedDict, total=False):
     type: Required[Literal["function"]]
 
 
-MessageAssistantMessageRequestToolCall = Union[MessageAssistantMessageRequestToolCallTyped, Dict[str, object]]
+MessageAssistantMessageRequestToolCall: TypeAlias = Union[
+    MessageAssistantMessageRequestToolCallTyped, Dict[str, object]
+]
 
 
 class MessageAssistantMessageRequestTyped(TypedDict, total=False):
@@ -203,30 +205,30 @@ class MessageAssistantMessageRequestTyped(TypedDict, total=False):
     tool_calls: Optional[Iterable[MessageAssistantMessageRequestToolCall]]
 
 
-MessageAssistantMessageRequest = Union[MessageAssistantMessageRequestTyped, Dict[str, object]]
+MessageAssistantMessageRequest: TypeAlias = Union[MessageAssistantMessageRequestTyped, Dict[str, object]]
 
-Message = Union[MessageSystemMessageRequest, MessageUserMessageRequest, MessageAssistantMessageRequest]
+Message: TypeAlias = Union[MessageSystemMessageRequest, MessageUserMessageRequest, MessageAssistantMessageRequest]
 
 
 class ResponseFormatTyped(TypedDict, total=False):
     type: Optional[Literal["text", "json_object"]]
 
 
-ResponseFormat = Union[ResponseFormatTyped, Dict[str, object]]
+ResponseFormat: TypeAlias = Union[ResponseFormatTyped, Dict[str, object]]
 
 
 class StreamOptionsTyped(TypedDict, total=False):
     include_usage: Optional[bool]
 
 
-StreamOptions = Union[StreamOptionsTyped, Dict[str, object]]
+StreamOptions: TypeAlias = Union[StreamOptionsTyped, Dict[str, object]]
 
 
 class ToolChoiceChoiceObjectFunctionTyped(TypedDict, total=False):
     name: Required[str]
 
 
-ToolChoiceChoiceObjectFunction = Union[ToolChoiceChoiceObjectFunctionTyped, Dict[str, object]]
+ToolChoiceChoiceObjectFunction: TypeAlias = Union[ToolChoiceChoiceObjectFunctionTyped, Dict[str, object]]
 
 
 class ToolChoiceChoiceObjectTyped(TypedDict, total=False):
@@ -235,9 +237,9 @@ class ToolChoiceChoiceObjectTyped(TypedDict, total=False):
     type: Required[str]
 
 
-ToolChoiceChoiceObject = Union[ToolChoiceChoiceObjectTyped, Dict[str, object]]
+ToolChoiceChoiceObject: TypeAlias = Union[ToolChoiceChoiceObjectTyped, Dict[str, object]]
 
-ToolChoice = Union[Literal["none", "auto", "required"], ToolChoiceChoiceObject]
+ToolChoice: TypeAlias = Union[Literal["none", "auto", "required"], ToolChoiceChoiceObject]
 
 
 class ToolFunctionTyped(TypedDict, total=False):
@@ -253,7 +255,7 @@ class ToolFunctionTyped(TypedDict, total=False):
     """
 
 
-ToolFunction = Union[ToolFunctionTyped, Dict[str, object]]
+ToolFunction: TypeAlias = Union[ToolFunctionTyped, Dict[str, object]]
 
 
 class ToolTyped(TypedDict, total=False):
@@ -262,4 +264,4 @@ class ToolTyped(TypedDict, total=False):
     type: Required[str]
 
 
-Tool = Union[ToolTyped, Dict[str, object]]
+Tool: TypeAlias = Union[ToolTyped, Dict[str, object]]

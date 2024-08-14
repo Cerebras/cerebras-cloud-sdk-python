@@ -2,7 +2,7 @@
 
 import builtins
 from typing import TYPE_CHECKING, List, Union, Optional
-from typing_extensions import Literal
+from typing_extensions import Literal, TypeAlias
 
 from ..._models import BaseModel
 from .chat_completion import ChatCompletion
@@ -33,8 +33,7 @@ class ChatChunkResponseChoiceDeltaToolCallFunction(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object:
-            ...
+        def __getattr__(self, attr: str) -> object: ...
 
 
 class ChatChunkResponseChoiceDeltaToolCall(BaseModel):
@@ -50,8 +49,7 @@ class ChatChunkResponseChoiceDeltaToolCall(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object:
-            ...
+        def __getattr__(self, attr: str) -> object: ...
 
 
 class ChatChunkResponseChoiceDelta(BaseModel):
@@ -65,8 +63,7 @@ class ChatChunkResponseChoiceDelta(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object:
-            ...
+        def __getattr__(self, attr: str) -> object: ...
 
 
 class ChatChunkResponseChoiceLogprobsContentTopLogprobs(BaseModel):
@@ -80,8 +77,7 @@ class ChatChunkResponseChoiceLogprobsContentTopLogprobs(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object:
-            ...
+        def __getattr__(self, attr: str) -> object: ...
 
 
 class ChatChunkResponseChoiceLogprobsContent(BaseModel):
@@ -97,8 +93,7 @@ class ChatChunkResponseChoiceLogprobsContent(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object:
-            ...
+        def __getattr__(self, attr: str) -> object: ...
 
 
 class ChatChunkResponseChoiceLogprobs(BaseModel):
@@ -108,8 +103,7 @@ class ChatChunkResponseChoiceLogprobs(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object:
-            ...
+        def __getattr__(self, attr: str) -> object: ...
 
 
 class ChatChunkResponseChoice(BaseModel):
@@ -125,8 +119,7 @@ class ChatChunkResponseChoice(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object:
-            ...
+        def __getattr__(self, attr: str) -> object: ...
 
 
 class ChatChunkResponseTimeInfo(BaseModel):
@@ -142,8 +135,7 @@ class ChatChunkResponseTimeInfo(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object:
-            ...
+        def __getattr__(self, attr: str) -> object: ...
 
 
 class ChatChunkResponseUsage(BaseModel):
@@ -157,8 +149,7 @@ class ChatChunkResponseUsage(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object:
-            ...
+        def __getattr__(self, attr: str) -> object: ...
 
 
 class ChatChunkResponse(BaseModel):
@@ -184,8 +175,7 @@ class ChatChunkResponse(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> builtins.object:
-            ...
+        def __getattr__(self, attr: str) -> builtins.object: ...
 
 
 class ErrorChunkResponseError(BaseModel):
@@ -201,8 +191,7 @@ class ErrorChunkResponseError(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object:
-            ...
+        def __getattr__(self, attr: str) -> object: ...
 
 
 class ErrorChunkResponse(BaseModel):
@@ -214,8 +203,7 @@ class ErrorChunkResponse(BaseModel):
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
         # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object:
-            ...
+        def __getattr__(self, attr: str) -> object: ...
 
 
-CompletionCreateResponse = Union[ChatCompletion, ChatChunkResponse, ErrorChunkResponse]
+CompletionCreateResponse: TypeAlias = Union[ChatCompletion, ChatChunkResponse, ErrorChunkResponse]
