@@ -40,6 +40,7 @@ export CEREBRAS_API_KEY="your-api-key-here"
 
 The full API of this library can be found in [api.md](api.md).
 
+<!-- RUN TEST: Standard -->
 ```python
 import os
 from cerebras.cloud.sdk import Cerebras
@@ -71,6 +72,7 @@ so that your API Key is not stored in source control.
 
 Simply import `AsyncCerebras` instead of `Cerebras` and use `await` with each API call:
 
+<!-- RUN TEST: Async -->
 ```python
 import os
 import asyncio
@@ -104,6 +106,7 @@ We provide support for streaming responses using Server Side Events (SSE).
 
 Note that when streaming, `usage` and `time_info` will be information will only be included in the final chunk.
 
+<!-- RUN TEST: Streaming -->
 ```python
 import os
 from cerebras.cloud.sdk import Cerebras
@@ -130,6 +133,7 @@ for chunk in stream:
 
 The async client uses the exact same interface.
 
+<!-- RUN TEST: AsyncStreaming -->
 ```python
 import os
 import asyncio
@@ -175,6 +179,7 @@ response), a subclass of `cerebras.cloud.sdk.APIStatusError` is raised, containi
 
 All errors inherit from `cerebras.cloud.sdk.APIError`.
 
+<!-- RUN TEST: Error -->
 ```python
 import cerebras.cloud.sdk
 from cerebras.cloud.sdk import Cerebras
@@ -223,6 +228,7 @@ Connection errors (for example, due to a network connectivity problem), 408 Requ
 
 You can use the `max_retries` option to configure or disable retry settings:
 
+<!-- RUN TEST: Retries -->
 ```python
 from cerebras.cloud.sdk import Cerebras
 
@@ -249,8 +255,10 @@ client.with_options(max_retries=5).chat.completions.create(
 By default requests time out after 1 minute. You can configure this with a `timeout` option,
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/#fine-tuning-the-configuration) object:
 
+<!-- RUN TEST: Timeout -->
 ```python
 from cerebras.cloud.sdk import Cerebras
+import httpx
 
 # Configure the default for all requests:
 client = Cerebras(
@@ -307,6 +315,7 @@ if response.my_field is None:
 
 The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
 
+<!-- RUN TEST: Advanced -->
 ```py
 from cerebras.cloud.sdk import Cerebras
 

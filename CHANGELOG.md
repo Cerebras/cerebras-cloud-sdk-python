@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.7.0 (2024-08-21)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **api:** Tool calling ([#195](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/195)) ([0b99084](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/0b9908473c8b7d346937ca849bff495e9500ed58))
+* **api:** Tool calling ([#199](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/199)) ([3ea9972](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/3ea9972b9ea244f9095d4fe9582148a956526484))
+* **api:** Tool calling ([#202](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/202)) ([40d4d6d](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/40d4d6d3c435334762d4ab78b0991e9c75b17910))
+
+
+### Chores
+
+* **client:** fix parsing union responses when non-json is returned ([#198](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/198)) ([1249007](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/12490079549796af3be4f8109c2f7f318c528ac8))
+* **internal:** codegen related update ([#197](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/197)) ([1b63a4d](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/1b63a4d093ae455af5a7da5560f8b7aeee990e6f))
+
 ## 0.6.0 (2024-08-14)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v0.5.0...v0.6.0)

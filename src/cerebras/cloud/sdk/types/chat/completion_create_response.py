@@ -55,7 +55,7 @@ class ChatChunkResponseChoiceDeltaToolCall(BaseModel):
 class ChatChunkResponseChoiceDelta(BaseModel):
     content: Optional[str] = None
 
-    role: Optional[Literal["assistant"]] = None
+    role: Optional[Literal["assistant", "user", "system", "tool"]] = None
 
     tool_calls: Optional[List[ChatChunkResponseChoiceDeltaToolCall]] = None
 

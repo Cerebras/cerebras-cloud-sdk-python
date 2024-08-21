@@ -47,7 +47,7 @@ class ChoiceMessageToolCall(BaseModel):
 
 
 class ChoiceMessage(BaseModel):
-    role: Literal["assistant"]
+    role: Literal["assistant", "user", "system", "tool"]
 
     content: Optional[str] = None
 

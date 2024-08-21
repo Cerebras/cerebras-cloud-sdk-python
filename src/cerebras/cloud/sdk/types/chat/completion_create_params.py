@@ -16,6 +16,7 @@ __all__ = [
     "MessageAssistantMessageRequest",
     "MessageAssistantMessageRequestToolCall",
     "MessageAssistantMessageRequestToolCallFunction",
+    "MessageToolMessageRequest",
     "ResponseFormat",
     "StreamOptions",
     "ToolChoice",
@@ -207,7 +208,22 @@ class MessageAssistantMessageRequestTyped(TypedDict, total=False):
 
 MessageAssistantMessageRequest: TypeAlias = Union[MessageAssistantMessageRequestTyped, Dict[str, object]]
 
-Message: TypeAlias = Union[MessageSystemMessageRequest, MessageUserMessageRequest, MessageAssistantMessageRequest]
+
+class MessageToolMessageRequestTyped(TypedDict, total=False):
+    content: Required[str]
+
+    role: Required[Literal["tool"]]
+
+    tool_call_id: Required[str]
+
+    name: Optional[str]
+
+
+MessageToolMessageRequest: TypeAlias = Union[MessageToolMessageRequestTyped, Dict[str, object]]
+
+Message: TypeAlias = Union[
+    MessageSystemMessageRequest, MessageUserMessageRequest, MessageAssistantMessageRequest, MessageToolMessageRequest
+]
 
 
 class ResponseFormatTyped(TypedDict, total=False):
