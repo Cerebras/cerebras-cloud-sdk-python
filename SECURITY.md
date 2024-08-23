@@ -20,7 +20,7 @@ or products provided by Cerebras please follow the respective company's security
 
 ### Cerebras Terms and Policies
 
-Please contact inference-beta-feedback@cerebras.net for any questions or concerns regarding security of our services.
+Please contact support@cerebras.ai for any questions or concerns regarding security of our services.
 
 ---
 

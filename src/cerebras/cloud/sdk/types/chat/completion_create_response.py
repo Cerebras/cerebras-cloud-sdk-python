@@ -157,7 +157,7 @@ class ChatChunkResponse(BaseModel):
 
     created: int
 
-    model: Literal["llama3.1-8b", "llama3.1-70b"]
+    model: str
 
     object: Literal["chat.completion.chunk"]
 

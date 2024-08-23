@@ -779,7 +779,7 @@ class TestCerebras:
                     "role": "system",
                 }
             ],
-            model="llama3.1-8b",
+            model="model",
         )
 
         assert response.retries_taken == failures_before_success
@@ -1531,7 +1531,7 @@ class TestAsyncCerebras:
                     "role": "system",
                 }
             ],
-            model="llama3.1-8b",
+            model="model",
         )
 
         assert response.retries_taken == failures_before_success

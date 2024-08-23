@@ -26,7 +26,7 @@ class TestCompletions:
                     "role": "system",
                 }
             ],
-            model="llama3.1-8b",
+            model="model",
         )
         assert_matches_type(CompletionCreateResponse, completion, path=["response"])
 
@@ -40,7 +40,7 @@ class TestCompletions:
                     "name": "name",
                 }
             ],
-            model="llama3.1-8b",
+            model="model",
             frequency_penalty=-2,
             logit_bias={},
             logprobs=True,
@@ -99,7 +99,7 @@ class TestCompletions:
                     "role": "system",
                 }
             ],
-            model="llama3.1-8b",
+            model="model",
         )
 
         assert response.is_closed is True
@@ -116,7 +116,7 @@ class TestCompletions:
                     "role": "system",
                 }
             ],
-            model="llama3.1-8b",
+            model="model",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -139,7 +139,7 @@ class TestAsyncCompletions:
                     "role": "system",
                 }
             ],
-            model="llama3.1-8b",
+            model="model",
         )
         assert_matches_type(CompletionCreateResponse, completion, path=["response"])
 
@@ -153,7 +153,7 @@ class TestAsyncCompletions:
                     "name": "name",
                 }
             ],
-            model="llama3.1-8b",
+            model="model",
             frequency_penalty=-2,
             logit_bias={},
             logprobs=True,
@@ -212,7 +212,7 @@ class TestAsyncCompletions:
                     "role": "system",
                 }
             ],
-            model="llama3.1-8b",
+            model="model",
         )
 
         assert response.is_closed is True
@@ -229,7 +229,7 @@ class TestAsyncCompletions:
                     "role": "system",
                 }
             ],
-            model="llama3.1-8b",
+            model="model",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

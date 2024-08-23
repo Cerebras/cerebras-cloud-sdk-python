@@ -30,7 +30,7 @@ __all__ = [
 class CompletionCreateParams(TypedDict, total=False):
     messages: Required[Iterable[Message]]
 
-    model: Required[Literal["llama3.1-8b", "llama3.1-70b"]]
+    model: Required[str]
 
     frequency_penalty: Optional[float]
     """Number between -2.0 and 2.0.

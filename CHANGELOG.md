@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.8.0 (2024-08-23)
+
+Full Changelog: [v0.7.0...v0.8.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v0.7.0...v0.8.0)
+
+### Chores
+
+* **internal:** codegen changes ([#206](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/206)) ([2f89cad](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/2f89cad533272f78ee04d8c4078fc82e765cd933))
+* **internal:** codegen changes ([#208](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/208)) ([3ab240b](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/3ab240b049c6ececf6aada81bd841946cb962df4))
+
 ## 0.7.0 (2024-08-21)
 
 Full Changelog: [v0.6.0...v0.7.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v0.6.0...v0.7.0)
