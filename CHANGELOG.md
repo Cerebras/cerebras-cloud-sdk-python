@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.0 (2024-08-25)
+
+Full Changelog: [v0.8.0...v1.0.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v0.8.0...v1.0.0)
+
+### Features
+
+* Update pyproject.toml ([#216](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/216)) ([e19903c](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/e19903ca6a476180c37ce950d71a922cf57a42d7))
+
 ## 0.8.0 (2024-08-23)
 
 Full Changelog: [v0.7.0...v0.8.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v0.7.0...v0.8.0)
