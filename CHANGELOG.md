@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.1.0 (2024-09-04)
+
+Full Changelog: [v1.0.0...v1.1.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.0.0...v1.1.0)
+
+### Features
+
+* **api:** Add models endpoint ([#220](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/220)) ([dfc5bc5](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/dfc5bc5fd64fdff791fe4859f794e4d0a7c66048))
+* **api:** Models endpoint ([#222](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/222)) ([a671096](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/a67109691a90ad13f0fab8a21564d6feacde5f60))
+* **api:** Update models endpoint ([#223](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/223)) ([5213258](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/52132588d223275a8c6ca3818a6164051888e54e))
+
+
+### Chores
+
+* pyproject.toml formatting changes ([#224](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/224)) ([6efa88f](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/6efa88fe72945468b577923f4a170f2d32aaa0d6))
+
 ## 1.0.0 (2024-08-25)
 
 Full Changelog: [v0.8.0...v1.0.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v0.8.0...v1.0.0)

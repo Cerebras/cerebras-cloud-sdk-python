@@ -48,6 +48,7 @@ __all__ = [
 
 class Cerebras(SyncAPIClient):
     chat: resources.ChatResource
+    models: resources.ModelsResource
     with_raw_response: CerebrasWithRawResponse
     with_streaming_response: CerebrasWithStreamedResponse
 
@@ -106,6 +107,7 @@ class Cerebras(SyncAPIClient):
         )
 
         self.chat = resources.ChatResource(self)
+        self.models = resources.ModelsResource(self)
         self.with_raw_response = CerebrasWithRawResponse(self)
         self.with_streaming_response = CerebrasWithStreamedResponse(self)
 
@@ -222,6 +224,7 @@ class Cerebras(SyncAPIClient):
 
 class AsyncCerebras(AsyncAPIClient):
     chat: resources.AsyncChatResource
+    models: resources.AsyncModelsResource
     with_raw_response: AsyncCerebrasWithRawResponse
     with_streaming_response: AsyncCerebrasWithStreamedResponse
 
@@ -280,6 +283,7 @@ class AsyncCerebras(AsyncAPIClient):
         )
 
         self.chat = resources.AsyncChatResource(self)
+        self.models = resources.AsyncModelsResource(self)
         self.with_raw_response = AsyncCerebrasWithRawResponse(self)
         self.with_streaming_response = AsyncCerebrasWithStreamedResponse(self)
 
@@ -397,21 +401,25 @@ class AsyncCerebras(AsyncAPIClient):
 class CerebrasWithRawResponse:
     def __init__(self, client: Cerebras) -> None:
         self.chat = resources.ChatResourceWithRawResponse(client.chat)
+        self.models = resources.ModelsResourceWithRawResponse(client.models)
 
 
 class AsyncCerebrasWithRawResponse:
     def __init__(self, client: AsyncCerebras) -> None:
         self.chat = resources.AsyncChatResourceWithRawResponse(client.chat)
+        self.models = resources.AsyncModelsResourceWithRawResponse(client.models)
 
 
 class CerebrasWithStreamedResponse:
     def __init__(self, client: Cerebras) -> None:
         self.chat = resources.ChatResourceWithStreamingResponse(client.chat)
+        self.models = resources.ModelsResourceWithStreamingResponse(client.models)
 
 
 class AsyncCerebrasWithStreamedResponse:
     def __init__(self, client: AsyncCerebras) -> None:
         self.chat = resources.AsyncChatResourceWithStreamingResponse(client.chat)
+        self.models = resources.AsyncModelsResourceWithStreamingResponse(client.models)
 
 
 Client = Cerebras
