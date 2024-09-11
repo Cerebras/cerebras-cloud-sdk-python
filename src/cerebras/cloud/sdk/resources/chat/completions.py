@@ -33,10 +33,21 @@ __all__ = ["CompletionsResource", "AsyncCompletionsResource"]
 class CompletionsResource(SyncAPIResource):
     @cached_property
     def with_raw_response(self) -> CompletionsResourceWithRawResponse:
+        """
+        This property can be used as a prefix for any HTTP method call to return the
+        the raw response object instead of the parsed content.
+
+        For more information, see https://www.github.com/Cerebras/cerebras-cloud-sdk-python-private#accessing-raw-response-data-eg-headers
+        """
         return CompletionsResourceWithRawResponse(self)
 
     @cached_property
     def with_streaming_response(self) -> CompletionsResourceWithStreamingResponse:
+        """
+        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
+
+        For more information, see https://www.github.com/Cerebras/cerebras-cloud-sdk-python-private#with_streaming_response
+        """
         return CompletionsResourceWithStreamingResponse(self)
 
     def create(
@@ -192,10 +203,21 @@ class CompletionsResource(SyncAPIResource):
 class AsyncCompletionsResource(AsyncAPIResource):
     @cached_property
     def with_raw_response(self) -> AsyncCompletionsResourceWithRawResponse:
+        """
+        This property can be used as a prefix for any HTTP method call to return the
+        the raw response object instead of the parsed content.
+
+        For more information, see https://www.github.com/Cerebras/cerebras-cloud-sdk-python-private#accessing-raw-response-data-eg-headers
+        """
         return AsyncCompletionsResourceWithRawResponse(self)
 
     @cached_property
     def with_streaming_response(self) -> AsyncCompletionsResourceWithStreamingResponse:
+        """
+        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
+
+        For more information, see https://www.github.com/Cerebras/cerebras-cloud-sdk-python-private#with_streaming_response
+        """
         return AsyncCompletionsResourceWithStreamingResponse(self)
 
     async def create(

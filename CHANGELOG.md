@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.2.0 (2024-09-11)
+
+Full Changelog: [v1.1.0...v1.2.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.1.0...v1.2.0)
+
+### Chores
+
+* add docstrings to raw response properties ([#227](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/227)) ([216dba5](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/216dba54bcbf4b4923fc32fdfdf35017ce524c97))
+
+
+### Documentation
+
+* **readme:** add section on determining installed version ([#228](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/228)) ([6d288ab](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/6d288ab1e2013865303f3cbb24d72e342f48e0dd))
+
 ## 1.1.0 (2024-09-04)
 
 Full Changelog: [v1.0.0...v1.1.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.0.0...v1.1.0)

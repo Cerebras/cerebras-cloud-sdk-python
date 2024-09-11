@@ -23,10 +23,21 @@ class ChatResource(SyncAPIResource):
 
     @cached_property
     def with_raw_response(self) -> ChatResourceWithRawResponse:
+        """
+        This property can be used as a prefix for any HTTP method call to return the
+        the raw response object instead of the parsed content.
+
+        For more information, see https://www.github.com/Cerebras/cerebras-cloud-sdk-python-private#accessing-raw-response-data-eg-headers
+        """
         return ChatResourceWithRawResponse(self)
 
     @cached_property
     def with_streaming_response(self) -> ChatResourceWithStreamingResponse:
+        """
+        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
+
+        For more information, see https://www.github.com/Cerebras/cerebras-cloud-sdk-python-private#with_streaming_response
+        """
         return ChatResourceWithStreamingResponse(self)
 
 
@@ -37,10 +48,21 @@ class AsyncChatResource(AsyncAPIResource):
 
     @cached_property
     def with_raw_response(self) -> AsyncChatResourceWithRawResponse:
+        """
+        This property can be used as a prefix for any HTTP method call to return the
+        the raw response object instead of the parsed content.
+
+        For more information, see https://www.github.com/Cerebras/cerebras-cloud-sdk-python-private#accessing-raw-response-data-eg-headers
+        """
         return AsyncChatResourceWithRawResponse(self)
 
     @cached_property
     def with_streaming_response(self) -> AsyncChatResourceWithStreamingResponse:
+        """
+        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
+
+        For more information, see https://www.github.com/Cerebras/cerebras-cloud-sdk-python-private#with_streaming_response
+        """
         return AsyncChatResourceWithStreamingResponse(self)
 
 
