@@ -50,7 +50,7 @@ client = Cerebras(
     api_key=os.environ.get("CEREBRAS_API_KEY"),
 )
 
-completion_create_response = client.chat.completions.create(
+completion = client.chat.completions.create(
     messages=[
         {
             "role": "user",
@@ -60,7 +60,7 @@ completion_create_response = client.chat.completions.create(
     model="llama3.1-8b",
 )
 
-print(completion_create_response)
+print(completion)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -84,7 +84,7 @@ client = AsyncCerebras(
 )
 
 async def main() -> None:
-    completion_create_response = await client.chat.completions.create(
+    completion = await client.chat.completions.create(
         messages=[
             {
                 "role": "user",
@@ -93,7 +93,7 @@ async def main() -> None:
         ],
         model="llama3.1-8b",
     )
-    print(completion_create_response)
+    print(completion)
 
 asyncio.run(main())
 ```
