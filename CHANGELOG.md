@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.3.0 (2024-09-18)
+
+Full Changelog: [v1.2.0...v1.3.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.2.0...v1.3.0)
+
+### Chores
+
+* **internal:** bump pyright / mypy version ([#241](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/241)) ([0bb7b7f](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/0bb7b7f3ee11f182dda66a81f8bd71c26565bedf))
+* **internal:** bump ruff ([#240](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/240)) ([cb6c95a](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/cb6c95a6dada4f1d58d911425c70ed7fac5fc36a))
+
+
+### Documentation
+
+* update CONTRIBUTING.md ([#238](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/238)) ([8c911ab](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/8c911aba5df4ecbedfdbe6b37f922cc15e73b18f))
+
 ## 1.2.0 (2024-09-11)
 
 Full Changelog: [v1.2.0...v1.2.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.2.0...v1.2.0)
