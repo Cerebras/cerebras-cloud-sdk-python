@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.4.0 (2024-09-25)
+
+Full Changelog: [v1.3.0...v1.4.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.3.0...v1.4.0)
+
+### Chores
+
+* **internal:** codegen related update ([#243](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/243)) ([1d0fd1e](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/1d0fd1ea893cc562afc9c867d7e7b685a0b55be9))
+* **internal:** codegen related update ([#246](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/246)) ([0a6f0cb](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/0a6f0cba1de5aadb0306ff65c0bf2ff9b031efe6))
+* **internal:** update pydantic v1 compat helpers ([#245](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/245)) ([5f021c6](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/5f021c69e8fa1f316551b707dd96c3a91342d43d))
+
 ## 1.3.0 (2024-09-18)
 
 Full Changelog: [v1.2.0...v1.3.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.2.0...v1.3.0)
