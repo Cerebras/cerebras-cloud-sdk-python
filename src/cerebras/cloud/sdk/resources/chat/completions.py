@@ -58,6 +58,7 @@ class CompletionsResource(SyncAPIResource):
         frequency_penalty: Optional[float] | NotGiven = NOT_GIVEN,
         logit_bias: Optional[object] | NotGiven = NOT_GIVEN,
         logprobs: Optional[bool] | NotGiven = NOT_GIVEN,
+        max_completion_tokens: Optional[int] | NotGiven = NOT_GIVEN,
         max_tokens: Optional[int] | NotGiven = NOT_GIVEN,
         n: Optional[int] | NotGiven = NOT_GIVEN,
         parallel_tool_calls: Optional[bool] | NotGiven = NOT_GIVEN,
@@ -105,9 +106,12 @@ class CompletionsResource(SyncAPIResource):
               returns the log probabilities of each output token returned in the content of
               message.
 
+          max_completion_tokens: An upper bound for the number of tokens that can be generated for a completion,
+              including visible output tokens and reasoning tokens.
+
           max_tokens: The maximum number of tokens that can be generated in the chat completion. The
               total length of input tokens and generated tokens is limited by the model's
-              context length.
+              context length. This value is now deprecated in favor of max_completion_tokens.
 
           n: How many chat completion choices to generate for each input message. Note that
               you will be charged based on the number of generated tokens across all of the
@@ -169,6 +173,7 @@ class CompletionsResource(SyncAPIResource):
                         "frequency_penalty": frequency_penalty,
                         "logit_bias": logit_bias,
                         "logprobs": logprobs,
+                        "max_completion_tokens": max_completion_tokens,
                         "max_tokens": max_tokens,
                         "n": n,
                         "parallel_tool_calls": parallel_tool_calls,
@@ -228,6 +233,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
         frequency_penalty: Optional[float] | NotGiven = NOT_GIVEN,
         logit_bias: Optional[object] | NotGiven = NOT_GIVEN,
         logprobs: Optional[bool] | NotGiven = NOT_GIVEN,
+        max_completion_tokens: Optional[int] | NotGiven = NOT_GIVEN,
         max_tokens: Optional[int] | NotGiven = NOT_GIVEN,
         n: Optional[int] | NotGiven = NOT_GIVEN,
         parallel_tool_calls: Optional[bool] | NotGiven = NOT_GIVEN,
@@ -275,9 +281,12 @@ class AsyncCompletionsResource(AsyncAPIResource):
               returns the log probabilities of each output token returned in the content of
               message.
 
+          max_completion_tokens: An upper bound for the number of tokens that can be generated for a completion,
+              including visible output tokens and reasoning tokens.
+
           max_tokens: The maximum number of tokens that can be generated in the chat completion. The
               total length of input tokens and generated tokens is limited by the model's
-              context length.
+              context length. This value is now deprecated in favor of max_completion_tokens.
 
           n: How many chat completion choices to generate for each input message. Note that
               you will be charged based on the number of generated tokens across all of the
@@ -339,6 +348,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
                         "frequency_penalty": frequency_penalty,
                         "logit_bias": logit_bias,
                         "logprobs": logprobs,
+                        "max_completion_tokens": max_completion_tokens,
                         "max_tokens": max_tokens,
                         "n": n,
                         "parallel_tool_calls": parallel_tool_calls,
