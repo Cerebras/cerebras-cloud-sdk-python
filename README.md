@@ -23,7 +23,7 @@ Want to experience the power of Cerebras? Check out our [website](https://cerebr
 
 ## Documentation
 
-The REST API documentation can be found on [inference-docs.cerebras.ai](https://inference-docs.cerebras.ai). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [inference-docs.cerebras.ai](https://inference-docs.cerebras.ai/). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 ```
@@ -83,6 +83,7 @@ client = AsyncCerebras(
     api_key=os.environ.get("CEREBRAS_API_KEY"),
 )
 
+
 async def main() -> None:
     completion = await client.chat.completions.create(
         messages=[
@@ -94,6 +95,7 @@ async def main() -> None:
         model="llama3.1-8b",
     )
     print(completion)
+
 
 asyncio.run(main())
 ```
@@ -144,6 +146,7 @@ client = AsyncCerebras(
     api_key=os.environ.get("CEREBRAS_API_KEY"),
 )
 
+
 async def main() -> None:
     stream = await client.chat.completions.create(
         messages=[
@@ -157,6 +160,7 @@ async def main() -> None:
     )
     async for chunk in stream:
         print(chunk.choices[0].delta.content or "", end="")
+
 
 asyncio.run(main())
 ```

@@ -231,6 +231,12 @@ class TestCerebras:
                         "cerebras/cloud/sdk/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
+                        # Mystery "leak" that appears when making request in constructor.
+                        "httpx/_client.py",
+                        "httpx/_models.py",
+                        "httpx/_urlparse.py",
+                        "httpx/_base_client.py",
+                        "sdk/_base_client.py",
                     ]
                 ):
                     return
@@ -1031,6 +1037,12 @@ class TestAsyncCerebras:
                         "cerebras/cloud/sdk/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
+                        # Mystery "leak" that appears when making request in constructor.
+                        "httpx/_client.py",
+                        "httpx/_models.py",
+                        "httpx/_urlparse.py",
+                        "httpx/_base_client.py",
+                        "sdk/_base_client.py",
                     ]
                 ):
                     return

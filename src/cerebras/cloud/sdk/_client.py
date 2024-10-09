@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import logging
 from typing import Any, Union, Mapping
 from typing_extensions import Self, override
 
@@ -45,6 +46,8 @@ __all__ = [
     "AsyncClient",
 ]
 
+log: logging.Logger = logging.getLogger(__name__)
+
 
 class Cerebras(SyncAPIClient):
     chat: resources.ChatResource
@@ -77,6 +80,7 @@ class Cerebras(SyncAPIClient):
         # outlining your use-case to help us decide if it should be
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
+        warm_tcp_connection: bool = True,
     ) -> None:
         """Construct a new synchronous cerebras client instance.
 
@@ -111,6 +115,13 @@ class Cerebras(SyncAPIClient):
         self.with_raw_response = CerebrasWithRawResponse(self)
         self.with_streaming_response = CerebrasWithStreamedResponse(self)
 
+        if warm_tcp_connection:
+            try:
+                for _ in range(5):
+                    self.models.list(timeout=1)
+            except Exception as e:
+                log.debug(f"TCP Warming had exception: {e}")
+
     @property
     @override
     def qs(self) -> Querystring:
@@ -143,6 +154,7 @@ class Cerebras(SyncAPIClient):
         set_default_headers: Mapping[str, str] | None = None,
         default_query: Mapping[str, object] | None = None,
         set_default_query: Mapping[str, object] | None = None,
+        warm_tcp_connection: bool = True,
         _extra_kwargs: Mapping[str, Any] = {},
     ) -> Self:
         """
@@ -175,6 +187,7 @@ class Cerebras(SyncAPIClient):
             max_retries=max_retries if is_given(max_retries) else self.max_retries,
             default_headers=headers,
             default_query=params,
+            warm_tcp_connection=warm_tcp_connection,
             **_extra_kwargs,
         )
 
@@ -253,6 +266,7 @@ class AsyncCerebras(AsyncAPIClient):
         # outlining your use-case to help us decide if it should be
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
+        warm_tcp_connection: bool = True,
     ) -> None:
         """Construct a new async cerebras client instance.
 
@@ -287,6 +301,10 @@ class AsyncCerebras(AsyncAPIClient):
         self.with_raw_response = AsyncCerebrasWithRawResponse(self)
         self.with_streaming_response = AsyncCerebrasWithStreamedResponse(self)
 
+        if warm_tcp_connection:
+            # Sync client will warm up the connection, then terminate.
+            Cerebras(base_url=base_url, api_key=api_key).close()
+
     @property
     @override
     def qs(self) -> Querystring:
@@ -320,6 +338,7 @@ class AsyncCerebras(AsyncAPIClient):
         default_query: Mapping[str, object] | None = None,
         set_default_query: Mapping[str, object] | None = None,
         _extra_kwargs: Mapping[str, Any] = {},
+        warm_tcp_connection: bool = True,
     ) -> Self:
         """
         Create a new client instance re-using the same options given to the current client with optional overriding.
@@ -351,6 +370,7 @@ class AsyncCerebras(AsyncAPIClient):
             max_retries=max_retries if is_given(max_retries) else self.max_retries,
             default_headers=headers,
             default_query=params,
+            warm_tcp_connection=warm_tcp_connection,
             **_extra_kwargs,
         )
 

@@ -68,11 +68,7 @@ class Stream(Generic[_T]):
                     if not message or not isinstance(message, str):
                         message = "An error occurred during streaming"
 
-                    raise self._client._make_status_error(
-                        message,
-                        body=data,
-                        response=response
-                    )
+                    raise self._client._make_status_error(message, body=data, response=response)
 
                 yield process_data(data=data, cast_to=cast_to, response=response)
 
@@ -87,11 +83,7 @@ class Stream(Generic[_T]):
                     if not message or not isinstance(message, str):
                         message = "An error occurred during streaming"
 
-                    raise self._client._make_status_error(
-                        message,
-                        body=data,
-                        response=response
-                    )
+                    raise self._client._make_status_error(message, body=data, response=response)
 
                 yield process_data(data={"data": data, "event": sse.event}, cast_to=cast_to, response=response)
 
@@ -170,11 +162,7 @@ class AsyncStream(Generic[_T]):
                     if not message or not isinstance(message, str):
                         message = "An error occurred during streaming"
 
-                    raise self._client._make_status_error(
-                        message,
-                        body=data,
-                        response=response
-                    )
+                    raise self._client._make_status_error(message, body=data, response=response)
 
                 yield process_data(data=data, cast_to=cast_to, response=response)
 
@@ -189,11 +177,7 @@ class AsyncStream(Generic[_T]):
                     if not message or not isinstance(message, str):
                         message = "An error occurred during streaming"
 
-                    raise self._client._make_status_error(
-                        message,
-                        body=data,
-                        response=response
-                    )
+                    raise self._client._make_status_error(message, body=data, response=response)
 
                 yield process_data(data={"data": data, "event": sse.event}, cast_to=cast_to, response=response)
 
