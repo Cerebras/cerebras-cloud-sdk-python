@@ -41,9 +41,9 @@ class ChatChunkResponseChoiceDeltaToolCall(BaseModel):
 
     function: ChatChunkResponseChoiceDeltaToolCallFunction
 
-    index: int
-
     type: Literal["function"]
+
+    index: Optional[int] = None
 
     if TYPE_CHECKING:
         # Stub to indicate that arbitrary properties are accepted.
