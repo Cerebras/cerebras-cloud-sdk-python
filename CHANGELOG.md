@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.8.0 (2024-10-23)
+
+Full Changelog: [v1.7.0...v1.8.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.7.0...v1.8.0)
+
+### Features
+
+* **api:** api update ([#259](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/259)) ([9813750](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/9813750bfe413d5be1b3c7dbe60b6b414d626b93))
+
 ## 1.7.0 (2024-10-16)
 
 Full Changelog: [v1.6.0...v1.7.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.6.0...v1.7.0)
