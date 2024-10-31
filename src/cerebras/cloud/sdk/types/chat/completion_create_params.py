@@ -70,6 +70,20 @@ class CompletionCreateParams(TypedDict, total=False):
     context length. This value is now deprecated in favor of max_completion_tokens.
     """
 
+    min_completion_tokens: Optional[int]
+    """The minimum number of tokens to generate for a completion.
+
+    If not specified or set to 0, the model will generate as many tokens as it deems
+    necessary. Setting to -1 sets to max sequence length.
+    """
+
+    min_tokens: Optional[int]
+    """The minimum number of tokens to generate for a completion.
+
+    If not specified or set to 0, the model will generate as many tokens as it deems
+    necessary. Setting to -1 sets to max sequence length.
+    """
+
     n: Optional[int]
     """How many chat completion choices to generate for each input message.
 

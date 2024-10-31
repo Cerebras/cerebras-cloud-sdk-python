@@ -60,6 +60,8 @@ class CompletionsResource(SyncAPIResource):
         logprobs: Optional[bool] | NotGiven = NOT_GIVEN,
         max_completion_tokens: Optional[int] | NotGiven = NOT_GIVEN,
         max_tokens: Optional[int] | NotGiven = NOT_GIVEN,
+        min_completion_tokens: Optional[int] | NotGiven = NOT_GIVEN,
+        min_tokens: Optional[int] | NotGiven = NOT_GIVEN,
         n: Optional[int] | NotGiven = NOT_GIVEN,
         parallel_tool_calls: Optional[bool] | NotGiven = NOT_GIVEN,
         presence_penalty: Optional[float] | NotGiven = NOT_GIVEN,
@@ -112,6 +114,14 @@ class CompletionsResource(SyncAPIResource):
           max_tokens: The maximum number of tokens that can be generated in the chat completion. The
               total length of input tokens and generated tokens is limited by the model's
               context length. This value is now deprecated in favor of max_completion_tokens.
+
+          min_completion_tokens: The minimum number of tokens to generate for a completion. If not specified or
+              set to 0, the model will generate as many tokens as it deems necessary. Setting
+              to -1 sets to max sequence length.
+
+          min_tokens: The minimum number of tokens to generate for a completion. If not specified or
+              set to 0, the model will generate as many tokens as it deems necessary. Setting
+              to -1 sets to max sequence length.
 
           n: How many chat completion choices to generate for each input message. Note that
               you will be charged based on the number of generated tokens across all of the
@@ -175,6 +185,8 @@ class CompletionsResource(SyncAPIResource):
                         "logprobs": logprobs,
                         "max_completion_tokens": max_completion_tokens,
                         "max_tokens": max_tokens,
+                        "min_completion_tokens": min_completion_tokens,
+                        "min_tokens": min_tokens,
                         "n": n,
                         "parallel_tool_calls": parallel_tool_calls,
                         "presence_penalty": presence_penalty,
@@ -235,6 +247,8 @@ class AsyncCompletionsResource(AsyncAPIResource):
         logprobs: Optional[bool] | NotGiven = NOT_GIVEN,
         max_completion_tokens: Optional[int] | NotGiven = NOT_GIVEN,
         max_tokens: Optional[int] | NotGiven = NOT_GIVEN,
+        min_completion_tokens: Optional[int] | NotGiven = NOT_GIVEN,
+        min_tokens: Optional[int] | NotGiven = NOT_GIVEN,
         n: Optional[int] | NotGiven = NOT_GIVEN,
         parallel_tool_calls: Optional[bool] | NotGiven = NOT_GIVEN,
         presence_penalty: Optional[float] | NotGiven = NOT_GIVEN,
@@ -287,6 +301,14 @@ class AsyncCompletionsResource(AsyncAPIResource):
           max_tokens: The maximum number of tokens that can be generated in the chat completion. The
               total length of input tokens and generated tokens is limited by the model's
               context length. This value is now deprecated in favor of max_completion_tokens.
+
+          min_completion_tokens: The minimum number of tokens to generate for a completion. If not specified or
+              set to 0, the model will generate as many tokens as it deems necessary. Setting
+              to -1 sets to max sequence length.
+
+          min_tokens: The minimum number of tokens to generate for a completion. If not specified or
+              set to 0, the model will generate as many tokens as it deems necessary. Setting
+              to -1 sets to max sequence length.
 
           n: How many chat completion choices to generate for each input message. Note that
               you will be charged based on the number of generated tokens across all of the
@@ -350,6 +372,8 @@ class AsyncCompletionsResource(AsyncAPIResource):
                         "logprobs": logprobs,
                         "max_completion_tokens": max_completion_tokens,
                         "max_tokens": max_tokens,
+                        "min_completion_tokens": min_completion_tokens,
+                        "min_tokens": min_tokens,
                         "n": n,
                         "parallel_tool_calls": parallel_tool_calls,
                         "presence_penalty": presence_penalty,
