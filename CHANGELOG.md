@@ -1,5 +1,32 @@
 # Changelog
 
+## 1.11.0 (2024-11-11)
+
+Full Changelog: [v1.10.0...v1.11.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.10.0...v1.11.0)
+
+### Features
+
+* **api:** api update ([#262](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/262)) ([525db14](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/525db148fefb55eca8c40f555c0cb93b7cf7dbf8))
+* **api:** api update ([#281](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/281)) ([1d2abaf](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/1d2abafddc80572990c12fbc3ba8dadf8fe5561e))
+* **api:** api update ([#286](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/286)) ([211acdd](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/211acdd9f5566a90d441ea2d4cd8a8319a1335e9))
+* **api:** manual updates ([#265](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/265)) ([ed7f448](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/ed7f4486f117316eb7b84ddd6bf339d408335ed2))
+* **api:** manual updates ([#266](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/266)) ([2056e8d](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/2056e8d37ac876a4d3e78a94ff25f63a38a5df76))
+* **api:** manual updates ([#272](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/272)) ([5e53faa](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/5e53faad3b05589c042db901fb99990e99fc04ae))
+* **api:** manual updates ([#273](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/273)) ([82c3019](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/82c301939945f1606e30b02aaebd706bee97ad70))
+* **api:** manual updates ([#274](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/274)) ([cdd2645](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/cdd2645f07aa1653dde5422fd4592ce1f3940062))
+* **api:** manual updates ([#275](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/275)) ([22cf795](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/22cf7952b0819530088ae1ab0bf9e45f522d436e))
+* **api:** manual updates ([#276](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/276)) ([ed94bd2](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/ed94bd26c2bd75e617b16205a880e40f393a259c))
+* **api:** manual updates ([#277](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/277)) ([3d8c159](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/3d8c159de93d3cc595980b9224108403a4985c97))
+* **api:** manual updates ([#282](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/282)) ([83c650a](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/83c650a733a43a626b7937b92c7143f38cb98920))
+
+
+### Chores
+
+* rebuild project due to codegen change ([#267](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/267)) ([5af50ad](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/5af50addfa7a049aa7ad008d1591c3032cc69f91))
+* rebuild project due to codegen change ([#268](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/268)) ([a38d822](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/a38d82294bbf7e40201c4c888973edbf1381ae6a))
+* rebuild project due to codegen change ([#269](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/269)) ([ba92374](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/ba92374a13eca54d009e2a2de4b432a787355000))
+* rebuild project due to codegen change ([#285](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/285)) ([04484af](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/04484afd805021a922ae533679d0247dd9678731))
+
 ## 1.10.0 (2024-11-04)
 
 Full Changelog: [v1.9.0...v1.10.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.9.0...v1.10.0)
