@@ -23,7 +23,7 @@ Want to experience the power of Cerebras? Check out our [website](https://cerebr
 
 ## Documentation
 
-The REST API documentation can be found on [inference-docs.cerebras.ai](https://inference-docs.cerebras.ai). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [inference-docs.cerebras.ai](https://inference-docs.cerebras.ai/). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 ```
@@ -40,17 +40,17 @@ export CEREBRAS_API_KEY="your-api-key-here"
 
 The full API of this library can be found in [api.md](api.md).
 
-<!-- RUN TEST: Standard -->
+### Chat Completion
+<!-- RUN TEST: ChatStandard -->
 ```python
 import os
 from cerebras.cloud.sdk import Cerebras
 
 client = Cerebras(
-    # This is the default and can be omitted
-    api_key=os.environ.get("CEREBRAS_API_KEY"),
+    api_key=os.environ.get("CEREBRAS_API_KEY"),  # This is the default and can be omitted
 )
 
-completion = client.chat.completions.create(
+chat_completion = client.chat.completions.create(
     messages=[
         {
             "role": "user",
@@ -60,8 +60,28 @@ completion = client.chat.completions.create(
     model="llama3.1-8b",
 )
 
+print(chat_completion)
+```
+
+### Text Completion
+<!-- RUN TEST: TextStandard -->
+```python
+import os
+from cerebras.cloud.sdk import Cerebras
+
+client = Cerebras(
+    api_key=os.environ.get("CEREBRAS_API_KEY"),  # This is the default and can be omitted
+)
+
+completion = client.completions.create(
+    prompt="It was a dark and stormy ",
+    max_tokens=100,
+    model="llama3.1-8b",
+)
+
 print(completion)
 ```
+
 
 While you can provide an `api_key` keyword argument,
 we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
@@ -72,20 +92,19 @@ so that your API Key is not stored in source control.
 
 Simply import `AsyncCerebras` instead of `Cerebras` and use `await` with each API call:
 
-<!-- RUN TEST: Async -->
+<!-- RUN TEST: ChatAsync -->
 ```python
 import os
 import asyncio
 from cerebras.cloud.sdk import AsyncCerebras
 
 client = AsyncCerebras(
-    # This is the default and can be omitted
-    api_key=os.environ.get("CEREBRAS_API_KEY"),
+    api_key=os.environ.get("CEREBRAS_API_KEY"),  # This is the default and can be omitted
 )
 
 
 async def main() -> None:
-    completion = await client.chat.completions.create(
+    chat_completion = await client.chat.completions.create(
         messages=[
             {
                 "role": "user",
@@ -94,7 +113,7 @@ async def main() -> None:
         ],
         model="llama3.1-8b",
     )
-    print(completion)
+    print(chat_completion)
 
 
 asyncio.run(main())
@@ -108,7 +127,8 @@ We provide support for streaming responses using Server Side Events (SSE).
 
 Note that when streaming, `usage` and `time_info` will be information will only be included in the final chunk.
 
-<!-- RUN TEST: Streaming -->
+### Chat Completion
+<!-- RUN TEST: ChatStreaming -->
 ```python
 import os
 from cerebras.cloud.sdk import Cerebras
@@ -135,7 +155,7 @@ for chunk in stream:
 
 The async client uses the exact same interface.
 
-<!-- RUN TEST: AsyncStreaming -->
+<!-- RUN TEST: ChatAsyncStreaming -->
 ```python
 import os
 import asyncio
@@ -164,6 +184,29 @@ async def main() -> None:
 
 asyncio.run(main())
 ```
+
+### Text Completion
+<!-- RUN TEST: TextStreaming -->
+```python
+import os
+from cerebras.cloud.sdk import Cerebras
+
+client = Cerebras(
+    # This is the default and can be omitted
+    api_key=os.environ.get("CEREBRAS_API_KEY"),
+)
+
+stream = client.completions.create(
+    prompt="It was a dark and stormy ",
+    max_tokens=100,
+    model="llama3.1-8b",
+    stream=True,
+)
+
+for chunk in stream:
+    print(chunk.choices[0].text or "", end="")
+```
+
 
 ## Using types
 

@@ -4,69 +4,23 @@ import builtins
 from typing import TYPE_CHECKING, List, Union, Optional
 from typing_extensions import Literal, TypeAlias
 
-from ..._models import BaseModel
-from .chat_completion import ChatCompletion
+from .._models import BaseModel
 
 __all__ = [
-    "CompletionCreateResponse",
-    "ChatChunkResponse",
-    "ChatChunkResponseChoice",
-    "ChatChunkResponseChoiceDelta",
-    "ChatChunkResponseChoiceDeltaToolCall",
-    "ChatChunkResponseChoiceDeltaToolCallFunction",
-    "ChatChunkResponseChoiceLogprobs",
-    "ChatChunkResponseChoiceLogprobsContent",
-    "ChatChunkResponseChoiceLogprobsContentTopLogprobs",
-    "ChatChunkResponseTimeInfo",
-    "ChatChunkResponseUsage",
+    "Completion",
+    "CompletionResponse",
+    "CompletionResponseChoice",
+    "CompletionResponseChoiceLogprobs",
+    "CompletionResponseChoiceLogprobsContent",
+    "CompletionResponseChoiceLogprobsContentTopLogprobs",
+    "CompletionResponseTimeInfo",
+    "CompletionResponseUsage",
     "ErrorChunkResponse",
     "ErrorChunkResponseError",
 ]
 
 
-class ChatChunkResponseChoiceDeltaToolCallFunction(BaseModel):
-    arguments: str
-
-    name: str
-
-    if TYPE_CHECKING:
-        # Stub to indicate that arbitrary properties are accepted.
-        # To access properties that are not valid identifiers you can use `getattr`, e.g.
-        # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object: ...
-
-
-class ChatChunkResponseChoiceDeltaToolCall(BaseModel):
-    id: str
-
-    function: ChatChunkResponseChoiceDeltaToolCallFunction
-
-    type: Literal["function"]
-
-    index: Optional[int] = None
-
-    if TYPE_CHECKING:
-        # Stub to indicate that arbitrary properties are accepted.
-        # To access properties that are not valid identifiers you can use `getattr`, e.g.
-        # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object: ...
-
-
-class ChatChunkResponseChoiceDelta(BaseModel):
-    content: Optional[str] = None
-
-    role: Optional[Literal["assistant", "user", "system", "tool"]] = None
-
-    tool_calls: Optional[List[ChatChunkResponseChoiceDeltaToolCall]] = None
-
-    if TYPE_CHECKING:
-        # Stub to indicate that arbitrary properties are accepted.
-        # To access properties that are not valid identifiers you can use `getattr`, e.g.
-        # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object: ...
-
-
-class ChatChunkResponseChoiceLogprobsContentTopLogprobs(BaseModel):
+class CompletionResponseChoiceLogprobsContentTopLogprobs(BaseModel):
     token: str
 
     logprob: float
@@ -80,12 +34,12 @@ class ChatChunkResponseChoiceLogprobsContentTopLogprobs(BaseModel):
         def __getattr__(self, attr: str) -> object: ...
 
 
-class ChatChunkResponseChoiceLogprobsContent(BaseModel):
+class CompletionResponseChoiceLogprobsContent(BaseModel):
     token: str
 
     logprob: float
 
-    top_logprobs: ChatChunkResponseChoiceLogprobsContentTopLogprobs
+    top_logprobs: CompletionResponseChoiceLogprobsContentTopLogprobs
 
     bytes: Optional[List[int]] = None
 
@@ -96,8 +50,8 @@ class ChatChunkResponseChoiceLogprobsContent(BaseModel):
         def __getattr__(self, attr: str) -> object: ...
 
 
-class ChatChunkResponseChoiceLogprobs(BaseModel):
-    content: ChatChunkResponseChoiceLogprobsContent
+class CompletionResponseChoiceLogprobs(BaseModel):
+    content: CompletionResponseChoiceLogprobsContent
 
     if TYPE_CHECKING:
         # Stub to indicate that arbitrary properties are accepted.
@@ -106,14 +60,14 @@ class ChatChunkResponseChoiceLogprobs(BaseModel):
         def __getattr__(self, attr: str) -> object: ...
 
 
-class ChatChunkResponseChoice(BaseModel):
-    delta: ChatChunkResponseChoiceDelta
-
+class CompletionResponseChoice(BaseModel):
     index: int
 
-    finish_reason: Optional[Literal["stop", "length", "content_filter", "tool_calls"]] = None
+    text: str
 
-    logprobs: Optional[ChatChunkResponseChoiceLogprobs] = None
+    finish_reason: Optional[Literal["stop", "length", "content_filter"]] = None
+
+    logprobs: Optional[CompletionResponseChoiceLogprobs] = None
 
     if TYPE_CHECKING:
         # Stub to indicate that arbitrary properties are accepted.
@@ -122,7 +76,7 @@ class ChatChunkResponseChoice(BaseModel):
         def __getattr__(self, attr: str) -> object: ...
 
 
-class ChatChunkResponseTimeInfo(BaseModel):
+class CompletionResponseTimeInfo(BaseModel):
     completion_time: Optional[float] = None
 
     prompt_time: Optional[float] = None
@@ -138,7 +92,7 @@ class ChatChunkResponseTimeInfo(BaseModel):
         def __getattr__(self, attr: str) -> object: ...
 
 
-class ChatChunkResponseUsage(BaseModel):
+class CompletionResponseUsage(BaseModel):
     completion_tokens: Optional[int] = None
 
     prompt_tokens: Optional[int] = None
@@ -152,24 +106,22 @@ class ChatChunkResponseUsage(BaseModel):
         def __getattr__(self, attr: str) -> object: ...
 
 
-class ChatChunkResponse(BaseModel):
+class CompletionResponse(BaseModel):
     id: str
+
+    choices: List[CompletionResponseChoice]
 
     created: int
 
     model: str
 
-    object: Literal["chat.completion.chunk"]
+    object: Literal["text_completion"]
 
     system_fingerprint: str
 
-    choices: Optional[List[ChatChunkResponseChoice]] = None
+    time_info: Optional[CompletionResponseTimeInfo] = None
 
-    service_tier: Optional[str] = None
-
-    time_info: Optional[ChatChunkResponseTimeInfo] = None
-
-    usage: Optional[ChatChunkResponseUsage] = None
+    usage: Optional[CompletionResponseUsage] = None
 
     if TYPE_CHECKING:
         # Stub to indicate that arbitrary properties are accepted.
@@ -206,4 +158,4 @@ class ErrorChunkResponse(BaseModel):
         def __getattr__(self, attr: str) -> object: ...
 
 
-CompletionCreateResponse: TypeAlias = Union[ChatCompletion, ChatChunkResponse, ErrorChunkResponse]
+Completion: TypeAlias = Union[CompletionResponse, ErrorChunkResponse]

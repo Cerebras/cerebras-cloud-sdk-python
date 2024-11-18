@@ -1,6 +1,6 @@
 [project]
 name = "cerebras_cloud_sdk"
-version = "1.11.0"
+version = "1.12.0"
 description = "The official Python library for the cerebras API"
 dynamic = ["readme"]
 license = "Apache-2.0"
@@ -55,6 +55,7 @@ dev-dependencies = [
     "dirty-equals>=0.6.0",
     "importlib-metadata>=6.7.0",
     "rich>=13.7.1",
+    "nest_asyncio==1.6.0"
 ]
 
 [tool.rye.scripts]
@@ -84,7 +85,7 @@ typecheck = { chain = [
 ]}
 "typecheck:pyright" = "pyright"
 "typecheck:verify-types" = "pyright --verifytypes cerebras.cloud.sdk --ignoreexternal"
-"typecheck:mypy" = "mypy ."
+"typecheck:mypy" = "mypy -p cerebras.cloud.sdk"
 
 [build-system]
 requires = ["hatchling", "hatch-fancy-pypi-readme"]

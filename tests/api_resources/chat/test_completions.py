@@ -9,7 +9,7 @@ import pytest
 
 from tests.utils import assert_matches_type
 from cerebras.cloud.sdk import Cerebras, AsyncCerebras
-from cerebras.cloud.sdk.types.chat import CompletionCreateResponse
+from cerebras.cloud.sdk.types.chat import ChatCompletion
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -28,7 +28,7 @@ class TestCompletions:
             ],
             model="model",
         )
-        assert_matches_type(CompletionCreateResponse, completion, path=["response"])
+        assert_matches_type(ChatCompletion, completion, path=["response"])
 
     @parametrize
     def test_method_create_with_all_params(self, client: Cerebras) -> None:
@@ -67,23 +67,7 @@ class TestCompletions:
                         "parameters": {},
                     },
                     "type": "type",
-                },
-                {
-                    "function": {
-                        "name": "name",
-                        "description": "description",
-                        "parameters": {},
-                    },
-                    "type": "type",
-                },
-                {
-                    "function": {
-                        "name": "name",
-                        "description": "description",
-                        "parameters": {},
-                    },
-                    "type": "type",
-                },
+                }
             ],
             top_logprobs=0,
             top_p=0,
@@ -91,7 +75,7 @@ class TestCompletions:
             x_amz_cf_id="X-Amz-Cf-Id",
             x_delay_time=0,
         )
-        assert_matches_type(CompletionCreateResponse, completion, path=["response"])
+        assert_matches_type(ChatCompletion, completion, path=["response"])
 
     @parametrize
     def test_raw_response_create(self, client: Cerebras) -> None:
@@ -108,7 +92,7 @@ class TestCompletions:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         completion = response.parse()
-        assert_matches_type(CompletionCreateResponse, completion, path=["response"])
+        assert_matches_type(ChatCompletion, completion, path=["response"])
 
     @parametrize
     def test_streaming_response_create(self, client: Cerebras) -> None:
@@ -125,7 +109,7 @@ class TestCompletions:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             completion = response.parse()
-            assert_matches_type(CompletionCreateResponse, completion, path=["response"])
+            assert_matches_type(ChatCompletion, completion, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -144,7 +128,7 @@ class TestAsyncCompletions:
             ],
             model="model",
         )
-        assert_matches_type(CompletionCreateResponse, completion, path=["response"])
+        assert_matches_type(ChatCompletion, completion, path=["response"])
 
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncCerebras) -> None:
@@ -183,23 +167,7 @@ class TestAsyncCompletions:
                         "parameters": {},
                     },
                     "type": "type",
-                },
-                {
-                    "function": {
-                        "name": "name",
-                        "description": "description",
-                        "parameters": {},
-                    },
-                    "type": "type",
-                },
-                {
-                    "function": {
-                        "name": "name",
-                        "description": "description",
-                        "parameters": {},
-                    },
-                    "type": "type",
-                },
+                }
             ],
             top_logprobs=0,
             top_p=0,
@@ -207,7 +175,7 @@ class TestAsyncCompletions:
             x_amz_cf_id="X-Amz-Cf-Id",
             x_delay_time=0,
         )
-        assert_matches_type(CompletionCreateResponse, completion, path=["response"])
+        assert_matches_type(ChatCompletion, completion, path=["response"])
 
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncCerebras) -> None:
@@ -224,7 +192,7 @@ class TestAsyncCompletions:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         completion = await response.parse()
-        assert_matches_type(CompletionCreateResponse, completion, path=["response"])
+        assert_matches_type(ChatCompletion, completion, path=["response"])
 
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncCerebras) -> None:
@@ -241,6 +209,6 @@ class TestAsyncCompletions:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             completion = await response.parse()
-            assert_matches_type(CompletionCreateResponse, completion, path=["response"])
+            assert_matches_type(ChatCompletion, completion, path=["response"])
 
         assert cast(Any, response.is_closed) is True

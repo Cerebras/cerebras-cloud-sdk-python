@@ -51,6 +51,7 @@ log: logging.Logger = logging.getLogger(__name__)
 
 class Cerebras(SyncAPIClient):
     chat: resources.ChatResource
+    completions: resources.CompletionsResource
     models: resources.ModelsResource
     with_raw_response: CerebrasWithRawResponse
     with_streaming_response: CerebrasWithStreamedResponse
@@ -111,6 +112,7 @@ class Cerebras(SyncAPIClient):
         )
 
         self.chat = resources.ChatResource(self)
+        self.completions = resources.CompletionsResource(self)
         self.models = resources.ModelsResource(self)
         self.with_raw_response = CerebrasWithRawResponse(self)
         self.with_streaming_response = CerebrasWithStreamedResponse(self)
@@ -237,6 +239,7 @@ class Cerebras(SyncAPIClient):
 
 class AsyncCerebras(AsyncAPIClient):
     chat: resources.AsyncChatResource
+    completions: resources.AsyncCompletionsResource
     models: resources.AsyncModelsResource
     with_raw_response: AsyncCerebrasWithRawResponse
     with_streaming_response: AsyncCerebrasWithStreamedResponse
@@ -297,6 +300,7 @@ class AsyncCerebras(AsyncAPIClient):
         )
 
         self.chat = resources.AsyncChatResource(self)
+        self.completions = resources.AsyncCompletionsResource(self)
         self.models = resources.AsyncModelsResource(self)
         self.with_raw_response = AsyncCerebrasWithRawResponse(self)
         self.with_streaming_response = AsyncCerebrasWithStreamedResponse(self)
@@ -421,24 +425,28 @@ class AsyncCerebras(AsyncAPIClient):
 class CerebrasWithRawResponse:
     def __init__(self, client: Cerebras) -> None:
         self.chat = resources.ChatResourceWithRawResponse(client.chat)
+        self.completions = resources.CompletionsResourceWithRawResponse(client.completions)
         self.models = resources.ModelsResourceWithRawResponse(client.models)
 
 
 class AsyncCerebrasWithRawResponse:
     def __init__(self, client: AsyncCerebras) -> None:
         self.chat = resources.AsyncChatResourceWithRawResponse(client.chat)
+        self.completions = resources.AsyncCompletionsResourceWithRawResponse(client.completions)
         self.models = resources.AsyncModelsResourceWithRawResponse(client.models)
 
 
 class CerebrasWithStreamedResponse:
     def __init__(self, client: Cerebras) -> None:
         self.chat = resources.ChatResourceWithStreamingResponse(client.chat)
+        self.completions = resources.CompletionsResourceWithStreamingResponse(client.completions)
         self.models = resources.ModelsResourceWithStreamingResponse(client.models)
 
 
 class AsyncCerebrasWithStreamedResponse:
     def __init__(self, client: AsyncCerebras) -> None:
         self.chat = resources.AsyncChatResourceWithStreamingResponse(client.chat)
+        self.completions = resources.AsyncCompletionsResourceWithStreamingResponse(client.completions)
         self.models = resources.AsyncModelsResourceWithStreamingResponse(client.models)
 
 
