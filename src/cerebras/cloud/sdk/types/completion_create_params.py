@@ -79,6 +79,9 @@ class CompletionCreateParams(TypedDict, total=False):
     strings, array of tokens, or array of token arrays.
     """
 
+    return_raw_tokens: Optional[bool]
+    """Return raw tokens instead of text"""
+
     seed: Optional[int]
     """
     If specified, our system will make a best effort to sample deterministically,

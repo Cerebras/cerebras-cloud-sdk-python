@@ -32,6 +32,7 @@ from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
     AsyncAPIClient,
+    make_request_options,
 )
 
 __all__ = [
@@ -119,8 +120,11 @@ class Cerebras(SyncAPIClient):
 
         if warm_tcp_connection:
             try:
-                for _ in range(5):
-                    self.models.list(timeout=1)
+                self.get(
+                    "/v1/tcp_warming",
+                    cast_to=str,
+                    options=make_request_options(timeout=1),
+                )
             except Exception as e:
                 log.debug(f"TCP Warming had exception: {e}")
 

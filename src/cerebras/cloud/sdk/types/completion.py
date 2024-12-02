@@ -63,11 +63,13 @@ class CompletionResponseChoiceLogprobs(BaseModel):
 class CompletionResponseChoice(BaseModel):
     index: int
 
-    text: str
-
     finish_reason: Optional[Literal["stop", "length", "content_filter"]] = None
 
     logprobs: Optional[CompletionResponseChoiceLogprobs] = None
+
+    text: Optional[str] = None
+
+    tokens: Optional[List[int]] = None
 
     if TYPE_CHECKING:
         # Stub to indicate that arbitrary properties are accepted.

@@ -21,6 +21,11 @@ Our CS-3 systems can be quickly and easily clustered to create the largest AI su
 
 Want to experience the power of Cerebras? Check out our [website](https://cerebras.net) for more resources and explore options for accessing our technology through the Cerebras Cloud or on-premise deployments!
 
+> [!NOTE]  
+> This SDK has a mechanism that sends a few requests to `/v1/tcp_warming` upon construction to reduce the TTFT. If this behaviour is not desired, set `warm_tcp_connection=False` in the constructor.
+>
+> If you are repeatedly reconstructing the SDK instance it will lead to poor performance. It is recommended that you construct the SDK once and reuse the instance if possible.
+
 ## Documentation
 
 The REST API documentation can be found on [inference-docs.cerebras.ai](https://inference-docs.cerebras.ai). The full API of this library can be found in [api.md](api.md).
@@ -340,11 +345,13 @@ Note that requests that time out are [retried twice by default](#retries).
 
 We use the standard library [`logging`](https://docs.python.org/3/library/logging.html) module.
 
-You can enable logging by setting the environment variable `CEREBRAS_LOG` to `debug`.
+You can enable logging by setting the environment variable `CEREBRAS_LOG` to `info`.
 
 ```shell
-$ export CEREBRAS_LOG=debug
+$ export CEREBRAS_LOG=info
 ```
+
+Or to `debug` for more verbose logging.
 
 ### How to tell whether `None` means `null` or missing
 

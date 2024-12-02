@@ -62,6 +62,7 @@ class CompletionsResource(SyncAPIResource):
         n: Optional[int] | NotGiven = NOT_GIVEN,
         presence_penalty: Optional[float] | NotGiven = NOT_GIVEN,
         prompt: Union[str, List[str], Iterable[int], Iterable[Iterable[int]]] | NotGiven = NOT_GIVEN,
+        return_raw_tokens: Optional[bool] | NotGiven = NOT_GIVEN,
         seed: Optional[int] | NotGiven = NOT_GIVEN,
         stop: Union[str, List[str], None] | NotGiven = NOT_GIVEN,
         stream: Optional[bool] | NotGiven = NOT_GIVEN,
@@ -125,6 +126,8 @@ class CompletionsResource(SyncAPIResource):
           prompt: The prompt(s) to generate completions for, encoded as a string, array of
               strings, array of tokens, or array of token arrays.
 
+          return_raw_tokens: Return raw tokens instead of text
+
           seed: If specified, our system will make a best effort to sample deterministically,
               such that repeated requests with the same `seed` and parameters should return
               the same result. Determinism is not guaranteed.
@@ -181,6 +184,7 @@ class CompletionsResource(SyncAPIResource):
                         "n": n,
                         "presence_penalty": presence_penalty,
                         "prompt": prompt,
+                        "return_raw_tokens": return_raw_tokens,
                         "seed": seed,
                         "stop": stop,
                         "stream": stream,
@@ -235,6 +239,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
         n: Optional[int] | NotGiven = NOT_GIVEN,
         presence_penalty: Optional[float] | NotGiven = NOT_GIVEN,
         prompt: Union[str, List[str], Iterable[int], Iterable[Iterable[int]]] | NotGiven = NOT_GIVEN,
+        return_raw_tokens: Optional[bool] | NotGiven = NOT_GIVEN,
         seed: Optional[int] | NotGiven = NOT_GIVEN,
         stop: Union[str, List[str], None] | NotGiven = NOT_GIVEN,
         stream: Optional[bool] | NotGiven = NOT_GIVEN,
@@ -298,6 +303,8 @@ class AsyncCompletionsResource(AsyncAPIResource):
           prompt: The prompt(s) to generate completions for, encoded as a string, array of
               strings, array of tokens, or array of token arrays.
 
+          return_raw_tokens: Return raw tokens instead of text
+
           seed: If specified, our system will make a best effort to sample deterministically,
               such that repeated requests with the same `seed` and parameters should return
               the same result. Determinism is not guaranteed.
@@ -354,6 +361,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
                         "n": n,
                         "presence_penalty": presence_penalty,
                         "prompt": prompt,
+                        "return_raw_tokens": return_raw_tokens,
                         "seed": seed,
                         "stop": stop,
                         "stream": stream,

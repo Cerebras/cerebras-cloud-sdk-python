@@ -1,5 +1,32 @@
 # Changelog
 
+## 1.13.0 (2024-12-02)
+
+Full Changelog: [v1.12.2...v1.13.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.12.2...v1.13.0)
+
+### Features
+
+* **api:** api update ([#326](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/326)) ([1771800](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/1771800b14ee9a6ca5962d7a2df52ee6e74c8a5a))
+* **api:** update via SDK Studio ([5b08534](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/5b08534ae763c6ac27142cb7f43147621d178138))
+* **api:** update via SDK Studio ([#43](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/43)) ([55aad6a](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/55aad6a326676d97ff4e7c76dacd18095ce9357e))
+* **api:** update via SDK Studio ([#45](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/45)) ([3d4a8a2](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/3d4a8a2caa8c959c6bd69389256638d25f6acddf))
+* **api:** update via SDK Studio ([#46](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/46)) ([735353f](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/735353ff9d98b07c87ace4e3caeff848797b3046))
+* **api:** update via SDK Studio ([#48](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/48)) ([2843d19](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/2843d19f758aa54a8a8a97754d69cba71fd724c4))
+
+
+### Chores
+
+* configure new SDK language ([96673a5](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/96673a5f26ec18e72fae44726a30c16922cf8b74))
+* **internal:** codegen related update ([#323](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/323)) ([6bb83c2](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/6bb83c2b953fa2259f436a4d44a90b74e75d82c8))
+* **internal:** exclude mypy from running on tests ([#320](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/320)) ([d87d078](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/d87d07832b86dfd803f18dd7df75b03f19348a11))
+* **internal:** fix compat model_dump method when warnings are passed ([#316](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/316)) ([9a67ef6](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/9a67ef659769d601e314db82640b83e6688c91b2))
+* remove now unused `cached-property` dep ([#319](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/319)) ([6d66c10](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/6d66c104ba068fd99827e69e98adb4ff9b983de5))
+
+
+### Documentation
+
+* add info log level to readme ([#318](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/318)) ([9cae8f9](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/9cae8f9ab89a4cda156fdaec62fac72525d706cd))
+
 ## 1.12.1 (2024-11-19)
 
 Full Changelog: [v1.12.0...v1.12.1](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.12.0...v1.12.1)
