@@ -34,6 +34,9 @@ class CompletionCreateParams(TypedDict, total=False):
     text so far, decreasing the model's likelihood to repeat the same line verbatim.
     """
 
+    grammar_root: Optional[str]
+    """The grammar root used for structured output generation."""
+
     logit_bias: Optional[object]
     """Modify the likelihood of specified tokens appearing in the completion.
 
@@ -57,6 +60,13 @@ class CompletionCreateParams(TypedDict, total=False):
 
     The total length of input tokens and generated tokens is limited by the model's
     context length.
+    """
+
+    min_tokens: Optional[int]
+    """The minimum number of tokens to generate for a completion.
+
+    If not specified or set to 0, the model will generate as many tokens as it deems
+    necessary. Setting to -1 sets to max sequence length.
     """
 
     n: Optional[int]

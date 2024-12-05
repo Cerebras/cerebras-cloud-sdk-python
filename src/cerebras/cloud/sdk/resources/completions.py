@@ -56,9 +56,11 @@ class CompletionsResource(SyncAPIResource):
         best_of: Optional[int] | NotGiven = NOT_GIVEN,
         echo: Optional[bool] | NotGiven = NOT_GIVEN,
         frequency_penalty: Optional[float] | NotGiven = NOT_GIVEN,
+        grammar_root: Optional[str] | NotGiven = NOT_GIVEN,
         logit_bias: Optional[object] | NotGiven = NOT_GIVEN,
         logprobs: Optional[bool] | NotGiven = NOT_GIVEN,
         max_tokens: Optional[int] | NotGiven = NOT_GIVEN,
+        min_tokens: Optional[int] | NotGiven = NOT_GIVEN,
         n: Optional[int] | NotGiven = NOT_GIVEN,
         presence_penalty: Optional[float] | NotGiven = NOT_GIVEN,
         prompt: Union[str, List[str], Iterable[int], Iterable[Iterable[int]]] | NotGiven = NOT_GIVEN,
@@ -98,6 +100,8 @@ class CompletionsResource(SyncAPIResource):
               existing frequency in the text so far, decreasing the model's likelihood to
               repeat the same line verbatim.
 
+          grammar_root: The grammar root used for structured output generation.
+
           logit_bias: Modify the likelihood of specified tokens appearing in the completion.
 
               Accepts a JSON object that maps tokens (specified by their token ID in the
@@ -114,6 +118,10 @@ class CompletionsResource(SyncAPIResource):
           max_tokens: The maximum number of tokens that can be generated in the chat completion. The
               total length of input tokens and generated tokens is limited by the model's
               context length.
+
+          min_tokens: The minimum number of tokens to generate for a completion. If not specified or
+              set to 0, the model will generate as many tokens as it deems necessary. Setting
+              to -1 sets to max sequence length.
 
           n: How many chat completion choices to generate for each input message. Note that
               you will be charged based on the number of generated tokens across all of the
@@ -178,9 +186,11 @@ class CompletionsResource(SyncAPIResource):
                         "best_of": best_of,
                         "echo": echo,
                         "frequency_penalty": frequency_penalty,
+                        "grammar_root": grammar_root,
                         "logit_bias": logit_bias,
                         "logprobs": logprobs,
                         "max_tokens": max_tokens,
+                        "min_tokens": min_tokens,
                         "n": n,
                         "presence_penalty": presence_penalty,
                         "prompt": prompt,
@@ -233,9 +243,11 @@ class AsyncCompletionsResource(AsyncAPIResource):
         best_of: Optional[int] | NotGiven = NOT_GIVEN,
         echo: Optional[bool] | NotGiven = NOT_GIVEN,
         frequency_penalty: Optional[float] | NotGiven = NOT_GIVEN,
+        grammar_root: Optional[str] | NotGiven = NOT_GIVEN,
         logit_bias: Optional[object] | NotGiven = NOT_GIVEN,
         logprobs: Optional[bool] | NotGiven = NOT_GIVEN,
         max_tokens: Optional[int] | NotGiven = NOT_GIVEN,
+        min_tokens: Optional[int] | NotGiven = NOT_GIVEN,
         n: Optional[int] | NotGiven = NOT_GIVEN,
         presence_penalty: Optional[float] | NotGiven = NOT_GIVEN,
         prompt: Union[str, List[str], Iterable[int], Iterable[Iterable[int]]] | NotGiven = NOT_GIVEN,
@@ -275,6 +287,8 @@ class AsyncCompletionsResource(AsyncAPIResource):
               existing frequency in the text so far, decreasing the model's likelihood to
               repeat the same line verbatim.
 
+          grammar_root: The grammar root used for structured output generation.
+
           logit_bias: Modify the likelihood of specified tokens appearing in the completion.
 
               Accepts a JSON object that maps tokens (specified by their token ID in the
@@ -291,6 +305,10 @@ class AsyncCompletionsResource(AsyncAPIResource):
           max_tokens: The maximum number of tokens that can be generated in the chat completion. The
               total length of input tokens and generated tokens is limited by the model's
               context length.
+
+          min_tokens: The minimum number of tokens to generate for a completion. If not specified or
+              set to 0, the model will generate as many tokens as it deems necessary. Setting
+              to -1 sets to max sequence length.
 
           n: How many chat completion choices to generate for each input message. Note that
               you will be charged based on the number of generated tokens across all of the
@@ -355,9 +373,11 @@ class AsyncCompletionsResource(AsyncAPIResource):
                         "best_of": best_of,
                         "echo": echo,
                         "frequency_penalty": frequency_penalty,
+                        "grammar_root": grammar_root,
                         "logit_bias": logit_bias,
                         "logprobs": logprobs,
                         "max_tokens": max_tokens,
+                        "min_tokens": min_tokens,
                         "n": n,
                         "presence_penalty": presence_penalty,
                         "prompt": prompt,

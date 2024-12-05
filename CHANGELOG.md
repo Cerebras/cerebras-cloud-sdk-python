@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.13.1 (2024-12-05)
+
+Full Changelog: [v1.13.0...v1.13.1](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.13.0...v1.13.1)
+
+### Features
+
+* **api:** api update ([#331](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/331)) ([149d481](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/149d48110344b60c7ab7237ea771116915478f76))
+
+
+### Chores
+
+* **internal:** bump pyright ([#329](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/329)) ([55a4bc5](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/55a4bc5e1fe36ab643dde4715acc5423b58890d1))
+* **internal:** version bump ([#327](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/327)) ([3e9db7c](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/3e9db7cebc2572145ff4e357dc5b2ed45970e254))
+* make the `Omit` type public ([#330](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/330)) ([b86c6ac](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/b86c6acedf80079c2ee9fb31f2059d82409a49bb))
+
 ## 1.13.0 (2024-12-02)
 
 Full Changelog: [v1.12.2...v1.13.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.12.2...v1.13.0)
