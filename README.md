@@ -1,4 +1,4 @@
-# Cerebras Python API library
+# Cerebras Python API library <!-- omit in toc -->
 
 [![PyPI version](https://img.shields.io/pypi/v/cerebras_cloud_sdk.svg)](https://pypi.org/project/cerebras_cloud_sdk/)
 
@@ -7,6 +7,36 @@ application. The library includes type definitions for all request params and re
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
 It is generated with [Stainless](https://www.stainlessapi.com/).
+
+- [About Cerebras](#about-cerebras)
+- [Documentation](#documentation)
+- [Installation](#installation)
+- [API Key](#api-key)
+- [Usage](#usage)
+  - [Chat Completion](#chat-completion)
+  - [Text Completion](#text-completion)
+- [Async usage](#async-usage)
+- [Streaming responses](#streaming-responses)
+  - [Chat Completion](#chat-completion-1)
+  - [Text Completion](#text-completion-1)
+- [Using types](#using-types)
+- [Handling errors](#handling-errors)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+- [Advanced](#advanced)
+  - [Logging](#logging)
+  - [How to tell whether `None` means `null` or missing](#how-to-tell-whether-none-means-null-or-missing)
+  - [Accessing raw response data (e.g. headers)](#accessing-raw-response-data-eg-headers)
+  - [Making custom/undocumented requests](#making-customundocumented-requests)
+    - [Undocumented endpoints](#undocumented-endpoints)
+    - [Undocumented request params](#undocumented-request-params)
+    - [Undocumented response properties](#undocumented-response-properties)
+  - [Configuring the HTTP client](#configuring-the-http-client)
+  - [Managing HTTP resources](#managing-http-resources)
+- [Versioning](#versioning)
+  - [Determining the installed version](#determining-the-installed-version)
+- [Requirements](#requirements)
+- [Contributing](#contributing)
 
 ## About Cerebras
 
@@ -33,7 +63,7 @@ The REST API documentation can be found on [inference-docs.cerebras.ai](https://
 
 ## Installation
 
-```
+```bash
 pip install cerebras_cloud_sdk
 ```
 
@@ -41,7 +71,7 @@ pip install cerebras_cloud_sdk
 
 Get an API Key from [cloud.cerebras.ai](https://cloud.cerebras.ai/) and add it to your environment variables:
 
-```
+```bash
 export CEREBRAS_API_KEY="your-api-key-here"
 ```
 
