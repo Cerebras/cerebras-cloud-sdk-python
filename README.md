@@ -13,6 +13,7 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 At Cerebras, we've developed the world's largest and fastest AI processor, the Wafer-Scale Engine-3 (WSE-3). The Cerebras CS-3 system, powered by the WSE-3, represents a new class of AI supercomputer that sets the standard for generative AI training and inference with unparalleled performance and scalability.
 
 With Cerebras as your inference provider, you can:
+
 - Achieve unprecedented speed for AI inference workloads
 - Build commercially with high throughput
 - Effortlessly scale your AI workloads with our seamless clustering technology
@@ -21,7 +22,7 @@ Our CS-3 systems can be quickly and easily clustered to create the largest AI su
 
 Want to experience the power of Cerebras? Check out our [website](https://cerebras.net) for more resources and explore options for accessing our technology through the Cerebras Cloud or on-premise deployments!
 
-> [!NOTE]  
+> [!NOTE]
 > This SDK has a mechanism that sends a few requests to `/v1/tcp_warming` upon construction to reduce the TTFT. If this behaviour is not desired, set `warm_tcp_connection=False` in the constructor.
 >
 > If you are repeatedly reconstructing the SDK instance it will lead to poor performance. It is recommended that you construct the SDK once and reuse the instance if possible.
@@ -31,12 +32,15 @@ Want to experience the power of Cerebras? Check out our [website](https://cerebr
 The REST API documentation can be found on [inference-docs.cerebras.ai](https://inference-docs.cerebras.ai). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
+
 ```
 pip install cerebras_cloud_sdk
 ```
 
 ## API Key
+
 Get an API Key from [cloud.cerebras.ai](https://cloud.cerebras.ai/) and add it to your environment variables:
+
 ```
 export CEREBRAS_API_KEY="your-api-key-here"
 ```
@@ -46,7 +50,9 @@ export CEREBRAS_API_KEY="your-api-key-here"
 The full API of this library can be found in [api.md](api.md).
 
 ### Chat Completion
+
 <!-- RUN TEST: ChatStandard -->
+
 ```python
 import os
 from cerebras.cloud.sdk import Cerebras
@@ -69,7 +75,9 @@ print(chat_completion)
 ```
 
 ### Text Completion
+
 <!-- RUN TEST: TextStandard -->
+
 ```python
 import os
 from cerebras.cloud.sdk import Cerebras
@@ -87,7 +95,6 @@ completion = client.completions.create(
 print(completion)
 ```
 
-
 While you can provide an `api_key` keyword argument,
 we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
 to add `CEREBRAS_API_KEY="My API Key"` to your `.env` file
@@ -98,6 +105,7 @@ so that your API Key is not stored in source control.
 Simply import `AsyncCerebras` instead of `Cerebras` and use `await` with each API call:
 
 <!-- RUN TEST: ChatAsync -->
+
 ```python
 import os
 import asyncio
@@ -133,7 +141,9 @@ We provide support for streaming responses using Server Side Events (SSE).
 Note that when streaming, `usage` and `time_info` will be information will only be included in the final chunk.
 
 ### Chat Completion
+
 <!-- RUN TEST: ChatStreaming -->
+
 ```python
 import os
 from cerebras.cloud.sdk import Cerebras
@@ -161,6 +171,7 @@ for chunk in stream:
 The async client uses the exact same interface.
 
 <!-- RUN TEST: ChatAsyncStreaming -->
+
 ```python
 import os
 import asyncio
@@ -191,7 +202,9 @@ asyncio.run(main())
 ```
 
 ### Text Completion
+
 <!-- RUN TEST: TextStreaming -->
+
 ```python
 import os
 from cerebras.cloud.sdk import Cerebras
@@ -212,7 +225,6 @@ for chunk in stream:
     print(chunk.choices[0].text or "", end="")
 ```
 
-
 ## Using types
 
 Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typing.html#typing.TypedDict). Responses are [Pydantic models](https://docs.pydantic.dev) which also provide helper methods for things like:
@@ -232,6 +244,7 @@ response), a subclass of `cerebras.cloud.sdk.APIStatusError` is raised, containi
 All errors inherit from `cerebras.cloud.sdk.APIError`.
 
 <!-- RUN TEST: Error -->
+
 ```python
 import cerebras.cloud.sdk
 from cerebras.cloud.sdk import Cerebras
@@ -281,6 +294,7 @@ Connection errors (for example, due to a network connectivity problem), 408 Requ
 You can use the `max_retries` option to configure or disable retry settings:
 
 <!-- RUN TEST: Retries -->
+
 ```python
 from cerebras.cloud.sdk import Cerebras
 
@@ -308,6 +322,7 @@ By default requests time out after 1 minute. You can configure this with a `time
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/#fine-tuning-the-configuration) object:
 
 <!-- RUN TEST: Timeout -->
+
 ```python
 from cerebras.cloud.sdk import Cerebras
 import httpx
@@ -370,6 +385,7 @@ if response.my_field is None:
 The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
 
 <!-- RUN TEST: Advanced -->
+
 ```py
 from cerebras.cloud.sdk import Cerebras
 
