@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.14.0 (2024-12-11)
+
+Full Changelog: [v1.13.1...v1.14.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.13.1...v1.14.0)
+
+### Chores
+
+* **internal:** bump pydantic dependency ([#336](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/336)) ([dbda9c0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/dbda9c064cd9d943658742ac971d0e3dfd5be9d4))
+* **internal:** version bump ([#327](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/327)) ([37ee8b7](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/37ee8b767b0b4a48a481b851360688ee6667abe9))
+* **internal:** version bump ([#333](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/333)) ([8c3b9e1](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/8c3b9e1c184bcba7ab62b72804a7ec3303a331da))
+
+
+### Documentation
+
+* **readme:** fix http client proxies example ([#337](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/337)) ([e4e1d46](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/e4e1d46c58635154f2a285c2c538db8dbbaa2e94))
+
 ## 1.13.1 (2024-12-05)
 
 Full Changelog: [v1.13.0...v1.13.1](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.13.0...v1.13.1)
