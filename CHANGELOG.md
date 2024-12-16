@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.15.0 (2024-12-16)
+
+Full Changelog: [v1.14.0...v1.15.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.14.0...v1.15.0)
+
+### Chores
+
+* **internal:** add support for TypeAliasType ([#342](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/342)) ([9355808](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/9355808499c3b76a8c099e7797ff5e5a10369832))
+* **internal:** bump pyright ([#341](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/341)) ([bf52801](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/bf52801f9a30bd18169ebc9b59d4ca9f9506c2ce))
+* **internal:** codegen related update ([#343](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/343)) ([6e7edfb](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/6e7edfbf149ecebc599801dd9e45a140ad586413))
+* **internal:** codegen related update ([#344](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/344)) ([8be570a](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/8be570aea88f5108c58547da6be509b794648dfb))
+* **internal:** version bump ([#327](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/327)) ([38097b8](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/38097b85f83d1682aa5a07f06a2e797422b3ff25))
+* **internal:** version bump ([#333](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/333)) ([6bbf797](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/6bbf797c6308a9de8bcf544befb12793d38a7a95))
+* **internal:** version bump ([#339](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/339)) ([5b75e61](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/5b75e61688bb0fabebaea6eb82a9595b37603f23))
+
 ## 1.14.0 (2024-12-11)
 
 Full Changelog: [v1.13.1...v1.14.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.13.1...v1.14.0)
