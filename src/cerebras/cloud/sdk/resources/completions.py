@@ -73,6 +73,7 @@ class CompletionsResource(SyncAPIResource):
         temperature: Optional[float] | NotGiven = NOT_GIVEN,
         top_p: Optional[float] | NotGiven = NOT_GIVEN,
         user: Optional[str] | NotGiven = NOT_GIVEN,
+        cf_ray: str | NotGiven = NOT_GIVEN,
         x_amz_cf_id: str | NotGiven = NOT_GIVEN,
         x_delay_time: float | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -170,6 +171,7 @@ class CompletionsResource(SyncAPIResource):
         extra_headers = {
             **strip_not_given(
                 {
+                    "CF-RAY": cf_ray,
                     "X-Amz-Cf-Id": x_amz_cf_id,
                     "X-delay-time": str(x_delay_time) if is_given(x_delay_time) else NOT_GIVEN,
                 }
@@ -260,6 +262,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
         temperature: Optional[float] | NotGiven = NOT_GIVEN,
         top_p: Optional[float] | NotGiven = NOT_GIVEN,
         user: Optional[str] | NotGiven = NOT_GIVEN,
+        cf_ray: str | NotGiven = NOT_GIVEN,
         x_amz_cf_id: str | NotGiven = NOT_GIVEN,
         x_delay_time: float | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -357,6 +360,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
         extra_headers = {
             **strip_not_given(
                 {
+                    "CF-RAY": cf_ray,
                     "X-Amz-Cf-Id": x_amz_cf_id,
                     "X-delay-time": str(x_delay_time) if is_given(x_delay_time) else NOT_GIVEN,
                 }

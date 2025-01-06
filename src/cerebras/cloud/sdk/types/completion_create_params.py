@@ -137,6 +137,8 @@ class CompletionCreateParams(TypedDict, total=False):
     monitor and detect abuse.
     """
 
+    cf_ray: Annotated[str, PropertyInfo(alias="CF-RAY")]
+
     x_amz_cf_id: Annotated[str, PropertyInfo(alias="X-Amz-Cf-Id")]
 
     x_delay_time: Annotated[float, PropertyInfo(alias="X-delay-time")]

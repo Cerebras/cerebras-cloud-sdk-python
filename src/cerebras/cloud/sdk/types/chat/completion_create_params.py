@@ -18,6 +18,10 @@ __all__ = [
     "MessageAssistantMessageRequestToolCallFunction",
     "MessageToolMessageRequest",
     "ResponseFormat",
+    "ResponseFormatResponseFormatText",
+    "ResponseFormatResponseFormatJsonObject",
+    "ResponseFormatResponseFormatJsonSchema",
+    "ResponseFormatResponseFormatJsonSchemaJsonSchema",
     "StreamOptions",
     "ToolChoice",
     "ToolChoiceChoiceObject",
@@ -154,6 +158,8 @@ class CompletionCreateParams(TypedDict, total=False):
     monitor and detect abuse.
     """
 
+    cf_ray: Annotated[str, PropertyInfo(alias="CF-RAY")]
+
     x_amz_cf_id: Annotated[str, PropertyInfo(alias="X-Amz-Cf-Id")]
 
     x_delay_time: Annotated[float, PropertyInfo(alias="X-delay-time")]
@@ -246,11 +252,50 @@ Message: TypeAlias = Union[
 ]
 
 
-class ResponseFormatTyped(TypedDict, total=False):
-    type: Optional[Literal["text", "json_object"]]
+class ResponseFormatResponseFormatTextTyped(TypedDict, total=False):
+    type: Required[Literal["text"]]
 
 
-ResponseFormat: TypeAlias = Union[ResponseFormatTyped, Dict[str, object]]
+ResponseFormatResponseFormatText: TypeAlias = Union[ResponseFormatResponseFormatTextTyped, Dict[str, object]]
+
+
+class ResponseFormatResponseFormatJsonObjectTyped(TypedDict, total=False):
+    type: Required[Literal["json_object"]]
+
+
+ResponseFormatResponseFormatJsonObject: TypeAlias = Union[
+    ResponseFormatResponseFormatJsonObjectTyped, Dict[str, object]
+]
+
+
+class ResponseFormatResponseFormatJsonSchemaJsonSchemaTyped(TypedDict, total=False):
+    name: Required[str]
+
+    description: Optional[str]
+
+    schema: Optional[object]
+
+    strict: Optional[bool]
+
+
+ResponseFormatResponseFormatJsonSchemaJsonSchema: TypeAlias = Union[
+    ResponseFormatResponseFormatJsonSchemaJsonSchemaTyped, Dict[str, object]
+]
+
+
+class ResponseFormatResponseFormatJsonSchemaTyped(TypedDict, total=False):
+    json_schema: Required[ResponseFormatResponseFormatJsonSchemaJsonSchema]
+
+    type: Required[Literal["json_schema"]]
+
+
+ResponseFormatResponseFormatJsonSchema: TypeAlias = Union[
+    ResponseFormatResponseFormatJsonSchemaTyped, Dict[str, object]
+]
+
+ResponseFormat: TypeAlias = Union[
+    ResponseFormatResponseFormatText, ResponseFormatResponseFormatJsonObject, ResponseFormatResponseFormatJsonSchema
+]
 
 
 class StreamOptionsTyped(TypedDict, total=False):

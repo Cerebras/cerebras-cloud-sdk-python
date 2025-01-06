@@ -1,5 +1,31 @@
 # Changelog
 
+## 1.16.0 (2025-01-06)
+
+Full Changelog: [v1.15.0...v1.16.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.15.0...v1.16.0)
+
+### Features
+
+* **api:** JSON Schema ([#352](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/352)) ([fa74cec](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/fa74cecc19a1f3713c6ec1f035e9909d3a408208))
+
+
+### Chores
+
+* **internal:** codegen related update ([#343](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/343)) ([d8dc23b](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/d8dc23be2cd8f69207212ea43f424013523921d6))
+* **internal:** codegen related update ([#344](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/344)) ([b95c969](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/b95c969eac2e67d50eb9cbaa1093cd7f981405a8))
+* **internal:** codegen related update ([#348](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/348)) ([6718606](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/6718606b6459876f32a371a93839f12967d61ff0))
+* **internal:** codegen related update ([#351](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/351)) ([b86bedd](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/b86bedda0ee952fa54dce331a6362bd66be24b49))
+* **internal:** fix some typos ([#350](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/350)) ([4f9f89f](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/4f9f89f6151c1c170e20a47a11643c5cb5c7a080))
+* **internal:** version bump ([#327](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/327)) ([ec004e8](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/ec004e8805d57cd480c37fbb4664e9c35ac94f1a))
+* **internal:** version bump ([#333](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/333)) ([02a69c1](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/02a69c1e1fcdb454a4d485f33e27aec3a11c2077))
+* **internal:** version bump ([#339](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/339)) ([40a3ca5](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/40a3ca5509e280c00924c5ec634cdbb26918cc5a))
+* **internal:** version bump ([#345](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/345)) ([14b86e4](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/14b86e46ba4e21d9947a9066bf8a7d7f21804e3a))
+
+
+### Documentation
+
+* **readme:** example snippet for client context manager ([#349](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/349)) ([4a6f9ee](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/4a6f9eee021b9d329411734b90917b1cb1c555f2))
+
 ## 1.15.0 (2024-12-16)
 
 Full Changelog: [v1.14.0...v1.15.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.14.0...v1.15.0)

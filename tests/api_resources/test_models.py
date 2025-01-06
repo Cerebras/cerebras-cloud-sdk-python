@@ -28,6 +28,7 @@ class TestModels:
     def test_method_retrieve_with_all_params(self, client: Cerebras) -> None:
         model = client.models.retrieve(
             model_id="model_id",
+            cf_ray="CF-RAY",
             x_amz_cf_id="X-Amz-Cf-Id",
         )
         assert_matches_type(ModelRetrieveResponse, model, path=["response"])
@@ -71,6 +72,7 @@ class TestModels:
     @parametrize
     def test_method_list_with_all_params(self, client: Cerebras) -> None:
         model = client.models.list(
+            cf_ray="CF-RAY",
             x_amz_cf_id="X-Amz-Cf-Id",
         )
         assert_matches_type(ModelListResponse, model, path=["response"])
@@ -110,6 +112,7 @@ class TestAsyncModels:
     async def test_method_retrieve_with_all_params(self, async_client: AsyncCerebras) -> None:
         model = await async_client.models.retrieve(
             model_id="model_id",
+            cf_ray="CF-RAY",
             x_amz_cf_id="X-Amz-Cf-Id",
         )
         assert_matches_type(ModelRetrieveResponse, model, path=["response"])
@@ -153,6 +156,7 @@ class TestAsyncModels:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncCerebras) -> None:
         model = await async_client.models.list(
+            cf_ray="CF-RAY",
             x_amz_cf_id="X-Amz-Cf-Id",
         )
         assert_matches_type(ModelListResponse, model, path=["response"])

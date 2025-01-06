@@ -72,6 +72,7 @@ class TestCompletions:
             top_logprobs=0,
             top_p=0,
             user="user",
+            cf_ray="CF-RAY",
             x_amz_cf_id="X-Amz-Cf-Id",
             x_delay_time=0,
         )
@@ -172,6 +173,7 @@ class TestAsyncCompletions:
             top_logprobs=0,
             top_p=0,
             user="user",
+            cf_ray="CF-RAY",
             x_amz_cf_id="X-Amz-Cf-Id",
             x_delay_time=0,
         )
