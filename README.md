@@ -28,7 +28,7 @@ Want to experience the power of Cerebras? Check out our [website](https://cerebr
 
 ## Documentation
 
-The REST API documentation can be found on [inference-docs.cerebras.ai](https://inference-docs.cerebras.ai). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [inference-docs.cerebras.ai](https://inference-docs.cerebras.ai/). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 ```
