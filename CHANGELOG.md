@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.18.0 (2025-01-20)
+
+Full Changelog: [v1.16.0...v1.18.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.16.0...v1.18.0)
+
+### Bug Fixes
+
+* **client:** only call .close() when needed ([#357](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/357)) ([331f683](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/331f6835bcec4da99992482753f77a7711801df1))
+* correctly handle deserialising `cls` fields ([#359](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/359)) ([ea9e540](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/ea9e5404ddbaa9b30d2f67e52fa3656669d12e6e))
+
+
+### Chores
+
+* add missing isclass check ([#354](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/354)) ([6081a4d](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/6081a4d7122e32829790ecb4e71c617f44f36a29))
+* **internal:** bump httpx dependency ([#356](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/356)) ([a3e4b85](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/a3e4b858db32cc6491c2e2dd86795205182ef54d))
+* **internal:** codegen related update ([#358](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/358)) ([7314518](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/731451815b959110be38451dcd0272a4040312c9))
+* **internal:** codegen related update ([#360](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/360)) ([a03e1dc](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/a03e1dc78a26c0dc4331bfd3712b4774cd80f5ad))
+
 ## 1.16.0 (2025-01-06)
 
 Full Changelog: [v1.15.0...v1.16.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.15.0...v1.16.0)

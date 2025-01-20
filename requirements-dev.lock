@@ -35,7 +35,7 @@ h11==0.14.0
     # via httpcore
 httpcore==1.0.2
     # via httpx
-httpx==0.25.2
+httpx==0.28.1
     # via cerebras-cloud-sdk
     # via respx
 idna==3.4
@@ -48,7 +48,7 @@ markdown-it-py==3.0.0
     # via rich
 mdurl==0.1.2
     # via markdown-it-py
-mypy==1.13.0
+mypy==1.14.1
 mypy-extensions==1.0.0
     # via mypy
 nest-asyncio==1.6.0
@@ -68,7 +68,7 @@ pydantic-core==2.27.1
     # via pydantic
 pygments==2.18.0
     # via rich
-pyright==1.1.390
+pyright==1.1.392.post0
 pytest==8.3.3
     # via pytest-asyncio
 pytest-asyncio==0.24.0
@@ -76,7 +76,7 @@ python-dateutil==2.8.2
     # via time-machine
 pytz==2023.3.post1
     # via dirty-equals
-respx==0.20.2
+respx==0.22.0
 rich==13.7.1
 ruff==0.6.5
 setuptools==68.2.2
@@ -86,7 +86,6 @@ six==1.16.0
 sniffio==1.3.0
     # via anyio
     # via cerebras-cloud-sdk
-    # via httpx
 time-machine==2.9.0
 tomli==2.0.2
     # via mypy
