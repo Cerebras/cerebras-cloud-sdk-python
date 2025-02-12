@@ -1,7 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import builtins
-from typing import TYPE_CHECKING, List, Union, Optional
+from typing import TYPE_CHECKING, Dict, List, Union, Optional
 from typing_extensions import Literal, TypeAlias
 
 from .._models import BaseModel
@@ -11,8 +11,6 @@ __all__ = [
     "CompletionResponse",
     "CompletionResponseChoice",
     "CompletionResponseChoiceLogprobs",
-    "CompletionResponseChoiceLogprobsContent",
-    "CompletionResponseChoiceLogprobsContentTopLogprobs",
     "CompletionResponseTimeInfo",
     "CompletionResponseUsage",
     "ErrorChunkResponse",
@@ -20,38 +18,14 @@ __all__ = [
 ]
 
 
-class CompletionResponseChoiceLogprobsContentTopLogprobs(BaseModel):
-    token: str
-
-    logprob: float
-
-    bytes: Optional[List[int]] = None
-
-    if TYPE_CHECKING:
-        # Stub to indicate that arbitrary properties are accepted.
-        # To access properties that are not valid identifiers you can use `getattr`, e.g.
-        # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object: ...
-
-
-class CompletionResponseChoiceLogprobsContent(BaseModel):
-    token: str
-
-    logprob: float
-
-    top_logprobs: CompletionResponseChoiceLogprobsContentTopLogprobs
-
-    bytes: Optional[List[int]] = None
-
-    if TYPE_CHECKING:
-        # Stub to indicate that arbitrary properties are accepted.
-        # To access properties that are not valid identifiers you can use `getattr`, e.g.
-        # `getattr(obj, '$type')`
-        def __getattr__(self, attr: str) -> object: ...
-
-
 class CompletionResponseChoiceLogprobs(BaseModel):
-    content: CompletionResponseChoiceLogprobsContent
+    text_offset: Optional[List[int]] = None
+
+    token_logprobs: Optional[List[float]] = None
+
+    tokens: Optional[List[str]] = None
+
+    top_logprobs: Optional[List[Dict[str, float]]] = None
 
     if TYPE_CHECKING:
         # Stub to indicate that arbitrary properties are accepted.

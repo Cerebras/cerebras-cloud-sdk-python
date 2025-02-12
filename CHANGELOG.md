@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.21.0 (2025-02-12)
+
+Full Changelog: [v1.20.0...v1.21.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.20.0...v1.21.0)
+
+### Features
+
+* **api:** Update schema for logprobs ([#382](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/382)) ([c78c203](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/c78c203cd19a31ad9ce75822b31570f32bbe9d17))
+* **client:** send `X-Stainless-Read-Timeout` header ([#379](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/379)) ([0f5bfbd](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/0f5bfbd05b766d10138794e62c934f236460486d))
+
+
+### Chores
+
+* **internal:** bummp ruff dependency ([#377](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/377)) ([0a6120d](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/0a6120da4547b1fe29cab8fb9b02035a34977c4c))
+* **internal:** change default timeout to an int ([#375](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/375)) ([ff60440](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/ff60440ae7dba4759fd44886d127696bb4c4b3a9))
+* **internal:** fix type traversing dictionary params ([#380](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/380)) ([f434008](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/f43400823714f68b23254f42c35c0970333557ca))
+* **internal:** minor type handling changes ([#381](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/381)) ([dc5e456](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/dc5e45660289242b2efc8af5394279153706809f))
+
 ## 1.20.0 (2025-02-03)
 
 Full Changelog: [v1.19.0...v1.20.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.19.0...v1.20.0)

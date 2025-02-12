@@ -15,7 +15,9 @@ __all__ = [
     "ChatCompletionResponseChoiceMessageToolCallFunction",
     "ChatCompletionResponseChoiceLogprobs",
     "ChatCompletionResponseChoiceLogprobsContent",
-    "ChatCompletionResponseChoiceLogprobsContentTopLogprobs",
+    "ChatCompletionResponseChoiceLogprobsContentTopLogprob",
+    "ChatCompletionResponseChoiceLogprobsRefusal",
+    "ChatCompletionResponseChoiceLogprobsRefusalTopLogprob",
     "ChatCompletionResponseTimeInfo",
     "ChatCompletionResponseUsage",
     "ChatChunkResponse",
@@ -25,7 +27,9 @@ __all__ = [
     "ChatChunkResponseChoiceDeltaToolCallFunction",
     "ChatChunkResponseChoiceLogprobs",
     "ChatChunkResponseChoiceLogprobsContent",
-    "ChatChunkResponseChoiceLogprobsContentTopLogprobs",
+    "ChatChunkResponseChoiceLogprobsContentTopLogprob",
+    "ChatChunkResponseChoiceLogprobsRefusal",
+    "ChatChunkResponseChoiceLogprobsRefusalTopLogprob",
     "ChatChunkResponseTimeInfo",
     "ChatChunkResponseUsage",
     "ErrorChunkResponse",
@@ -73,7 +77,7 @@ class ChatCompletionResponseChoiceMessage(BaseModel):
         def __getattr__(self, attr: str) -> object: ...
 
 
-class ChatCompletionResponseChoiceLogprobsContentTopLogprobs(BaseModel):
+class ChatCompletionResponseChoiceLogprobsContentTopLogprob(BaseModel):
     token: str
 
     logprob: float
@@ -92,7 +96,37 @@ class ChatCompletionResponseChoiceLogprobsContent(BaseModel):
 
     logprob: float
 
-    top_logprobs: ChatCompletionResponseChoiceLogprobsContentTopLogprobs
+    top_logprobs: List[ChatCompletionResponseChoiceLogprobsContentTopLogprob]
+
+    bytes: Optional[List[int]] = None
+
+    if TYPE_CHECKING:
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+
+
+class ChatCompletionResponseChoiceLogprobsRefusalTopLogprob(BaseModel):
+    token: str
+
+    logprob: float
+
+    bytes: Optional[List[int]] = None
+
+    if TYPE_CHECKING:
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+
+
+class ChatCompletionResponseChoiceLogprobsRefusal(BaseModel):
+    token: str
+
+    logprob: float
+
+    top_logprobs: List[ChatCompletionResponseChoiceLogprobsRefusalTopLogprob]
 
     bytes: Optional[List[int]] = None
 
@@ -104,7 +138,9 @@ class ChatCompletionResponseChoiceLogprobsContent(BaseModel):
 
 
 class ChatCompletionResponseChoiceLogprobs(BaseModel):
-    content: ChatCompletionResponseChoiceLogprobsContent
+    content: Optional[List[ChatCompletionResponseChoiceLogprobsContent]] = None
+
+    refusal: Optional[List[ChatCompletionResponseChoiceLogprobsRefusal]] = None
 
     if TYPE_CHECKING:
         # Stub to indicate that arbitrary properties are accepted.
@@ -227,7 +263,7 @@ class ChatChunkResponseChoiceDelta(BaseModel):
         def __getattr__(self, attr: str) -> object: ...
 
 
-class ChatChunkResponseChoiceLogprobsContentTopLogprobs(BaseModel):
+class ChatChunkResponseChoiceLogprobsContentTopLogprob(BaseModel):
     token: str
 
     logprob: float
@@ -246,7 +282,37 @@ class ChatChunkResponseChoiceLogprobsContent(BaseModel):
 
     logprob: float
 
-    top_logprobs: ChatChunkResponseChoiceLogprobsContentTopLogprobs
+    top_logprobs: List[ChatChunkResponseChoiceLogprobsContentTopLogprob]
+
+    bytes: Optional[List[int]] = None
+
+    if TYPE_CHECKING:
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+
+
+class ChatChunkResponseChoiceLogprobsRefusalTopLogprob(BaseModel):
+    token: str
+
+    logprob: float
+
+    bytes: Optional[List[int]] = None
+
+    if TYPE_CHECKING:
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+
+
+class ChatChunkResponseChoiceLogprobsRefusal(BaseModel):
+    token: str
+
+    logprob: float
+
+    top_logprobs: List[ChatChunkResponseChoiceLogprobsRefusalTopLogprob]
 
     bytes: Optional[List[int]] = None
 
@@ -258,7 +324,9 @@ class ChatChunkResponseChoiceLogprobsContent(BaseModel):
 
 
 class ChatChunkResponseChoiceLogprobs(BaseModel):
-    content: ChatChunkResponseChoiceLogprobsContent
+    content: Optional[List[ChatChunkResponseChoiceLogprobsContent]] = None
+
+    refusal: Optional[List[ChatChunkResponseChoiceLogprobsRefusal]] = None
 
     if TYPE_CHECKING:
         # Stub to indicate that arbitrary properties are accepted.
