@@ -22,6 +22,7 @@ from pydantic import ValidationError
 
 from cerebras.cloud.sdk import Cerebras, AsyncCerebras, APIResponseValidationError
 from cerebras.cloud.sdk._types import Omit
+from cerebras.cloud.sdk._utils import maybe_transform
 from cerebras.cloud.sdk._models import BaseModel, FinalRequestOptions
 from cerebras.cloud.sdk._constants import RAW_RESPONSE_HEADER
 from cerebras.cloud.sdk._exceptions import CerebrasError, APIStatusError, APITimeoutError, APIResponseValidationError
@@ -31,6 +32,7 @@ from cerebras.cloud.sdk._base_client import (
     BaseClient,
     make_request_options,
 )
+from cerebras.cloud.sdk.types.chat.completion_create_params import CompletionCreateParams
 
 from .utils import update_env
 
@@ -724,14 +726,17 @@ class TestCerebras:
                 "/v1/chat/completions",
                 body=cast(
                     object,
-                    dict(
-                        messages=[
-                            {
-                                "role": "user",
-                                "content": "Why is fast inference important?",
-                            }
-                        ],
-                        model="llama3.1-8b",
+                    maybe_transform(
+                        dict(
+                            messages=[
+                                {
+                                    "role": "user",
+                                    "content": "Why is fast inference important?",
+                                }
+                            ],
+                            model="llama3.1-8b",
+                        ),
+                        CompletionCreateParams,
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -750,14 +755,17 @@ class TestCerebras:
                 "/v1/chat/completions",
                 body=cast(
                     object,
-                    dict(
-                        messages=[
-                            {
-                                "role": "user",
-                                "content": "Why is fast inference important?",
-                            }
-                        ],
-                        model="llama3.1-8b",
+                    maybe_transform(
+                        dict(
+                            messages=[
+                                {
+                                    "role": "user",
+                                    "content": "Why is fast inference important?",
+                                }
+                            ],
+                            model="llama3.1-8b",
+                        ),
+                        CompletionCreateParams,
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -1545,14 +1553,17 @@ class TestAsyncCerebras:
                 "/v1/chat/completions",
                 body=cast(
                     object,
-                    dict(
-                        messages=[
-                            {
-                                "role": "user",
-                                "content": "Why is fast inference important?",
-                            }
-                        ],
-                        model="llama3.1-8b",
+                    maybe_transform(
+                        dict(
+                            messages=[
+                                {
+                                    "role": "user",
+                                    "content": "Why is fast inference important?",
+                                }
+                            ],
+                            model="llama3.1-8b",
+                        ),
+                        CompletionCreateParams,
                     ),
                 ),
                 cast_to=httpx.Response,
@@ -1571,14 +1582,17 @@ class TestAsyncCerebras:
                 "/v1/chat/completions",
                 body=cast(
                     object,
-                    dict(
-                        messages=[
-                            {
-                                "role": "user",
-                                "content": "Why is fast inference important?",
-                            }
-                        ],
-                        model="llama3.1-8b",
+                    maybe_transform(
+                        dict(
+                            messages=[
+                                {
+                                    "role": "user",
+                                    "content": "Why is fast inference important?",
+                                }
+                            ],
+                            model="llama3.1-8b",
+                        ),
+                        CompletionCreateParams,
                     ),
                 ),
                 cast_to=httpx.Response,

@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.22.0 (2025-02-17)
+
+Full Changelog: [v1.21.0...v1.22.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.21.0...v1.22.0)
+
+### Bug Fixes
+
+* asyncify on non-asyncio runtimes ([#386](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/386)) ([d2c1e25](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/d2c1e25ff96cac85737e27ecf55b330d84231413))
+
+
+### Chores
+
+* **internal:** update client tests ([#384](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/384)) ([41d2988](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/41d29887d57be70ea82e8b73d7d862a8f9354c8c))
+
 ## 1.21.0 (2025-02-12)
 
 Full Changelog: [v1.20.0...v1.21.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.20.0...v1.21.0)
