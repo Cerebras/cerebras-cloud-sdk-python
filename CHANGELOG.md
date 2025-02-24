@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.23.0 (2025-02-24)
+
+Full Changelog: [v1.22.0...v1.23.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.22.0...v1.23.0)
+
+### Features
+
+* **client:** allow passing `NotGiven` for body ([#388](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/388)) ([ec539c5](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/ec539c52d67e3c5bc78813dda8a7d2ffd1e6904d))
+
+
+### Bug Fixes
+
+* **client:** mark some request bodies as optional ([ec539c5](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/ec539c52d67e3c5bc78813dda8a7d2ffd1e6904d))
+
+
+### Chores
+
+* **internal:** fix devcontainers setup ([#390](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/390)) ([297b19f](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/297b19fadda5a4b86d09b4033f9483c411b8a42c))
+
 ## 1.22.0 (2025-02-17)
 
 Full Changelog: [v1.21.0...v1.22.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.21.0...v1.22.0)
