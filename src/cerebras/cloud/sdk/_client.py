@@ -85,7 +85,7 @@ class Cerebras(SyncAPIClient):
         _strict_response_validation: bool = False,
         warm_tcp_connection: bool = True,
     ) -> None:
-        """Construct a new synchronous cerebras client instance.
+        """Construct a new synchronous Cerebras client instance.
 
         This automatically infers the `api_key` argument from the `CEREBRAS_API_KEY` environment variable if it is not provided.
         """
@@ -276,7 +276,7 @@ class AsyncCerebras(AsyncAPIClient):
         _strict_response_validation: bool = False,
         warm_tcp_connection: bool = True,
     ) -> None:
-        """Construct a new async cerebras client instance.
+        """Construct a new async AsyncCerebras client instance.
 
         This automatically infers the `api_key` argument from the `CEREBRAS_API_KEY` environment variable if it is not provided.
         """

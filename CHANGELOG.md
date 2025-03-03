@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.24.0 (2025-03-03)
+
+Full Changelog: [v1.23.0...v1.24.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.23.0...v1.24.0)
+
+### Chores
+
+* **docs:** update client docstring ([#396](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/396)) ([8cfb8e7](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/8cfb8e7ba0473cd3f200a3a78c910acb2c4985ff))
+* **internal:** properly set __pydantic_private__ ([#392](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/392)) ([52f83e0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/52f83e09fef5e8472a60a524a01e1c2aec999f23))
+
+
+### Documentation
+
+* update URLs from stainlessapi.com to stainless.com ([#394](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/394)) ([e6acb69](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/e6acb69cf30655d4e185cde9f75ebef9f9937a2e))
+
 ## 1.23.0 (2025-02-24)
 
 Full Changelog: [v1.22.0...v1.23.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.22.0...v1.23.0)
