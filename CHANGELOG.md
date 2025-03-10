@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.25.0 (2025-03-10)
+
+Full Changelog: [v1.24.0...v1.25.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.24.0...v1.25.0)
+
+### Features
+
+* **api:** manual updates ([#400](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/400)) ([28dc9bb](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/28dc9bb19589b98ea0771a672dc96a2545756016))
+
+
+### Chores
+
+* **internal:** remove unused http client options forwarding ([#398](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/398)) ([8186316](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/81863162bd7f2e7de84c0ebd0159b9bb108e575b))
+
 ## 1.24.0 (2025-03-03)
 
 Full Changelog: [v1.23.0...v1.24.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.23.0...v1.24.0)
