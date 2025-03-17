@@ -28,7 +28,7 @@ Want to experience the power of Cerebras? Check out our [website](https://cerebr
 
 ## Documentation
 
-The REST API documentation can be found on [inference-docs.cerebras.ai](https://inference-docs.cerebras.ai/). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [inference-docs.cerebras.ai](https://inference-docs.cerebras.ai). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 ```
@@ -221,6 +221,28 @@ Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typ
 - Converting to a dictionary, `model.to_dict()`
 
 Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
+
+## Nested params
+
+Nested parameters are dictionaries, typed using `TypedDict`, for example:
+
+```python
+from cerebras.cloud.sdk import Cerebras
+
+client = Cerebras()
+
+chat_completion = client.chat.completions.create(
+    messages=[
+        {
+            "content": "content",
+            "role": "system",
+        }
+    ],
+    model="model",
+    stream_options={"include_usage": True},
+)
+print(chat_completion.stream_options)
+```
 
 ## Handling errors
 

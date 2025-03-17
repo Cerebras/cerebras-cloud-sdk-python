@@ -1,6 +1,6 @@
 [project]
 name = "cerebras_cloud_sdk"
-version = "1.25.0"
+version = "1.26.0"
 description = "The official Python library for the cerebras API"
 dynamic = ["readme"]
 license = "Apache-2.0"
@@ -36,7 +36,6 @@ classifiers = [
 [project.urls]
 Homepage = "https://github.com/Cerebras/cerebras-cloud-sdk-python"
 Repository = "https://github.com/Cerebras/cerebras-cloud-sdk-python"
-
 
 
 [tool.rye]
@@ -87,7 +86,7 @@ typecheck = { chain = [
 "typecheck:mypy" = "mypy -p cerebras.cloud.sdk"
 
 [build-system]
-requires = ["hatchling", "hatch-fancy-pypi-readme"]
+requires = ["hatchling==1.26.3", "hatch-fancy-pypi-readme"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build]
@@ -155,7 +154,6 @@ reportImplicitOverride = true
 
 reportImportCycles = false
 reportPrivateUsage = false
-
 
 [tool.ruff]
 line-length = 120
