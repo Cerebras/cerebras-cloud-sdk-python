@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.28.0 (2025-03-31)
+
+Full Changelog: [v1.26.0...v1.28.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.26.0...v1.28.0)
+
+### Bug Fixes
+
+* **ci:** ensure pip is always available ([#409](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/409)) ([98d6e0f](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/98d6e0f87f8eb77b71fb56f78c681b4ba93b408c))
+
+
+### Chores
+
+* fix typos ([#416](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/416)) ([288d843](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/288d843c36573498506957102e3474530a66f58b))
+
 ## 1.26.0 (2025-03-17)
 
 Full Changelog: [v1.25.0...v1.26.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.25.0...v1.26.0)
