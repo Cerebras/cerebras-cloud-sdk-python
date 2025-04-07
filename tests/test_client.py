@@ -1712,7 +1712,7 @@ class TestAsyncCerebras:
         import threading
 
         from cerebras.cloud.sdk._utils import asyncify
-        from cerebras.cloud.sdk._base_client import get_platform 
+        from cerebras.cloud.sdk._base_client import get_platform
 
         async def test_main() -> None:
             result = await asyncify(get_platform)()

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.29.0 (2025-04-07)
+
+Full Changelog: [v1.28.0...v1.29.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.28.0...v1.29.0)
+
+### Chores
+
+* **internal:** remove trailing character ([#418](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/418)) ([d2b242d](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/d2b242d146aad2e6785d8877d4f8131f2ea2d625))
+
 ## 1.28.0 (2025-03-31)
 
 Full Changelog: [v1.26.0...v1.28.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.26.0...v1.28.0)
