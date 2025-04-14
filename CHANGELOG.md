@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.30.0 (2025-04-14)
+
+Full Changelog: [v1.29.0...v1.30.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.29.0...v1.30.0)
+
+### Bug Fixes
+
+* **perf:** optimize some hot paths ([c06533d](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/c06533d5b08937e0b6a8ec245cf5d2fedb0324c7))
+* **perf:** skip traversing types for NotGiven values ([50d47d4](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/50d47d436628939bea5faeff6034f14a0de543ca))
+
+
+### Chores
+
+* **internal:** expand CI branch coverage ([8e7453d](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/8e7453d3ae0ecb516aaa50e0ac2961d3945cd55a))
+* **internal:** reduce CI branch coverage ([8587280](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/8587280968357719993f46dbe0e6194cb2a272e6))
+* **internal:** slight transform perf improvement ([#421](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/issues/421)) ([63678cf](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/63678cf1f6b61f83ced990ace9d1443e7a2b2acc))
+
 ## 1.29.0 (2025-04-07)
 
 Full Changelog: [v1.28.0...v1.29.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.28.0...v1.29.0)
