@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.31.0 (2025-04-21)
+
+Full Changelog: [v1.30.0...v1.31.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.30.0...v1.31.0)
+
+### Chores
+
+* **client:** minor internal fixes ([5990e34](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/5990e34b636ab047784af108fd95052f56ad87c9))
+* **internal:** base client updates ([56a37f9](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/56a37f970fed8bc9f9383a2375ad8ebd7db19c6e))
+* **internal:** bump pyright version ([333b0d1](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/333b0d18477f164970b6f38bfa288ba0e31fb8bf))
+* **internal:** update models test ([c08e4a5](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/c08e4a5c85ce0c8776c6af8919baa4f0de3134c6))
+* **internal:** update pyright settings ([1a0e087](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/1a0e0877eab12776e28b2fc3987b62e9e719d9b7))
+
 ## 1.30.0 (2025-04-14)
 
 Full Changelog: [v1.29.0...v1.30.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.29.0...v1.30.0)
