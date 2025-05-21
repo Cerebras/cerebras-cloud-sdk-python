@@ -13,6 +13,7 @@ __all__ = [
     "CompletionResponseChoiceLogprobs",
     "CompletionResponseTimeInfo",
     "CompletionResponseUsage",
+    "CompletionResponseUsagePromptTokensDetails",
     "ErrorChunkResponse",
     "ErrorChunkResponseError",
 ]
@@ -68,10 +69,22 @@ class CompletionResponseTimeInfo(BaseModel):
         def __getattr__(self, attr: str) -> object: ...
 
 
+class CompletionResponseUsagePromptTokensDetails(BaseModel):
+    cached_tokens: Optional[int] = None
+
+    if TYPE_CHECKING:
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+
+
 class CompletionResponseUsage(BaseModel):
     completion_tokens: Optional[int] = None
 
     prompt_tokens: Optional[int] = None
+
+    prompt_tokens_details: Optional[CompletionResponseUsagePromptTokensDetails] = None
 
     total_tokens: Optional[int] = None
 

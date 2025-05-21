@@ -20,6 +20,7 @@ __all__ = [
     "ChatCompletionResponseChoiceLogprobsRefusalTopLogprob",
     "ChatCompletionResponseTimeInfo",
     "ChatCompletionResponseUsage",
+    "ChatCompletionResponseUsagePromptTokensDetails",
     "ChatChunkResponse",
     "ChatChunkResponseChoice",
     "ChatChunkResponseChoiceDelta",
@@ -32,6 +33,7 @@ __all__ = [
     "ChatChunkResponseChoiceLogprobsRefusalTopLogprob",
     "ChatChunkResponseTimeInfo",
     "ChatChunkResponseUsage",
+    "ChatChunkResponseUsagePromptTokensDetails",
     "ErrorChunkResponse",
     "ErrorChunkResponseError",
 ]
@@ -181,10 +183,22 @@ class ChatCompletionResponseTimeInfo(BaseModel):
         def __getattr__(self, attr: str) -> object: ...
 
 
+class ChatCompletionResponseUsagePromptTokensDetails(BaseModel):
+    cached_tokens: Optional[int] = None
+
+    if TYPE_CHECKING:
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+
+
 class ChatCompletionResponseUsage(BaseModel):
     completion_tokens: Optional[int] = None
 
     prompt_tokens: Optional[int] = None
+
+    prompt_tokens_details: Optional[ChatCompletionResponseUsagePromptTokensDetails] = None
 
     total_tokens: Optional[int] = None
 
@@ -367,10 +381,22 @@ class ChatChunkResponseTimeInfo(BaseModel):
         def __getattr__(self, attr: str) -> object: ...
 
 
+class ChatChunkResponseUsagePromptTokensDetails(BaseModel):
+    cached_tokens: Optional[int] = None
+
+    if TYPE_CHECKING:
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+
+
 class ChatChunkResponseUsage(BaseModel):
     completion_tokens: Optional[int] = None
 
     prompt_tokens: Optional[int] = None
+
+    prompt_tokens_details: Optional[ChatChunkResponseUsagePromptTokensDetails] = None
 
     total_tokens: Optional[int] = None
 

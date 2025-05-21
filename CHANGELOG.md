@@ -1,5 +1,33 @@
 # Changelog
 
+## 1.35.0 (2025-05-21)
+
+Full Changelog: [v1.31.0...v1.35.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.31.0...v1.35.0)
+
+### Features
+
+* **api:** v1.35.0 ([dbd5e33](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/dbd5e33605d378eceae3873092836de683db424c))
+
+
+### Bug Fixes
+
+* **package:** support direct resource imports ([c2f1ff6](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/c2f1ff692f4f518beefb7ce3eea685bb4ea4bb8d))
+* **pydantic v1:** more robust ModelField.annotation check ([800e2c7](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/800e2c734a7c90d5828d53e8adde652bd92b221b))
+
+
+### Chores
+
+* broadly detect json family of content-type headers ([91b5b57](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/91b5b578311103fa5bbb7df361e82db72c23ccbc))
+* **ci:** add timeout thresholds for CI jobs ([6a3f728](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/6a3f7281a5129ec881071933e3b09f553f79d787))
+* **ci:** fix installation instructions ([a2067fa](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/a2067fa16213f4bd83a52cd05160f4f104b58c2f))
+* **ci:** only use depot for staging repos ([878c90f](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/878c90f6f234bff26bf391a0dcfe46d81d2dbdd1))
+* **ci:** upload sdks to package manager ([f48fe6e](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/f48fe6e8da53f90b65469cb8c0f931b489118ac4))
+* **internal:** avoid errors for isinstance checks on proxies ([a2baa26](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/a2baa26820af9404702ee17f52697b4cbe01bf4e))
+* **internal:** codegen related update ([2cf4c90](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/2cf4c903ac83588d63c1df5ecacbecf4c792fed4))
+* **internal:** fix list file params ([e5cc090](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/e5cc09007a60f2bcfc2469c00e70d344e3d51ea5))
+* **internal:** import reformatting ([a919643](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/a91964386f6f557a116d6d4c4d2ac77a8b85bd93))
+* **internal:** refactor retries to not use recursion ([7b2af10](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/7b2af102158969369904eb7cf0a45d48f600852e))
+
 ## 1.31.0 (2025-04-21)
 
 Full Changelog: [v1.30.0...v1.31.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.30.0...v1.31.0)
