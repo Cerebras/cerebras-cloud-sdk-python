@@ -4,6 +4,8 @@ import builtins
 from typing import TYPE_CHECKING, Dict, List, Union, Optional
 from typing_extensions import Literal, TypeAlias
 
+from pydantic import Field as FieldInfo
+
 from .._models import BaseModel
 
 __all__ = [
@@ -28,6 +30,7 @@ class CompletionResponseChoiceLogprobs(BaseModel):
 
     top_logprobs: Optional[List[Dict[str, float]]] = None
 
+    __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
     if TYPE_CHECKING:
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
@@ -46,6 +49,7 @@ class CompletionResponseChoice(BaseModel):
 
     tokens: Optional[List[int]] = None
 
+    __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
     if TYPE_CHECKING:
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
@@ -62,6 +66,7 @@ class CompletionResponseTimeInfo(BaseModel):
 
     total_time: Optional[float] = None
 
+    __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
     if TYPE_CHECKING:
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
@@ -72,6 +77,7 @@ class CompletionResponseTimeInfo(BaseModel):
 class CompletionResponseUsagePromptTokensDetails(BaseModel):
     cached_tokens: Optional[int] = None
 
+    __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
     if TYPE_CHECKING:
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
@@ -88,6 +94,7 @@ class CompletionResponseUsage(BaseModel):
 
     total_tokens: Optional[int] = None
 
+    __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
     if TYPE_CHECKING:
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
@@ -112,6 +119,7 @@ class CompletionResponse(BaseModel):
 
     usage: Optional[CompletionResponseUsage] = None
 
+    __pydantic_extra__: Dict[str, builtins.object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
     if TYPE_CHECKING:
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
@@ -128,6 +136,7 @@ class ErrorChunkResponseError(BaseModel):
 
     type: Optional[str] = None
 
+    __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
     if TYPE_CHECKING:
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.
@@ -140,6 +149,7 @@ class ErrorChunkResponse(BaseModel):
 
     status_code: int
 
+    __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
     if TYPE_CHECKING:
         # Stub to indicate that arbitrary properties are accepted.
         # To access properties that are not valid identifiers you can use `getattr`, e.g.

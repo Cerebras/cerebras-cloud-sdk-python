@@ -1,5 +1,54 @@
 # Changelog
 
+## 1.45.0 (2025-08-01)
+
+Full Changelog: [v1.35.0...v1.45.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.35.0...v1.45.0)
+
+### Features
+
+* clean up environment call outs ([fffc43f](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/fffc43fa553578aae13eec5ad635e7749d6ca724))
+* **client:** add follow_redirects request option ([3226fca](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/3226fca4259a6a420f3edcc8e953b9ec89c6617c))
+* **client:** add support for aiohttp ([28a7cc1](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/28a7cc1f34bcb40023fcf161aece24f1514d2bee))
+* **client:** support file upload requests ([2372a31](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/2372a31a943a6f4d0a5442550030cf1c2e4b98dc))
+
+
+### Bug Fixes
+
+* **ci:** correct conditional ([7d66aaa](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/7d66aaa380cff6e08873f87e86e3bf2a842ef3ac))
+* **ci:** release-doctor — report correct token name ([fd6a83a](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/fd6a83a3c6d5df6a8ddfe10f5c8180aa38f12e28))
+* **client:** correctly parse binary response | stream ([76ca6a7](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/76ca6a730c778a3e4288fc4055d860cab9c24d2e))
+* **client:** don't send Content-Type header on GET requests ([b8fe414](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/b8fe414d2adc4bdcbdf2885e8993a012b1b2de48))
+* **parsing:** correctly handle nested discriminated unions ([46bed22](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/46bed227a2bc4ef17aad9d26342e50e5092955d5))
+* **parsing:** ignore empty metadata ([236987f](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/236987f27fa35d41f8135d6fd132240f9a44a9b5))
+* **parsing:** parse extra field types ([681170c](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/681170cdd5a2f397af15b621bd4311b5b76d060b))
+* **tests:** fix: tests which call HTTP endpoints directly with the example parameters ([50b794e](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/50b794e0c3efba7594e825e59a4f7bd534038dec))
+
+
+### Chores
+
+* change publish docs url ([73a9957](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/73a9957a38f3bb822a24236a654bc37a1f2fafee))
+* **ci:** change upload type ([874eae9](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/874eae9b1febe2b981c1098762298066de7b92ce))
+* **ci:** enable for pull requests ([466161c](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/466161c2d20768cfe8db5039abd49de82067b93f))
+* **ci:** only run for pushes and fork pull requests ([a390df9](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/a390df94880385b771fcf1d974feb1917a7f9a2b))
+* **docs:** grammar improvements ([cabe1bc](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/cabe1bc343fc059d9fec3258067c5c79c9b64449))
+* **docs:** remove reference to rye shell ([87cbac5](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/87cbac5e7524204d042ebcaa0ad6a60fb0714bb8))
+* **docs:** remove unnecessary param examples ([b151d50](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/b151d50fa38f9c39182765025c9685c750edf268))
+* **internal:** bump pinned h11 dep ([ee33096](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/ee3309667226706bb602c0fdae21168fdd19a611))
+* **internal:** codegen related update ([3c14770](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/3c147702213aa92219d48e62d5cbb96315435cd1))
+* **internal:** update conftest.py ([d15fb3d](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/d15fb3d4969cba33e07d2075087e436cdf3fa20b))
+* **package:** mark python 3.13 as supported ([24a4ea7](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/24a4ea74be0b75aacdfb4cc9cb2a4ff62d9113c2))
+* **project:** add settings file for vscode ([f5695e9](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/f5695e9e3e46fc907a0e0d7105e22cc95b561bf1))
+* **readme:** fix version rendering on pypi ([26640e0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/26640e0dd2c284614727e9c4b88ea67df755376e))
+* **readme:** update badges ([9ba0335](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/9ba033525f74f62fb828aaf95e6d3a03a4d5c66d))
+* **tests:** add tests for httpx client instantiation & proxies ([9ac8199](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/9ac819921be1ebb410acfcb2e9b1cad3ed42856f))
+* **tests:** run tests in parallel ([4bf2213](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/4bf2213588354b2d79d5944ec72c2a32c6d2ebe1))
+* **tests:** skip some failing tests on the latest python versions ([33cc261](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/33cc2612a647f882154a89c246887f531189ae9f))
+
+
+### Documentation
+
+* **client:** fix httpx.Timeout documentation reference ([6de3527](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/6de3527ad12985afe01fc4647756575623a004f1))
+
 ## 1.35.0 (2025-05-21)
 
 Full Changelog: [v1.31.0...v1.35.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.31.0...v1.35.0)

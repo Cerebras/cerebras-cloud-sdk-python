@@ -1,6 +1,7 @@
 # Cerebras Python API library
 
-[![PyPI version](https://img.shields.io/pypi/v/cerebras_cloud_sdk.svg)](https://pypi.org/project/cerebras_cloud_sdk/)
+<!-- prettier-ignore -->
+[![PyPI version](https://img.shields.io/pypi/v/cerebras_cloud_sdk.svg?label=pypi%20(stable))](https://pypi.org/project/cerebras_cloud_sdk/)
 
 The Cerebras Python library provides convenient access to the Cerebras REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
@@ -126,6 +127,44 @@ asyncio.run(main())
 
 Functionality between the synchronous and asynchronous clients is otherwise identical.
 
+### With aiohttp
+
+By default, the async client uses `httpx` for HTTP requests. However, for improved concurrency performance you may also use `aiohttp` as the HTTP backend.
+
+You can enable this by installing `aiohttp`:
+
+```sh
+# install from the production repo
+pip install 'cerebras_cloud_sdk[aiohttp] @ git+ssh://git@github.com/Cerebras/cerebras-cloud-sdk-python-private.git'
+```
+
+Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
+
+```python
+import asyncio
+from cerebras.cloud.sdk import DefaultAioHttpClient
+from cerebras.cloud.sdk import AsyncCerebras
+
+
+async def main() -> None:
+    async with AsyncCerebras(
+        api_key="My API Key",
+        http_client=DefaultAioHttpClient(),
+    ) as client:
+        chat_completion = await client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": "Why is fast inference important?",
+                }
+            ],
+            model="llama3.1-8b",
+        )
+
+
+asyncio.run(main())
+```
+
 ## Streaming responses
 
 We provide support for streaming responses using Server Side Events (SSE).
@@ -239,7 +278,7 @@ chat_completion = client.chat.completions.create(
         }
     ],
     model="model",
-    stream_options={"include_usage": True},
+    stream_options={},
 )
 print(chat_completion.stream_options)
 ```
@@ -327,7 +366,7 @@ client.with_options(max_retries=5).chat.completions.create(
 ### Timeouts
 
 By default requests time out after 1 minute. You can configure this with a `timeout` option,
-which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/#fine-tuning-the-configuration) object:
+which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:
 
 <!-- RUN TEST: Timeout -->
 ```python
