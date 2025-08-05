@@ -60,6 +60,7 @@ class CompletionsResource(SyncAPIResource):
         n: Optional[int] | NotGiven = NOT_GIVEN,
         parallel_tool_calls: Optional[bool] | NotGiven = NOT_GIVEN,
         presence_penalty: Optional[float] | NotGiven = NOT_GIVEN,
+        reasoning_effort: Optional[Literal["low", "medium", "high"]] | NotGiven = NOT_GIVEN,
         response_format: Optional[completion_create_params.ResponseFormat] | NotGiven = NOT_GIVEN,
         seed: Optional[int] | NotGiven = NOT_GIVEN,
         service_tier: Optional[Literal["auto", "default"]] | NotGiven = NOT_GIVEN,
@@ -127,6 +128,11 @@ class CompletionsResource(SyncAPIResource):
               whether they appear in the text so far, increasing the model's likelihood to
               talk about new topics.
 
+          reasoning_effort: Constrains effort on reasoning for reasoning models. Currently supported values
+              are low, medium, and high. Reducing reasoning effort can result in faster
+              responses and fewer tokens used on reasoning in a response. If set to None, the
+              model will use the default reasoning effort for the model.
+
           seed: If specified, our system will make a best effort to sample deterministically,
               such that repeated requests with the same `seed` and parameters should return
               the same result. Determinism is not guaranteed.
@@ -187,6 +193,7 @@ class CompletionsResource(SyncAPIResource):
                         "n": n,
                         "parallel_tool_calls": parallel_tool_calls,
                         "presence_penalty": presence_penalty,
+                        "reasoning_effort": reasoning_effort,
                         "response_format": response_format,
                         "seed": seed,
                         "service_tier": service_tier,
@@ -247,6 +254,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
         n: Optional[int] | NotGiven = NOT_GIVEN,
         parallel_tool_calls: Optional[bool] | NotGiven = NOT_GIVEN,
         presence_penalty: Optional[float] | NotGiven = NOT_GIVEN,
+        reasoning_effort: Optional[Literal["low", "medium", "high"]] | NotGiven = NOT_GIVEN,
         response_format: Optional[completion_create_params.ResponseFormat] | NotGiven = NOT_GIVEN,
         seed: Optional[int] | NotGiven = NOT_GIVEN,
         service_tier: Optional[Literal["auto", "default"]] | NotGiven = NOT_GIVEN,
@@ -314,6 +322,11 @@ class AsyncCompletionsResource(AsyncAPIResource):
               whether they appear in the text so far, increasing the model's likelihood to
               talk about new topics.
 
+          reasoning_effort: Constrains effort on reasoning for reasoning models. Currently supported values
+              are low, medium, and high. Reducing reasoning effort can result in faster
+              responses and fewer tokens used on reasoning in a response. If set to None, the
+              model will use the default reasoning effort for the model.
+
           seed: If specified, our system will make a best effort to sample deterministically,
               such that repeated requests with the same `seed` and parameters should return
               the same result. Determinism is not guaranteed.
@@ -374,6 +387,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
                         "n": n,
                         "parallel_tool_calls": parallel_tool_calls,
                         "presence_penalty": presence_penalty,
+                        "reasoning_effort": reasoning_effort,
                         "response_format": response_format,
                         "seed": seed,
                         "service_tier": service_tier,

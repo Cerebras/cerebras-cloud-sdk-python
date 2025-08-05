@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.46.0 (2025-08-05)
+
+Full Changelog: [v1.45.0...v1.46.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.45.0...v1.46.0)
+
+### Features
+
+* **api:** v1.46.0 ([c37e994](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/c37e99486e8b48bf1e26a2e5e6e72b6207b637ca))
+
 ## 1.45.0 (2025-08-01)
 
 Full Changelog: [v1.35.0...v1.45.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.35.0...v1.45.0)

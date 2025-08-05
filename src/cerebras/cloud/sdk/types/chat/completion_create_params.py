@@ -104,6 +104,14 @@ class CompletionCreateParams(TypedDict, total=False):
     far, increasing the model's likelihood to talk about new topics.
     """
 
+    reasoning_effort: Optional[Literal["low", "medium", "high"]]
+    """Constrains effort on reasoning for reasoning models.
+
+    Currently supported values are low, medium, and high. Reducing reasoning effort
+    can result in faster responses and fewer tokens used on reasoning in a response.
+    If set to None, the model will use the default reasoning effort for the model.
+    """
+
     response_format: Optional[ResponseFormat]
 
     seed: Optional[int]
@@ -213,6 +221,7 @@ class MessageAssistantMessageRequestToolCallTyped(TypedDict, total=False):
     id: Required[str]
 
     function: Required[MessageAssistantMessageRequestToolCallFunction]
+    """Non-streaming only. Represents a function call in an assistant tool call."""
 
     type: Required[Literal["function"]]
 
@@ -223,11 +232,13 @@ MessageAssistantMessageRequestToolCall: TypeAlias = Union[
 
 
 class MessageAssistantMessageRequestTyped(TypedDict, total=False):
-    role: Required[Literal["assistant"]]
-
     content: Optional[str]
 
     name: Optional[str]
+
+    reasoning: Optional[str]
+
+    role: Literal["assistant"]
 
     tool_calls: Optional[Iterable[MessageAssistantMessageRequestToolCall]]
 

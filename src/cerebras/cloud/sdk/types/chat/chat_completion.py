@@ -58,6 +58,7 @@ class ChatCompletionResponseChoiceMessageToolCall(BaseModel):
     id: str
 
     function: ChatCompletionResponseChoiceMessageToolCallFunction
+    """Non-streaming only. Represents a function call in an assistant tool call."""
 
     type: Literal["function"]
 
@@ -73,6 +74,8 @@ class ChatCompletionResponseChoiceMessage(BaseModel):
     role: Literal["assistant", "user", "system", "tool"]
 
     content: Optional[str] = None
+
+    reasoning: Optional[str] = None
 
     tool_calls: Optional[List[ChatCompletionResponseChoiceMessageToolCall]] = None
 
@@ -251,9 +254,9 @@ class ChatCompletionResponse(BaseModel):
 
 
 class ChatChunkResponseChoiceDeltaToolCallFunction(BaseModel):
-    arguments: str
+    arguments: Optional[str] = None
 
-    name: str
+    name: Optional[str] = None
 
     __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
     if TYPE_CHECKING:
@@ -264,11 +267,12 @@ class ChatChunkResponseChoiceDeltaToolCallFunction(BaseModel):
 
 
 class ChatChunkResponseChoiceDeltaToolCall(BaseModel):
-    id: str
-
     function: ChatChunkResponseChoiceDeltaToolCallFunction
+    """Streaming only. Represents a function in an assistant tool call."""
 
     type: Literal["function"]
+
+    id: Optional[str] = None
 
     index: Optional[int] = None
 
@@ -282,6 +286,8 @@ class ChatChunkResponseChoiceDeltaToolCall(BaseModel):
 
 class ChatChunkResponseChoiceDelta(BaseModel):
     content: Optional[str] = None
+
+    reasoning: Optional[str] = None
 
     role: Optional[Literal["assistant", "user", "system", "tool"]] = None
 
