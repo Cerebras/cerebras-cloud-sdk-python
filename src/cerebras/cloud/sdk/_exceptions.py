@@ -6,6 +6,10 @@ from typing_extensions import Literal
 
 import httpx
 
+from ._utils import (
+    is_mapping,
+)
+
 __all__ = [
     "BadRequestError",
     "AuthenticationError",
@@ -61,9 +65,16 @@ class APIStatusError(APIError):
     status_code: int
 
     def __init__(self, message: str, *, response: httpx.Response, body: object | None) -> None:
-        super().__init__(message, response.request, body=body)
+        super().__init__(
+            message,
+            response.request,
+            # Cerebras includes error message in `error` field of response payload.
+            body=body.get("error", body) if is_mapping(body) else body,
+        )
         self.response = response
-        self.status_code = response.status_code
+
+        body_status_code = body.get("status_code") if is_mapping(body) else None
+        self.status_code = body_status_code if isinstance(body_status_code, int) else response.status_code
 
 
 class APIConnectionError(APIError):

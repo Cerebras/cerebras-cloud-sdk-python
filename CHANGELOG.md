@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.49.0 (2025-08-28)
+
+Full Changelog: [v1.46.0...v1.49.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.46.0...v1.49.0)
+
+### Bug Fixes
+
+* avoid newer type syntax ([05f5146](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/05f5146971fc88a329ff917efbd6e9bdea19742d))
+
+
+### Chores
+
+* **internal:** change ci workflow machines ([26c3ada](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/26c3ada8fdb28c0c87dfcf443584548532903f6b))
+* **internal:** fix ruff target version ([c97eab5](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/c97eab59a78a87d58d9aaede959fc448561257a3))
+* **internal:** update comment in script ([1e0c668](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/1e0c66841ec90f1c580d5f07ebbbeec7f68a5f7c))
+* **internal:** update pyright exclude list ([8c4fbad](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/8c4fbad056690ca71f13c43120e8de254664560c))
+* update @stainless-api/prism-cli to v5.15.0 ([2d41cb2](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/2d41cb248cdc1856166d505a5d6ef0c63d324726))
+* update github action ([ff279b0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/ff279b098d2a861a4d70d6f2c31d31f4ace3a286))
+
 ## 1.46.0 (2025-08-05)
 
 Full Changelog: [v1.45.0...v1.46.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.45.0...v1.46.0)

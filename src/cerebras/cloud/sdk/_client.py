@@ -395,36 +395,34 @@ class AsyncCerebras(AsyncAPIClient):
         body: object,
         response: httpx.Response,
     ) -> APIStatusError:
-        data = body.get("error", body) if is_mapping(body) else body
-
         # Need to do it this way so the linter doesn't complain about the type of the status code.
         body_status_code = body.get("status_code") if is_mapping(body) else None
         status_code = body_status_code if isinstance(body_status_code, int) else response.status_code
 
         if status_code == 400:
-            return _exceptions.BadRequestError(err_msg, response=response, body=data)
+            return _exceptions.BadRequestError(err_msg, response=response, body=body)
 
         if status_code == 401:
-            return _exceptions.AuthenticationError(err_msg, response=response, body=data)
+            return _exceptions.AuthenticationError(err_msg, response=response, body=body)
 
         if status_code == 403:
-            return _exceptions.PermissionDeniedError(err_msg, response=response, body=data)
+            return _exceptions.PermissionDeniedError(err_msg, response=response, body=body)
 
         if status_code == 404:
-            return _exceptions.NotFoundError(err_msg, response=response, body=data)
+            return _exceptions.NotFoundError(err_msg, response=response, body=body)
 
         if status_code == 409:
-            return _exceptions.ConflictError(err_msg, response=response, body=data)
+            return _exceptions.ConflictError(err_msg, response=response, body=body)
 
         if status_code == 422:
-            return _exceptions.UnprocessableEntityError(err_msg, response=response, body=data)
+            return _exceptions.UnprocessableEntityError(err_msg, response=response, body=body)
 
         if status_code == 429:
-            return _exceptions.RateLimitError(err_msg, response=response, body=data)
+            return _exceptions.RateLimitError(err_msg, response=response, body=body)
 
         if status_code >= 500:
-            return _exceptions.InternalServerError(err_msg, response=response, body=data)
-        return APIStatusError(err_msg, response=response, body=data)
+            return _exceptions.InternalServerError(err_msg, response=response, body=body)
+        return APIStatusError(err_msg, response=response, body=body)
 
 
 class CerebrasWithRawResponse:
