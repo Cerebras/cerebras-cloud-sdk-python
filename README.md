@@ -273,7 +273,7 @@ client = Cerebras()
 chat_completion = client.chat.completions.create(
     messages=[
         {
-            "content": "content",
+            "content": "string",
             "role": "system",
         }
     ],

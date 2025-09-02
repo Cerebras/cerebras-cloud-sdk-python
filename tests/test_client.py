@@ -725,7 +725,7 @@ class TestCerebras:
             client.chat.completions.with_streaming_response.create(
                 messages=[
                     {
-                        "content": "content",
+                        "content": "string",
                         "role": "system",
                     }
                 ],
@@ -743,7 +743,7 @@ class TestCerebras:
             client.chat.completions.with_streaming_response.create(
                 messages=[
                     {
-                        "content": "content",
+                        "content": "string",
                         "role": "system",
                     }
                 ],
@@ -771,7 +771,7 @@ class TestCerebras:
         response = client.chat.completions.with_raw_response.create(
             messages=[
                 {
-                    "content": "content",
+                    "content": "string",
                     "role": "system",
                 }
             ],
@@ -803,7 +803,7 @@ class TestCerebras:
         response = client.chat.completions.with_raw_response.create(
             messages=[
                 {
-                    "content": "content",
+                    "content": "string",
                     "role": "system",
                 }
             ],
@@ -835,7 +835,7 @@ class TestCerebras:
         response = client.chat.completions.with_raw_response.create(
             messages=[
                 {
-                    "content": "content",
+                    "content": "string",
                     "role": "system",
                 }
             ],
@@ -1581,7 +1581,7 @@ class TestAsyncCerebras:
             await async_client.chat.completions.with_streaming_response.create(
                 messages=[
                     {
-                        "content": "content",
+                        "content": "string",
                         "role": "system",
                     }
                 ],
@@ -1601,7 +1601,7 @@ class TestAsyncCerebras:
             await async_client.chat.completions.with_streaming_response.create(
                 messages=[
                     {
-                        "content": "content",
+                        "content": "string",
                         "role": "system",
                     }
                 ],
@@ -1632,7 +1632,7 @@ class TestAsyncCerebras:
         response = await client.chat.completions.with_raw_response.create(
             messages=[
                 {
-                    "content": "content",
+                    "content": "string",
                     "role": "system",
                 }
             ],
@@ -1665,7 +1665,7 @@ class TestAsyncCerebras:
         response = await client.chat.completions.with_raw_response.create(
             messages=[
                 {
-                    "content": "content",
+                    "content": "string",
                     "role": "system",
                 }
             ],
@@ -1698,7 +1698,7 @@ class TestAsyncCerebras:
         response = await client.chat.completions.with_raw_response.create(
             messages=[
                 {
-                    "content": "content",
+                    "content": "string",
                     "role": "system",
                 }
             ],

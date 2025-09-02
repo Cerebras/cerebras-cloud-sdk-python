@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.50.0 (2025-09-02)
+
+Full Changelog: [v1.49.0...v1.50.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.49.0...v1.50.0)
+
+### Features
+
+* **api:** v.1.50.0 ([39f1917](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/39f19172f04d6668aed8f09e0a3af7258aa51796))
+
+
+### Chores
+
+* **internal:** add Sequence related utils ([2b791f9](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/2b791f9dce2b9c4434706da505488eb3770c7752))
+
 ## 1.49.0 (2025-08-28)
 
 Full Changelog: [v1.46.0...v1.49.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.46.0...v1.49.0)

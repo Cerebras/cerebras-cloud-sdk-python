@@ -11,9 +11,11 @@ __all__ = [
     "CompletionCreateParams",
     "Message",
     "MessageSystemMessageRequest",
+    "MessageSystemMessageRequestContentUnionMember1",
     "MessageUserMessageRequest",
     "MessageUserMessageRequestContentUnionMember1",
     "MessageAssistantMessageRequest",
+    "MessageAssistantMessageRequestContentUnionMember1",
     "MessageAssistantMessageRequestToolCall",
     "MessageAssistantMessageRequestToolCallFunction",
     "MessageToolMessageRequest",
@@ -173,8 +175,19 @@ class CompletionCreateParams(TypedDict, total=False):
     x_delay_time: Annotated[float, PropertyInfo(alias="X-delay-time")]
 
 
+class MessageSystemMessageRequestContentUnionMember1Typed(TypedDict, total=False):
+    text: Required[str]
+
+    type: Required[Literal["text"]]
+
+
+MessageSystemMessageRequestContentUnionMember1: TypeAlias = Union[
+    MessageSystemMessageRequestContentUnionMember1Typed, Dict[str, object]
+]
+
+
 class MessageSystemMessageRequestTyped(TypedDict, total=False):
-    content: Required[str]
+    content: Required[Union[str, Iterable[MessageSystemMessageRequestContentUnionMember1]]]
 
     role: Required[Literal["system"]]
 
@@ -206,6 +219,17 @@ class MessageUserMessageRequestTyped(TypedDict, total=False):
 MessageUserMessageRequest: TypeAlias = Union[MessageUserMessageRequestTyped, Dict[str, object]]
 
 
+class MessageAssistantMessageRequestContentUnionMember1Typed(TypedDict, total=False):
+    text: Required[str]
+
+    type: Required[Literal["text"]]
+
+
+MessageAssistantMessageRequestContentUnionMember1: TypeAlias = Union[
+    MessageAssistantMessageRequestContentUnionMember1Typed, Dict[str, object]
+]
+
+
 class MessageAssistantMessageRequestToolCallFunctionTyped(TypedDict, total=False):
     arguments: Required[str]
 
@@ -232,7 +256,7 @@ MessageAssistantMessageRequestToolCall: TypeAlias = Union[
 
 
 class MessageAssistantMessageRequestTyped(TypedDict, total=False):
-    content: Optional[str]
+    content: Union[str, Iterable[MessageAssistantMessageRequestContentUnionMember1], None]
 
     name: Optional[str]
 
@@ -247,8 +271,6 @@ MessageAssistantMessageRequest: TypeAlias = Union[MessageAssistantMessageRequest
 
 
 class MessageToolMessageRequestTyped(TypedDict, total=False):
-    content: Required[str]
-
     role: Required[Literal["tool"]]
 
     tool_call_id: Required[str]
