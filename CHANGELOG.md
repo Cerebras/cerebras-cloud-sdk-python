@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.50.1 (2025-09-02)
+
+Full Changelog: [v1.50.0...v1.50.1](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.50.0...v1.50.1)
+
 ## 1.50.0 (2025-09-02)
 
 Full Changelog: [v1.49.0...v1.50.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.49.0...v1.50.0)

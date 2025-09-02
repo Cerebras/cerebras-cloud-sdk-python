@@ -134,8 +134,7 @@ By default, the async client uses `httpx` for HTTP requests. However, for improv
 You can enable this by installing `aiohttp`:
 
 ```sh
-# install from the production repo
-pip install 'cerebras_cloud_sdk[aiohttp] @ git+ssh://git@github.com/Cerebras/cerebras-cloud-sdk-python-private.git'
+pip install 'cerebras_cloud_sdk[aiohttp]'
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
