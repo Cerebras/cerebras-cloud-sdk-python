@@ -1,5 +1,31 @@
 # Changelog
 
+## 1.56.1 (2025-10-15)
+
+Full Changelog: [v1.50.1...v1.56.1](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.50.1...v1.56.1)
+
+### Features
+
+* **api:** v1.56.1 ([4612537](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/4612537f1c6ffb8bda5bce247b85e2a953f7cea5))
+* improve future compat with pydantic v3 ([076c666](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/076c66637d9b28833bdad45fe5bde8a0f47f6f29))
+* **types:** replace List[str] with SequenceNotStr in params ([e73a305](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/e73a305a0b4d28459af1933793f27c5fa9b1e5db))
+
+
+### Bug Fixes
+
+* **compat:** compat with `pydantic&lt;2.8.0` when using additional fields ([492b957](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/492b9571a369a0ba2f7b9cdd9efce52c3f82ffc0))
+* do not set headers with default to omit ([6abd4da](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/6abd4daffca5b1d6e8313cd8d0858eea2fc7b296))
+
+
+### Chores
+
+* do not install brew dependencies in ./scripts/bootstrap by default ([21f9131](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/21f91312e82e6a49eae8999532e86363d809f5c1))
+* **internal:** detect missing future annotations with ruff ([01e6039](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/01e603902c26a9383b9aa8c7415fd802db45f4a7))
+* **internal:** move mypy configurations to `pyproject.toml` file ([2d24239](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/2d242391c3be1fc9668fcd070819815216573042))
+* **internal:** update pydantic dependency ([e71c1f4](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/e71c1f40d3c392e86ed7288d2b9b662a10c9d2f3))
+* **tests:** simplify `get_platform` test ([aec0f1b](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/aec0f1bc2adf4cbc51e0006b7f4bcec57065baab))
+* **types:** change optional parameter type from NotGiven to Omit ([2f5f7ef](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/2f5f7ef6b2115fd459805a7c7fc5101ca8f7bf67))
+
 ## 1.50.1 (2025-09-02)
 
 Full Changelog: [v1.50.0...v1.50.1](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.50.0...v1.50.1)

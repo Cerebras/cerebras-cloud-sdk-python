@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from typing import Any, List, Union, Iterable, Optional, cast
+from typing import Any, Union, Iterable, Optional, cast
 from typing_extensions import Literal
 
 import httpx
 
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import is_given, maybe_transform, strip_not_given, async_maybe_transform
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
@@ -50,45 +50,49 @@ class CompletionsResource(SyncAPIResource):
         *,
         messages: Iterable[completion_create_params.Message],
         model: str,
-        frequency_penalty: Optional[float] | NotGiven = NOT_GIVEN,
-        logit_bias: Optional[object] | NotGiven = NOT_GIVEN,
-        logprobs: Optional[bool] | NotGiven = NOT_GIVEN,
-        max_completion_tokens: Optional[int] | NotGiven = NOT_GIVEN,
-        max_tokens: Optional[int] | NotGiven = NOT_GIVEN,
-        min_completion_tokens: Optional[int] | NotGiven = NOT_GIVEN,
-        min_tokens: Optional[int] | NotGiven = NOT_GIVEN,
-        n: Optional[int] | NotGiven = NOT_GIVEN,
-        parallel_tool_calls: Optional[bool] | NotGiven = NOT_GIVEN,
-        presence_penalty: Optional[float] | NotGiven = NOT_GIVEN,
-        reasoning_effort: Optional[Literal["low", "medium", "high"]] | NotGiven = NOT_GIVEN,
-        response_format: Optional[completion_create_params.ResponseFormat] | NotGiven = NOT_GIVEN,
-        seed: Optional[int] | NotGiven = NOT_GIVEN,
-        service_tier: Optional[Literal["auto", "default"]] | NotGiven = NOT_GIVEN,
-        stop: Union[str, List[str], None] | NotGiven = NOT_GIVEN,
-        stream: Optional[bool] | NotGiven = NOT_GIVEN,
-        stream_options: Optional[completion_create_params.StreamOptions] | NotGiven = NOT_GIVEN,
-        temperature: Optional[float] | NotGiven = NOT_GIVEN,
-        tool_choice: Optional[completion_create_params.ToolChoice] | NotGiven = NOT_GIVEN,
-        tools: Optional[Iterable[completion_create_params.Tool]] | NotGiven = NOT_GIVEN,
-        top_logprobs: Optional[int] | NotGiven = NOT_GIVEN,
-        top_p: Optional[float] | NotGiven = NOT_GIVEN,
-        user: Optional[str] | NotGiven = NOT_GIVEN,
-        cf_ray: str | NotGiven = NOT_GIVEN,
-        x_amz_cf_id: str | NotGiven = NOT_GIVEN,
-        x_delay_time: float | NotGiven = NOT_GIVEN,
+        disable_reasoning: Optional[bool] | Omit = omit,
+        frequency_penalty: Optional[float] | Omit = omit,
+        logit_bias: Optional[object] | Omit = omit,
+        logprobs: Optional[bool] | Omit = omit,
+        max_completion_tokens: Optional[int] | Omit = omit,
+        max_tokens: Optional[int] | Omit = omit,
+        min_completion_tokens: Optional[int] | Omit = omit,
+        min_tokens: Optional[int] | Omit = omit,
+        n: Optional[int] | Omit = omit,
+        parallel_tool_calls: Optional[bool] | Omit = omit,
+        presence_penalty: Optional[float] | Omit = omit,
+        reasoning_effort: Optional[Literal["low", "medium", "high"]] | Omit = omit,
+        response_format: Optional[completion_create_params.ResponseFormat] | Omit = omit,
+        seed: Optional[int] | Omit = omit,
+        service_tier: Optional[Literal["auto", "default", "flex", "priority"]] | Omit = omit,
+        stop: Union[str, SequenceNotStr[str], None] | Omit = omit,
+        stream: Optional[bool] | Omit = omit,
+        stream_options: Optional[completion_create_params.StreamOptions] | Omit = omit,
+        temperature: Optional[float] | Omit = omit,
+        tool_choice: Optional[completion_create_params.ToolChoice] | Omit = omit,
+        tools: Optional[Iterable[completion_create_params.Tool]] | Omit = omit,
+        top_logprobs: Optional[int] | Omit = omit,
+        top_p: Optional[float] | Omit = omit,
+        user: Optional[str] | Omit = omit,
+        cf_ray: str | Omit = omit,
+        x_amz_cf_id: str | Omit = omit,
+        x_delay_time: float | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ChatCompletion | Stream[ChatCompletion]:
         """Chat
 
         Args:
-          frequency_penalty: Number between -2.0 and 2.0.
+          disable_reasoning: Disables reasoning for reasoning models.
 
-        Positive values penalize new tokens based on their
+        If set to True, the model will not use
+              any reasoning in its response.
+
+          frequency_penalty: Number between -2.0 and 2.0. Positive values penalize new tokens based on their
               existing frequency in the text so far, decreasing the model's likelihood to
               repeat the same line verbatim.
 
@@ -170,7 +174,7 @@ class CompletionsResource(SyncAPIResource):
                 {
                     "CF-RAY": cf_ray,
                     "X-Amz-Cf-Id": x_amz_cf_id,
-                    "X-delay-time": str(x_delay_time) if is_given(x_delay_time) else NOT_GIVEN,
+                    "X-delay-time": str(x_delay_time) if is_given(x_delay_time) else not_given,
                 }
             ),
             **(extra_headers or {}),
@@ -183,6 +187,7 @@ class CompletionsResource(SyncAPIResource):
                     {
                         "messages": messages,
                         "model": model,
+                        "disable_reasoning": disable_reasoning,
                         "frequency_penalty": frequency_penalty,
                         "logit_bias": logit_bias,
                         "logprobs": logprobs,
@@ -244,45 +249,49 @@ class AsyncCompletionsResource(AsyncAPIResource):
         *,
         messages: Iterable[completion_create_params.Message],
         model: str,
-        frequency_penalty: Optional[float] | NotGiven = NOT_GIVEN,
-        logit_bias: Optional[object] | NotGiven = NOT_GIVEN,
-        logprobs: Optional[bool] | NotGiven = NOT_GIVEN,
-        max_completion_tokens: Optional[int] | NotGiven = NOT_GIVEN,
-        max_tokens: Optional[int] | NotGiven = NOT_GIVEN,
-        min_completion_tokens: Optional[int] | NotGiven = NOT_GIVEN,
-        min_tokens: Optional[int] | NotGiven = NOT_GIVEN,
-        n: Optional[int] | NotGiven = NOT_GIVEN,
-        parallel_tool_calls: Optional[bool] | NotGiven = NOT_GIVEN,
-        presence_penalty: Optional[float] | NotGiven = NOT_GIVEN,
-        reasoning_effort: Optional[Literal["low", "medium", "high"]] | NotGiven = NOT_GIVEN,
-        response_format: Optional[completion_create_params.ResponseFormat] | NotGiven = NOT_GIVEN,
-        seed: Optional[int] | NotGiven = NOT_GIVEN,
-        service_tier: Optional[Literal["auto", "default"]] | NotGiven = NOT_GIVEN,
-        stop: Union[str, List[str], None] | NotGiven = NOT_GIVEN,
-        stream: Optional[bool] | NotGiven = NOT_GIVEN,
-        stream_options: Optional[completion_create_params.StreamOptions] | NotGiven = NOT_GIVEN,
-        temperature: Optional[float] | NotGiven = NOT_GIVEN,
-        tool_choice: Optional[completion_create_params.ToolChoice] | NotGiven = NOT_GIVEN,
-        tools: Optional[Iterable[completion_create_params.Tool]] | NotGiven = NOT_GIVEN,
-        top_logprobs: Optional[int] | NotGiven = NOT_GIVEN,
-        top_p: Optional[float] | NotGiven = NOT_GIVEN,
-        user: Optional[str] | NotGiven = NOT_GIVEN,
-        cf_ray: str | NotGiven = NOT_GIVEN,
-        x_amz_cf_id: str | NotGiven = NOT_GIVEN,
-        x_delay_time: float | NotGiven = NOT_GIVEN,
+        disable_reasoning: Optional[bool] | Omit = omit,
+        frequency_penalty: Optional[float] | Omit = omit,
+        logit_bias: Optional[object] | Omit = omit,
+        logprobs: Optional[bool] | Omit = omit,
+        max_completion_tokens: Optional[int] | Omit = omit,
+        max_tokens: Optional[int] | Omit = omit,
+        min_completion_tokens: Optional[int] | Omit = omit,
+        min_tokens: Optional[int] | Omit = omit,
+        n: Optional[int] | Omit = omit,
+        parallel_tool_calls: Optional[bool] | Omit = omit,
+        presence_penalty: Optional[float] | Omit = omit,
+        reasoning_effort: Optional[Literal["low", "medium", "high"]] | Omit = omit,
+        response_format: Optional[completion_create_params.ResponseFormat] | Omit = omit,
+        seed: Optional[int] | Omit = omit,
+        service_tier: Optional[Literal["auto", "default", "flex", "priority"]] | Omit = omit,
+        stop: Union[str, SequenceNotStr[str], None] | Omit = omit,
+        stream: Optional[bool] | Omit = omit,
+        stream_options: Optional[completion_create_params.StreamOptions] | Omit = omit,
+        temperature: Optional[float] | Omit = omit,
+        tool_choice: Optional[completion_create_params.ToolChoice] | Omit = omit,
+        tools: Optional[Iterable[completion_create_params.Tool]] | Omit = omit,
+        top_logprobs: Optional[int] | Omit = omit,
+        top_p: Optional[float] | Omit = omit,
+        user: Optional[str] | Omit = omit,
+        cf_ray: str | Omit = omit,
+        x_amz_cf_id: str | Omit = omit,
+        x_delay_time: float | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ChatCompletion | AsyncStream[ChatCompletion]:
         """Chat
 
         Args:
-          frequency_penalty: Number between -2.0 and 2.0.
+          disable_reasoning: Disables reasoning for reasoning models.
 
-        Positive values penalize new tokens based on their
+        If set to True, the model will not use
+              any reasoning in its response.
+
+          frequency_penalty: Number between -2.0 and 2.0. Positive values penalize new tokens based on their
               existing frequency in the text so far, decreasing the model's likelihood to
               repeat the same line verbatim.
 
@@ -364,7 +373,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
                 {
                     "CF-RAY": cf_ray,
                     "X-Amz-Cf-Id": x_amz_cf_id,
-                    "X-delay-time": str(x_delay_time) if is_given(x_delay_time) else NOT_GIVEN,
+                    "X-delay-time": str(x_delay_time) if is_given(x_delay_time) else not_given,
                 }
             ),
             **(extra_headers or {}),
@@ -377,6 +386,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
                     {
                         "messages": messages,
                         "model": model,
+                        "disable_reasoning": disable_reasoning,
                         "frequency_penalty": frequency_penalty,
                         "logit_bias": logit_bias,
                         "logprobs": logprobs,

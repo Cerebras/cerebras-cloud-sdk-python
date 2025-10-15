@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Dict, List, Union, Iterable, Optional
+from typing import Dict, Union, Iterable, Optional
 from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
 
+from ..._types import SequenceNotStr
 from ..._utils import PropertyInfo
 
 __all__ = [
@@ -37,6 +38,12 @@ class CompletionCreateParams(TypedDict, total=False):
     messages: Required[Iterable[Message]]
 
     model: Required[str]
+
+    disable_reasoning: Optional[bool]
+    """Disables reasoning for reasoning models.
+
+    If set to True, the model will not use any reasoning in its response.
+    """
 
     frequency_penalty: Optional[float]
     """Number between -2.0 and 2.0.
@@ -123,9 +130,9 @@ class CompletionCreateParams(TypedDict, total=False):
     the same result. Determinism is not guaranteed.
     """
 
-    service_tier: Optional[Literal["auto", "default"]]
+    service_tier: Optional[Literal["auto", "default", "flex", "priority"]]
 
-    stop: Union[str, List[str], None]
+    stop: Union[str, SequenceNotStr[str], None]
     """Up to 4 sequences where the API will stop generating further tokens.
 
     The returned text will not contain the stop sequence.

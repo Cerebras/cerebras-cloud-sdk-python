@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from typing import Any, List, Union, Iterable, Optional, cast
+from typing import Any, Union, Iterable, Optional, cast
 
 import httpx
 
 from ..types import completion_create_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import is_given, maybe_transform, strip_not_given, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -48,35 +48,35 @@ class CompletionsResource(SyncAPIResource):
         self,
         *,
         model: str,
-        best_of: Optional[int] | NotGiven = NOT_GIVEN,
-        echo: Optional[bool] | NotGiven = NOT_GIVEN,
-        frequency_penalty: Optional[float] | NotGiven = NOT_GIVEN,
-        grammar_root: Optional[str] | NotGiven = NOT_GIVEN,
-        logit_bias: Optional[object] | NotGiven = NOT_GIVEN,
-        logprobs: Optional[bool] | NotGiven = NOT_GIVEN,
-        max_tokens: Optional[int] | NotGiven = NOT_GIVEN,
-        min_tokens: Optional[int] | NotGiven = NOT_GIVEN,
-        n: Optional[int] | NotGiven = NOT_GIVEN,
-        presence_penalty: Optional[float] | NotGiven = NOT_GIVEN,
-        prompt: Union[str, List[str], Iterable[int], Iterable[Iterable[int]]] | NotGiven = NOT_GIVEN,
-        return_raw_tokens: Optional[bool] | NotGiven = NOT_GIVEN,
-        seed: Optional[int] | NotGiven = NOT_GIVEN,
-        stop: Union[str, List[str], None] | NotGiven = NOT_GIVEN,
-        stream: Optional[bool] | NotGiven = NOT_GIVEN,
-        stream_options: Optional[completion_create_params.StreamOptions] | NotGiven = NOT_GIVEN,
-        suffix: Optional[str] | NotGiven = NOT_GIVEN,
-        temperature: Optional[float] | NotGiven = NOT_GIVEN,
-        top_p: Optional[float] | NotGiven = NOT_GIVEN,
-        user: Optional[str] | NotGiven = NOT_GIVEN,
-        cf_ray: str | NotGiven = NOT_GIVEN,
-        x_amz_cf_id: str | NotGiven = NOT_GIVEN,
-        x_delay_time: float | NotGiven = NOT_GIVEN,
+        best_of: Optional[int] | Omit = omit,
+        echo: Optional[bool] | Omit = omit,
+        frequency_penalty: Optional[float] | Omit = omit,
+        grammar_root: Optional[str] | Omit = omit,
+        logit_bias: Optional[object] | Omit = omit,
+        logprobs: Union[int, bool, None] | Omit = omit,
+        max_tokens: Optional[int] | Omit = omit,
+        min_tokens: Optional[int] | Omit = omit,
+        n: Optional[int] | Omit = omit,
+        presence_penalty: Optional[float] | Omit = omit,
+        prompt: Union[str, SequenceNotStr[str], Iterable[int], Iterable[Iterable[int]]] | Omit = omit,
+        return_raw_tokens: Optional[bool] | Omit = omit,
+        seed: Optional[int] | Omit = omit,
+        stop: Union[str, SequenceNotStr[str], None] | Omit = omit,
+        stream: Optional[bool] | Omit = omit,
+        stream_options: Optional[completion_create_params.StreamOptions] | Omit = omit,
+        suffix: Optional[str] | Omit = omit,
+        temperature: Optional[float] | Omit = omit,
+        top_p: Optional[float] | Omit = omit,
+        user: Optional[str] | Omit = omit,
+        cf_ray: str | Omit = omit,
+        x_amz_cf_id: str | Omit = omit,
+        x_delay_time: float | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Completion | Stream[Completion]:
         """
         Completions
@@ -107,9 +107,10 @@ class CompletionsResource(SyncAPIResource):
               increase likelihood of selection; values like -100 or 100 should result in a ban
               or exclusive selection of the relevant token.
 
-          logprobs: Whether to return log probabilities of the output tokens or not. If true,
-              returns the log probabilities of each output token returned in the content of
-              message.
+          logprobs: Include the log probabilities on the logprobs most likely output tokens, as well
+              the chosen tokens. For example, if logprobs is 5, the API will return a list of
+              the 5 most likely tokens. The API will always return the logprob of the sampled
+              token, so there may be up to logprobs+1 elements in the response.
 
           max_tokens: The maximum number of tokens that can be generated in the chat completion. The
               total length of input tokens and generated tokens is limited by the model's
@@ -168,7 +169,7 @@ class CompletionsResource(SyncAPIResource):
                 {
                     "CF-RAY": cf_ray,
                     "X-Amz-Cf-Id": x_amz_cf_id,
-                    "X-delay-time": str(x_delay_time) if is_given(x_delay_time) else NOT_GIVEN,
+                    "X-delay-time": str(x_delay_time) if is_given(x_delay_time) else not_given,
                 }
             ),
             **(extra_headers or {}),
@@ -237,35 +238,35 @@ class AsyncCompletionsResource(AsyncAPIResource):
         self,
         *,
         model: str,
-        best_of: Optional[int] | NotGiven = NOT_GIVEN,
-        echo: Optional[bool] | NotGiven = NOT_GIVEN,
-        frequency_penalty: Optional[float] | NotGiven = NOT_GIVEN,
-        grammar_root: Optional[str] | NotGiven = NOT_GIVEN,
-        logit_bias: Optional[object] | NotGiven = NOT_GIVEN,
-        logprobs: Optional[bool] | NotGiven = NOT_GIVEN,
-        max_tokens: Optional[int] | NotGiven = NOT_GIVEN,
-        min_tokens: Optional[int] | NotGiven = NOT_GIVEN,
-        n: Optional[int] | NotGiven = NOT_GIVEN,
-        presence_penalty: Optional[float] | NotGiven = NOT_GIVEN,
-        prompt: Union[str, List[str], Iterable[int], Iterable[Iterable[int]]] | NotGiven = NOT_GIVEN,
-        return_raw_tokens: Optional[bool] | NotGiven = NOT_GIVEN,
-        seed: Optional[int] | NotGiven = NOT_GIVEN,
-        stop: Union[str, List[str], None] | NotGiven = NOT_GIVEN,
-        stream: Optional[bool] | NotGiven = NOT_GIVEN,
-        stream_options: Optional[completion_create_params.StreamOptions] | NotGiven = NOT_GIVEN,
-        suffix: Optional[str] | NotGiven = NOT_GIVEN,
-        temperature: Optional[float] | NotGiven = NOT_GIVEN,
-        top_p: Optional[float] | NotGiven = NOT_GIVEN,
-        user: Optional[str] | NotGiven = NOT_GIVEN,
-        cf_ray: str | NotGiven = NOT_GIVEN,
-        x_amz_cf_id: str | NotGiven = NOT_GIVEN,
-        x_delay_time: float | NotGiven = NOT_GIVEN,
+        best_of: Optional[int] | Omit = omit,
+        echo: Optional[bool] | Omit = omit,
+        frequency_penalty: Optional[float] | Omit = omit,
+        grammar_root: Optional[str] | Omit = omit,
+        logit_bias: Optional[object] | Omit = omit,
+        logprobs: Union[int, bool, None] | Omit = omit,
+        max_tokens: Optional[int] | Omit = omit,
+        min_tokens: Optional[int] | Omit = omit,
+        n: Optional[int] | Omit = omit,
+        presence_penalty: Optional[float] | Omit = omit,
+        prompt: Union[str, SequenceNotStr[str], Iterable[int], Iterable[Iterable[int]]] | Omit = omit,
+        return_raw_tokens: Optional[bool] | Omit = omit,
+        seed: Optional[int] | Omit = omit,
+        stop: Union[str, SequenceNotStr[str], None] | Omit = omit,
+        stream: Optional[bool] | Omit = omit,
+        stream_options: Optional[completion_create_params.StreamOptions] | Omit = omit,
+        suffix: Optional[str] | Omit = omit,
+        temperature: Optional[float] | Omit = omit,
+        top_p: Optional[float] | Omit = omit,
+        user: Optional[str] | Omit = omit,
+        cf_ray: str | Omit = omit,
+        x_amz_cf_id: str | Omit = omit,
+        x_delay_time: float | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Completion | AsyncStream[Completion]:
         """
         Completions
@@ -296,9 +297,10 @@ class AsyncCompletionsResource(AsyncAPIResource):
               increase likelihood of selection; values like -100 or 100 should result in a ban
               or exclusive selection of the relevant token.
 
-          logprobs: Whether to return log probabilities of the output tokens or not. If true,
-              returns the log probabilities of each output token returned in the content of
-              message.
+          logprobs: Include the log probabilities on the logprobs most likely output tokens, as well
+              the chosen tokens. For example, if logprobs is 5, the API will return a list of
+              the 5 most likely tokens. The API will always return the logprob of the sampled
+              token, so there may be up to logprobs+1 elements in the response.
 
           max_tokens: The maximum number of tokens that can be generated in the chat completion. The
               total length of input tokens and generated tokens is limited by the model's
@@ -357,7 +359,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
                 {
                     "CF-RAY": cf_ray,
                     "X-Amz-Cf-Id": x_amz_cf_id,
-                    "X-delay-time": str(x_delay_time) if is_given(x_delay_time) else NOT_GIVEN,
+                    "X-delay-time": str(x_delay_time) if is_given(x_delay_time) else not_given,
                 }
             ),
             **(extra_headers or {}),

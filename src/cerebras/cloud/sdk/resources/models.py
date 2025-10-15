@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import httpx
 
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from .._utils import strip_not_given
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -45,14 +45,14 @@ class ModelsResource(SyncAPIResource):
         self,
         model_id: str,
         *,
-        cf_ray: str | NotGiven = NOT_GIVEN,
-        x_amz_cf_id: str | NotGiven = NOT_GIVEN,
+        cf_ray: str | Omit = omit,
+        x_amz_cf_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ModelRetrieveResponse:
         """
         Get Model
@@ -88,14 +88,14 @@ class ModelsResource(SyncAPIResource):
     def list(
         self,
         *,
-        cf_ray: str | NotGiven = NOT_GIVEN,
-        x_amz_cf_id: str | NotGiven = NOT_GIVEN,
+        cf_ray: str | Omit = omit,
+        x_amz_cf_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ModelListResponse:
         """
         List Models
@@ -151,14 +151,14 @@ class AsyncModelsResource(AsyncAPIResource):
         self,
         model_id: str,
         *,
-        cf_ray: str | NotGiven = NOT_GIVEN,
-        x_amz_cf_id: str | NotGiven = NOT_GIVEN,
+        cf_ray: str | Omit = omit,
+        x_amz_cf_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ModelRetrieveResponse:
         """
         Get Model
@@ -194,14 +194,14 @@ class AsyncModelsResource(AsyncAPIResource):
     async def list(
         self,
         *,
-        cf_ray: str | NotGiven = NOT_GIVEN,
-        x_amz_cf_id: str | NotGiven = NOT_GIVEN,
+        cf_ray: str | Omit = omit,
+        x_amz_cf_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ModelListResponse:
         """
         List Models

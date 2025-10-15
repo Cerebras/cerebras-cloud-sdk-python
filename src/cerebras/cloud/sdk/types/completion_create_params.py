@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Dict, List, Union, Iterable, Optional
+from typing import Dict, Union, Iterable, Optional
 from typing_extensions import Required, Annotated, TypeAlias, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
 __all__ = ["CompletionCreateParams", "StreamOptions"]
@@ -48,11 +49,12 @@ class CompletionCreateParams(TypedDict, total=False):
     or exclusive selection of the relevant token.
     """
 
-    logprobs: Optional[bool]
-    """Whether to return log probabilities of the output tokens or not.
-
-    If true, returns the log probabilities of each output token returned in the
-    content of message.
+    logprobs: Union[int, bool, None]
+    """
+    Include the log probabilities on the logprobs most likely output tokens, as well
+    the chosen tokens. For example, if logprobs is 5, the API will return a list of
+    the 5 most likely tokens. The API will always return the logprob of the sampled
+    token, so there may be up to logprobs+1 elements in the response.
     """
 
     max_tokens: Optional[int]
@@ -83,7 +85,7 @@ class CompletionCreateParams(TypedDict, total=False):
     far, increasing the model's likelihood to talk about new topics.
     """
 
-    prompt: Union[str, List[str], Iterable[int], Iterable[Iterable[int]]]
+    prompt: Union[str, SequenceNotStr[str], Iterable[int], Iterable[Iterable[int]]]
     """
     The prompt(s) to generate completions for, encoded as a string, array of
     strings, array of tokens, or array of token arrays.
@@ -99,7 +101,7 @@ class CompletionCreateParams(TypedDict, total=False):
     the same result. Determinism is not guaranteed.
     """
 
-    stop: Union[str, List[str], None]
+    stop: Union[str, SequenceNotStr[str], None]
     """Up to 4 sequences where the API will stop generating further tokens.
 
     The returned text will not contain the stop sequence.

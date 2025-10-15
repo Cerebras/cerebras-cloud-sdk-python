@@ -41,6 +41,7 @@ class TestCompletions:
                 }
             ],
             model="model",
+            disable_reasoning=True,
             frequency_penalty=-2,
             logit_bias={},
             logprobs=True,
@@ -145,6 +146,7 @@ class TestAsyncCompletions:
                 }
             ],
             model="model",
+            disable_reasoning=True,
             frequency_penalty=-2,
             logit_bias={},
             logprobs=True,
