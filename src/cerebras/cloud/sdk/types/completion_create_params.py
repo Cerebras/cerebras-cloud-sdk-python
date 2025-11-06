@@ -14,6 +14,12 @@ __all__ = ["CompletionCreateParams", "StreamOptions"]
 class CompletionCreateParams(TypedDict, total=False):
     model: Required[str]
 
+    prompt: Required[Union[str, SequenceNotStr[str], Iterable[int], Iterable[Iterable[int]]]]
+    """
+    The prompt(s) to generate completions for, encoded as a string, array of
+    strings, array of tokens, or array of token arrays.
+    """
+
     best_of: Optional[int]
     """
     Generates `best_of` completions server-side and returns the "best" (the one with
@@ -49,7 +55,7 @@ class CompletionCreateParams(TypedDict, total=False):
     or exclusive selection of the relevant token.
     """
 
-    logprobs: Union[int, bool, None]
+    logprobs: Optional[int]
     """
     Include the log probabilities on the logprobs most likely output tokens, as well
     the chosen tokens. For example, if logprobs is 5, the API will return a list of
@@ -85,12 +91,6 @@ class CompletionCreateParams(TypedDict, total=False):
     far, increasing the model's likelihood to talk about new topics.
     """
 
-    prompt: Union[str, SequenceNotStr[str], Iterable[int], Iterable[Iterable[int]]]
-    """
-    The prompt(s) to generate completions for, encoded as a string, array of
-    strings, array of tokens, or array of token arrays.
-    """
-
     return_raw_tokens: Optional[bool]
     """Return raw tokens instead of text"""
 
@@ -110,6 +110,7 @@ class CompletionCreateParams(TypedDict, total=False):
     stream: Optional[bool]
 
     stream_options: Optional[StreamOptions]
+    """Options for streaming."""
 
     suffix: Optional[str]
     """The suffix that comes after a completion of inserted text.

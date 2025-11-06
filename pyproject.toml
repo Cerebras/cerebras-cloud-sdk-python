@@ -1,6 +1,6 @@
 [project]
 name = "cerebras_cloud_sdk"
-version = "1.56.1"
+version = "1.59.0"
 description = "The official Python library for the cerebras API"
 dynamic = ["readme"]
 license = "Apache-2.0"
@@ -39,7 +39,7 @@ Homepage = "https://github.com/Cerebras/cerebras-cloud-sdk-python"
 Repository = "https://github.com/Cerebras/cerebras-cloud-sdk-python"
 
 [project.optional-dependencies]
-aiohttp = ["aiohttp", "httpx_aiohttp>=0.1.8"]
+aiohttp = ["aiohttp", "httpx_aiohttp>=0.1.9"]
 
 [tool.rye]
 managed = true

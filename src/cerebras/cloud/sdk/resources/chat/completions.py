@@ -48,7 +48,6 @@ class CompletionsResource(SyncAPIResource):
     def create(
         self,
         *,
-        messages: Iterable[completion_create_params.Message],
         model: str,
         disable_reasoning: Optional[bool] | Omit = omit,
         frequency_penalty: Optional[float] | Omit = omit,
@@ -56,10 +55,12 @@ class CompletionsResource(SyncAPIResource):
         logprobs: Optional[bool] | Omit = omit,
         max_completion_tokens: Optional[int] | Omit = omit,
         max_tokens: Optional[int] | Omit = omit,
+        messages: Optional[Iterable[completion_create_params.Message]] | Omit = omit,
         min_completion_tokens: Optional[int] | Omit = omit,
         min_tokens: Optional[int] | Omit = omit,
         n: Optional[int] | Omit = omit,
         parallel_tool_calls: Optional[bool] | Omit = omit,
+        prediction: Optional[completion_create_params.Prediction] | Omit = omit,
         presence_penalty: Optional[float] | Omit = omit,
         reasoning_effort: Optional[Literal["low", "medium", "high"]] | Omit = omit,
         response_format: Optional[completion_create_params.ResponseFormat] | Omit = omit,
@@ -128,6 +129,10 @@ class CompletionsResource(SyncAPIResource):
               you will be charged based on the number of generated tokens across all of the
               choices. Keep n as 1 to minimize costs.
 
+          prediction: Configuration for a Predicted Output, which can greatly improve response times
+              when large parts of the model response are known ahead of time. This is most
+              common when regenerating a file with only minor changes to most of the content.
+
           presence_penalty: Number between -2.0 and 2.0. Positive values penalize new tokens based on
               whether they appear in the text so far, increasing the model's likelihood to
               talk about new topics.
@@ -137,6 +142,8 @@ class CompletionsResource(SyncAPIResource):
               responses and fewer tokens used on reasoning in a response. If set to None, the
               model will use the default reasoning effort for the model.
 
+          response_format: A response format for text.
+
           seed: If specified, our system will make a best effort to sample deterministically,
               such that repeated requests with the same `seed` and parameters should return
               the same result. Determinism is not guaranteed.
@@ -144,10 +151,14 @@ class CompletionsResource(SyncAPIResource):
           stop: Up to 4 sequences where the API will stop generating further tokens. The
               returned text will not contain the stop sequence.
 
+          stream_options: Options for streaming.
+
           temperature: What sampling temperature to use, between 0 and 1.5. Higher values like 0.8 will
               make the output more random, while lower values like 0.2 will make it more
               focused and deterministic. We generally recommend altering this or `top_p` but
               not both.
+
+          tool_choice: A choice object.
 
           top_logprobs: An integer between 0 and 20 specifying the number of most likely tokens to
               return at each token position, each with an associated log probability. logprobs
@@ -185,7 +196,6 @@ class CompletionsResource(SyncAPIResource):
                 "/v1/chat/completions",
                 body=maybe_transform(
                     {
-                        "messages": messages,
                         "model": model,
                         "disable_reasoning": disable_reasoning,
                         "frequency_penalty": frequency_penalty,
@@ -193,10 +203,12 @@ class CompletionsResource(SyncAPIResource):
                         "logprobs": logprobs,
                         "max_completion_tokens": max_completion_tokens,
                         "max_tokens": max_tokens,
+                        "messages": messages,
                         "min_completion_tokens": min_completion_tokens,
                         "min_tokens": min_tokens,
                         "n": n,
                         "parallel_tool_calls": parallel_tool_calls,
+                        "prediction": prediction,
                         "presence_penalty": presence_penalty,
                         "reasoning_effort": reasoning_effort,
                         "response_format": response_format,
@@ -247,7 +259,6 @@ class AsyncCompletionsResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        messages: Iterable[completion_create_params.Message],
         model: str,
         disable_reasoning: Optional[bool] | Omit = omit,
         frequency_penalty: Optional[float] | Omit = omit,
@@ -255,10 +266,12 @@ class AsyncCompletionsResource(AsyncAPIResource):
         logprobs: Optional[bool] | Omit = omit,
         max_completion_tokens: Optional[int] | Omit = omit,
         max_tokens: Optional[int] | Omit = omit,
+        messages: Optional[Iterable[completion_create_params.Message]] | Omit = omit,
         min_completion_tokens: Optional[int] | Omit = omit,
         min_tokens: Optional[int] | Omit = omit,
         n: Optional[int] | Omit = omit,
         parallel_tool_calls: Optional[bool] | Omit = omit,
+        prediction: Optional[completion_create_params.Prediction] | Omit = omit,
         presence_penalty: Optional[float] | Omit = omit,
         reasoning_effort: Optional[Literal["low", "medium", "high"]] | Omit = omit,
         response_format: Optional[completion_create_params.ResponseFormat] | Omit = omit,
@@ -327,6 +340,10 @@ class AsyncCompletionsResource(AsyncAPIResource):
               you will be charged based on the number of generated tokens across all of the
               choices. Keep n as 1 to minimize costs.
 
+          prediction: Configuration for a Predicted Output, which can greatly improve response times
+              when large parts of the model response are known ahead of time. This is most
+              common when regenerating a file with only minor changes to most of the content.
+
           presence_penalty: Number between -2.0 and 2.0. Positive values penalize new tokens based on
               whether they appear in the text so far, increasing the model's likelihood to
               talk about new topics.
@@ -336,6 +353,8 @@ class AsyncCompletionsResource(AsyncAPIResource):
               responses and fewer tokens used on reasoning in a response. If set to None, the
               model will use the default reasoning effort for the model.
 
+          response_format: A response format for text.
+
           seed: If specified, our system will make a best effort to sample deterministically,
               such that repeated requests with the same `seed` and parameters should return
               the same result. Determinism is not guaranteed.
@@ -343,10 +362,14 @@ class AsyncCompletionsResource(AsyncAPIResource):
           stop: Up to 4 sequences where the API will stop generating further tokens. The
               returned text will not contain the stop sequence.
 
+          stream_options: Options for streaming.
+
           temperature: What sampling temperature to use, between 0 and 1.5. Higher values like 0.8 will
               make the output more random, while lower values like 0.2 will make it more
               focused and deterministic. We generally recommend altering this or `top_p` but
               not both.
+
+          tool_choice: A choice object.
 
           top_logprobs: An integer between 0 and 20 specifying the number of most likely tokens to
               return at each token position, each with an associated log probability. logprobs
@@ -384,7 +407,6 @@ class AsyncCompletionsResource(AsyncAPIResource):
                 "/v1/chat/completions",
                 body=await async_maybe_transform(
                     {
-                        "messages": messages,
                         "model": model,
                         "disable_reasoning": disable_reasoning,
                         "frequency_penalty": frequency_penalty,
@@ -392,10 +414,12 @@ class AsyncCompletionsResource(AsyncAPIResource):
                         "logprobs": logprobs,
                         "max_completion_tokens": max_completion_tokens,
                         "max_tokens": max_tokens,
+                        "messages": messages,
                         "min_completion_tokens": min_completion_tokens,
                         "min_tokens": min_tokens,
                         "n": n,
                         "parallel_tool_calls": parallel_tool_calls,
+                        "prediction": prediction,
                         "presence_penalty": presence_penalty,
                         "reasoning_effort": reasoning_effort,
                         "response_format": response_format,

@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.59.0 (2025-11-06)
+
+Full Changelog: [v1.56.1...v1.59.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.56.1...v1.59.0)
+
+### Features
+
+* **api:** v1.57.0 ([c479c00](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/c479c008f94774048dd080bc08392edcff90dc13))
+* **api:** v1.59.0 ([9dc7e43](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/9dc7e434a98a2252c5b72d2915c3f217c2e1374c))
+
+
+### Bug Fixes
+
+* **client:** close streams without requiring full consumption ([cfc81cd](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/cfc81cde8c34aa137cedf406dadcb4568f7583d0))
+
+
+### Chores
+
+* bump `httpx-aiohttp` version to 0.1.9 ([17fe461](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/17fe461acd40d24ed2501ec656267e685932b7c6))
+* **internal/tests:** avoid race condition with implicit client cleanup ([a0577f3](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/a0577f396aaa54f7d50e1c17286ccc32684d3c2c))
+* **internal:** grammar fix (it's -&gt; its) ([bb42463](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/bb42463abb6c7e73d5a60262a309a958838bbc87))
+
 ## 1.56.1 (2025-10-15)
 
 Full Changelog: [v1.50.1...v1.56.1](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.50.1...v1.56.1)

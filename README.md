@@ -57,13 +57,13 @@ client = Cerebras(
 )
 
 chat_completion = client.chat.completions.create(
+    model="llama3.1-8b",
     messages=[
         {
             "role": "user",
             "content": "Why is fast inference important?",
         }
     ],
-    model="llama3.1-8b",
 )
 
 print(chat_completion)
@@ -111,13 +111,13 @@ client = AsyncCerebras(
 
 async def main() -> None:
     chat_completion = await client.chat.completions.create(
+        model="llama3.1-8b",
         messages=[
             {
                 "role": "user",
                 "content": "Why is fast inference important?",
             }
         ],
-        model="llama3.1-8b",
     )
     print(chat_completion)
 
@@ -151,13 +151,13 @@ async def main() -> None:
         http_client=DefaultAioHttpClient(),
     ) as client:
         chat_completion = await client.chat.completions.create(
+            model="llama3.1-8b",
             messages=[
                 {
                     "role": "user",
                     "content": "Why is fast inference important?",
                 }
             ],
-            model="llama3.1-8b",
         )
 
 
@@ -270,16 +270,13 @@ from cerebras.cloud.sdk import Cerebras
 client = Cerebras()
 
 chat_completion = client.chat.completions.create(
-    messages=[
-        {
-            "content": "string",
-            "role": "system",
-        }
-    ],
     model="model",
-    stream_options={},
+    prediction={
+        "content": "string",
+        "type": "content",
+    },
 )
-print(chat_completion.stream_options)
+print(chat_completion.prediction)
 ```
 
 ## Handling errors
@@ -300,13 +297,13 @@ client = Cerebras()
 
 try:
     client.chat.completions.create(
+        model="some-model-that-doesnt-exist",
         messages=[
             {
                 "role": "user",
                 "content": "This should cause an error!",
             }
         ],
-        model="some-model-that-doesnt-exist",
     )
 except cerebras.cloud.sdk.APIConnectionError as e:
     print("The server could not be reached")
@@ -352,13 +349,13 @@ client = Cerebras(
 
 # Or, configure per-request:
 client.with_options(max_retries=5).chat.completions.create(
+    model="llama3.1-8b",
     messages=[
         {
             "role": "user",
             "content": "Why is fast inference important?",
         }
     ],
-    model="llama3.1-8b",
 )
 ```
 
@@ -385,13 +382,13 @@ client = Cerebras(
 
 # Override per-request:
 client.with_options(timeout=5.0).chat.completions.create(
+    model="llama3.1-8b",
     messages=[
         {
             "role": "user",
             "content": "Why is fast inference important?",
         }
     ],
-    model="llama3.1-8b",
 )
 ```
 
@@ -435,11 +432,11 @@ from cerebras.cloud.sdk import Cerebras
 
 client = Cerebras()
 response = client.chat.completions.with_raw_response.create(
+    model="llama3.1-8b",
     messages=[{
         "role": "user",
         "content": "Why is fast inference important?",
     }],
-    model="llama3.1-8b",
 )
 print(response.headers.get('X-My-Header'))
 
@@ -460,13 +457,13 @@ To stream the response body, use `.with_streaming_response` instead, which requi
 
 ```python
 with client.chat.completions.with_streaming_response.create(
+    model="llama3.1-8b",
     messages=[
         {
             "role": "user",
             "content": "Why is fast inference important?",
         }
     ],
-    model="llama3.1-8b",
 ) as response:
     print(response.headers.get("X-My-Header"))
 

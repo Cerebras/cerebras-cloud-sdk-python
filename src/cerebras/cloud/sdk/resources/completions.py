@@ -48,17 +48,17 @@ class CompletionsResource(SyncAPIResource):
         self,
         *,
         model: str,
+        prompt: Union[str, SequenceNotStr[str], Iterable[int], Iterable[Iterable[int]]],
         best_of: Optional[int] | Omit = omit,
         echo: Optional[bool] | Omit = omit,
         frequency_penalty: Optional[float] | Omit = omit,
         grammar_root: Optional[str] | Omit = omit,
         logit_bias: Optional[object] | Omit = omit,
-        logprobs: Union[int, bool, None] | Omit = omit,
+        logprobs: Optional[int] | Omit = omit,
         max_tokens: Optional[int] | Omit = omit,
         min_tokens: Optional[int] | Omit = omit,
         n: Optional[int] | Omit = omit,
         presence_penalty: Optional[float] | Omit = omit,
-        prompt: Union[str, SequenceNotStr[str], Iterable[int], Iterable[Iterable[int]]] | Omit = omit,
         return_raw_tokens: Optional[bool] | Omit = omit,
         seed: Optional[int] | Omit = omit,
         stop: Union[str, SequenceNotStr[str], None] | Omit = omit,
@@ -82,6 +82,9 @@ class CompletionsResource(SyncAPIResource):
         Completions
 
         Args:
+          prompt: The prompt(s) to generate completions for, encoded as a string, array of
+              strings, array of tokens, or array of token arrays.
+
           best_of: Generates `best_of` completions server-side and returns the "best" (the one with
               the highest log probability per token). Results cannot be streamed. When used
               with `n`, `best_of` controls the number of candidate completions and `n`
@@ -128,9 +131,6 @@ class CompletionsResource(SyncAPIResource):
               whether they appear in the text so far, increasing the model's likelihood to
               talk about new topics.
 
-          prompt: The prompt(s) to generate completions for, encoded as a string, array of
-              strings, array of tokens, or array of token arrays.
-
           return_raw_tokens: Return raw tokens instead of text
 
           seed: If specified, our system will make a best effort to sample deterministically,
@@ -139,6 +139,8 @@ class CompletionsResource(SyncAPIResource):
 
           stop: Up to 4 sequences where the API will stop generating further tokens. The
               returned text will not contain the stop sequence.
+
+          stream_options: Options for streaming.
 
           suffix: The suffix that comes after a completion of inserted text. (OpenAI feature, not
               supported)
@@ -181,6 +183,7 @@ class CompletionsResource(SyncAPIResource):
                 body=maybe_transform(
                     {
                         "model": model,
+                        "prompt": prompt,
                         "best_of": best_of,
                         "echo": echo,
                         "frequency_penalty": frequency_penalty,
@@ -191,7 +194,6 @@ class CompletionsResource(SyncAPIResource):
                         "min_tokens": min_tokens,
                         "n": n,
                         "presence_penalty": presence_penalty,
-                        "prompt": prompt,
                         "return_raw_tokens": return_raw_tokens,
                         "seed": seed,
                         "stop": stop,
@@ -238,17 +240,17 @@ class AsyncCompletionsResource(AsyncAPIResource):
         self,
         *,
         model: str,
+        prompt: Union[str, SequenceNotStr[str], Iterable[int], Iterable[Iterable[int]]],
         best_of: Optional[int] | Omit = omit,
         echo: Optional[bool] | Omit = omit,
         frequency_penalty: Optional[float] | Omit = omit,
         grammar_root: Optional[str] | Omit = omit,
         logit_bias: Optional[object] | Omit = omit,
-        logprobs: Union[int, bool, None] | Omit = omit,
+        logprobs: Optional[int] | Omit = omit,
         max_tokens: Optional[int] | Omit = omit,
         min_tokens: Optional[int] | Omit = omit,
         n: Optional[int] | Omit = omit,
         presence_penalty: Optional[float] | Omit = omit,
-        prompt: Union[str, SequenceNotStr[str], Iterable[int], Iterable[Iterable[int]]] | Omit = omit,
         return_raw_tokens: Optional[bool] | Omit = omit,
         seed: Optional[int] | Omit = omit,
         stop: Union[str, SequenceNotStr[str], None] | Omit = omit,
@@ -272,6 +274,9 @@ class AsyncCompletionsResource(AsyncAPIResource):
         Completions
 
         Args:
+          prompt: The prompt(s) to generate completions for, encoded as a string, array of
+              strings, array of tokens, or array of token arrays.
+
           best_of: Generates `best_of` completions server-side and returns the "best" (the one with
               the highest log probability per token). Results cannot be streamed. When used
               with `n`, `best_of` controls the number of candidate completions and `n`
@@ -318,9 +323,6 @@ class AsyncCompletionsResource(AsyncAPIResource):
               whether they appear in the text so far, increasing the model's likelihood to
               talk about new topics.
 
-          prompt: The prompt(s) to generate completions for, encoded as a string, array of
-              strings, array of tokens, or array of token arrays.
-
           return_raw_tokens: Return raw tokens instead of text
 
           seed: If specified, our system will make a best effort to sample deterministically,
@@ -329,6 +331,8 @@ class AsyncCompletionsResource(AsyncAPIResource):
 
           stop: Up to 4 sequences where the API will stop generating further tokens. The
               returned text will not contain the stop sequence.
+
+          stream_options: Options for streaming.
 
           suffix: The suffix that comes after a completion of inserted text. (OpenAI feature, not
               supported)
@@ -371,6 +375,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
                 body=await async_maybe_transform(
                     {
                         "model": model,
+                        "prompt": prompt,
                         "best_of": best_of,
                         "echo": echo,
                         "frequency_penalty": frequency_penalty,
@@ -381,7 +386,6 @@ class AsyncCompletionsResource(AsyncAPIResource):
                         "min_tokens": min_tokens,
                         "n": n,
                         "presence_penalty": presence_penalty,
-                        "prompt": prompt,
                         "return_raw_tokens": return_raw_tokens,
                         "seed": seed,
                         "stop": stop,

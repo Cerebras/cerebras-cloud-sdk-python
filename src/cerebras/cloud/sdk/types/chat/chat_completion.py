@@ -22,6 +22,7 @@ __all__ = [
     "ChatCompletionResponseChoiceLogprobsRefusalTopLogprob",
     "ChatCompletionResponseTimeInfo",
     "ChatCompletionResponseUsage",
+    "ChatCompletionResponseUsageCompletionTokensDetails",
     "ChatCompletionResponseUsagePromptTokensDetails",
     "ChatChunkResponse",
     "ChatChunkResponseChoice",
@@ -35,6 +36,7 @@ __all__ = [
     "ChatChunkResponseChoiceLogprobsRefusalTopLogprob",
     "ChatChunkResponseTimeInfo",
     "ChatChunkResponseUsage",
+    "ChatChunkResponseUsageCompletionTokensDetails",
     "ChatChunkResponseUsagePromptTokensDetails",
     "ErrorChunkResponse",
     "ErrorChunkResponseError",
@@ -63,7 +65,7 @@ class ChatCompletionResponseChoiceMessageToolCall(BaseModel):
     id: str
 
     function: ChatCompletionResponseChoiceMessageToolCallFunction
-    """Non-streaming only. Represents a function call in an assistant tool call."""
+    """A function call for an assistant tool."""
 
     type: Literal["function"]
 
@@ -248,6 +250,24 @@ class ChatCompletionResponseTimeInfo(BaseModel):
         __pydantic_extra__: Dict[str, object]
 
 
+class ChatCompletionResponseUsageCompletionTokensDetails(BaseModel):
+    accepted_prediction_tokens: Optional[int] = None
+
+    rejected_prediction_tokens: Optional[int] = None
+
+    if TYPE_CHECKING:
+        # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
+        # value to this field, so for compatibility we avoid doing it at runtime.
+        __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
+
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+    else:
+        __pydantic_extra__: Dict[str, object]
+
+
 class ChatCompletionResponseUsagePromptTokensDetails(BaseModel):
     cached_tokens: Optional[int] = None
 
@@ -266,6 +286,8 @@ class ChatCompletionResponseUsagePromptTokensDetails(BaseModel):
 
 class ChatCompletionResponseUsage(BaseModel):
     completion_tokens: Optional[int] = None
+
+    completion_tokens_details: Optional[ChatCompletionResponseUsageCompletionTokensDetails] = None
 
     prompt_tokens: Optional[int] = None
 
@@ -365,6 +387,8 @@ class ChatChunkResponseChoiceDelta(BaseModel):
     reasoning: Optional[str] = None
 
     role: Optional[Literal["assistant", "user", "system", "tool"]] = None
+
+    tokens: Optional[List[int]] = None
 
     tool_calls: Optional[List[ChatChunkResponseChoiceDeltaToolCall]] = None
 
@@ -484,13 +508,17 @@ class ChatChunkResponseChoiceLogprobs(BaseModel):
 
 
 class ChatChunkResponseChoice(BaseModel):
-    delta: ChatChunkResponseChoiceDelta
-
     index: int
+
+    delta: Optional[ChatChunkResponseChoiceDelta] = None
 
     finish_reason: Optional[Literal["stop", "length", "content_filter", "tool_calls"]] = None
 
     logprobs: Optional[ChatChunkResponseChoiceLogprobs] = None
+
+    text: Optional[str] = None
+
+    tokens: Optional[List[int]] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -527,6 +555,24 @@ class ChatChunkResponseTimeInfo(BaseModel):
         __pydantic_extra__: Dict[str, object]
 
 
+class ChatChunkResponseUsageCompletionTokensDetails(BaseModel):
+    accepted_prediction_tokens: Optional[int] = None
+
+    rejected_prediction_tokens: Optional[int] = None
+
+    if TYPE_CHECKING:
+        # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
+        # value to this field, so for compatibility we avoid doing it at runtime.
+        __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
+
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+    else:
+        __pydantic_extra__: Dict[str, object]
+
+
 class ChatChunkResponseUsagePromptTokensDetails(BaseModel):
     cached_tokens: Optional[int] = None
 
@@ -545,6 +591,8 @@ class ChatChunkResponseUsagePromptTokensDetails(BaseModel):
 
 class ChatChunkResponseUsage(BaseModel):
     completion_tokens: Optional[int] = None
+
+    completion_tokens_details: Optional[ChatChunkResponseUsageCompletionTokensDetails] = None
 
     prompt_tokens: Optional[int] = None
 
@@ -572,7 +620,7 @@ class ChatChunkResponse(BaseModel):
 
     model: str
 
-    object: Literal["chat.completion.chunk"]
+    object: Literal["chat.completion.chunk", "text_completion"]
 
     system_fingerprint: str
 
@@ -598,6 +646,8 @@ class ChatChunkResponse(BaseModel):
 
 
 class ErrorChunkResponseError(BaseModel):
+    id: Optional[str] = None
+
     code: Optional[str] = None
 
     message: Optional[str] = None
