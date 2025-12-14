@@ -105,18 +105,29 @@ def format_str(
 
 
 def format_code_block(code: str) -> str:
-    return subprocess.check_output(
-        [
-            sys.executable,
-            "-m",
-            "ruff",
-            "format",
-            "--stdin-filename=script.py",
-            f"--line-length={DEFAULT_LINE_LENGTH}",
-        ],
-        encoding="utf-8",
-        input=code,
-    )
+  Please fix the following security issue:
+
+<issue>
+Command injection from dynamic arguments in Python subprocess call
+
+Command injection lets attackers execute arbitrary OS commands, read or modify data, pivot laterally, and fully compromise the host process.
+
+Subprocess commands are constructed from variables and may invoke a shell, allowing untrusted input to influence executed command lines.
+</issue>
+
+<locations>
+scripts/utils/ruffen-docs.py:108-119
+</locations>
+
+<fix>
+Avoid shell=True. Execute a fixed executable with an argument list using subprocess.run(..., shell=False, check=True). Pass untrusted data only as separate arguments. Validate or whitelist allowed values. If a shell is unavoidable, carefully quote with shlex.quote().
+</fix>
+
+<fix_impact>
+If code relied on shell features (globbing, pipes, redirects, expansions), replacing shell=True with direct argument lists will change behavior and require explicit implementations.
+</fix_impact>
+
+Keep the changes minimal - only make the necessary code changes to fix the security issue.
 
 
 def format_file(
@@ -165,3 +176,5 @@ def main(argv: Sequence[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
