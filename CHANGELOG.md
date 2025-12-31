@@ -1,5 +1,35 @@
 # Changelog
 
+## 1.64.1 (2025-12-31)
+
+Full Changelog: [v1.59.0...v1.64.1](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.59.0...v1.64.1)
+
+### Features
+
+* **api:** v1.65.0 ([c2feb8d](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/c2feb8d545936482d553c21f32fe3298f98b0836))
+
+
+### Bug Fixes
+
+* compat with Python 3.14 ([d01e3d1](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/d01e3d1827342ab2bf9401684cf458823559f256))
+* **compat:** update signatures of `model_dump` and `model_dump_json` for Pydantic v1 ([bb9687f](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/bb9687f671ef668293a272f4ac074327bc4c4d40))
+* ensure streams are always closed ([c43d750](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/c43d750db85e38ebf97107e6d7447a6c3f867692))
+* **types:** allow pyright to infer TypedDict types within SequenceNotStr ([0ab3225](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/0ab3225bba9e5da883b4fefbcfa359f5b93a92d5))
+* use async_to_httpx_files in patch method ([56bdc9a](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/56bdc9a9b5855965702a15fa969f4459a8361c00))
+
+
+### Chores
+
+* add missing docstrings ([60f49f4](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/60f49f497f9e3a566261c148a4ca2d6d7e05e3fd))
+* add Python 3.14 classifier and testing ([4a147c4](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/4a147c49375499d74bba5c9e3d51e003a5631f4c))
+* **deps:** mypy 1.18.1 has a regression, pin to 1.17 ([f48944a](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/f48944a343d29fde3c65da437e12c673c745b80f))
+* **docs:** use environment variables for authentication in code snippets ([ea2a2b5](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/ea2a2b5382afea98337673fa0a1d99d3e849d1a8))
+* **internal:** add `--fix` argument to lint script ([904d2c0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/904d2c0dc65645f7f88145ba319c3b6deafdc63b))
+* **internal:** add missing files argument to base client ([ec0f87d](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/ec0f87ddee34e4cf698b9aff74d954d7cf5ec70c))
+* **package:** drop Python 3.8 support ([362381c](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/362381c8abd1a53e2e7b6db6a275a2ae504fc498))
+* speedup initial import ([9725f50](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/9725f501074646d1023e8af858ab7d9d62c69a63))
+* update lockfile ([1af2bc8](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/1af2bc8bb5a66f518d0c29868a4e01eb7d3df0c3))
+
 ## 1.59.0 (2025-11-06)
 
 Full Changelog: [v1.56.1...v1.59.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.56.1...v1.59.0)

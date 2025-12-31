@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import os
 import logging
-from typing import Any, Mapping
+from typing import TYPE_CHECKING, Any, Mapping
 from typing_extensions import Self, override
 
 import httpx
@@ -25,8 +25,8 @@ from ._utils import (
     is_mapping,
     get_async_library,
 )
+from ._compat import cached_property
 from ._version import __version__
-from .resources import models, completions
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import CerebrasError, APIStatusError
 from ._base_client import (
@@ -35,7 +35,12 @@ from ._base_client import (
     AsyncAPIClient,
     make_request_options,
 )
-from .resources.chat import chat
+
+if TYPE_CHECKING:
+    from .resources import chat, models, completions
+    from .resources.models import ModelsResource, AsyncModelsResource
+    from .resources.chat.chat import ChatResource, AsyncChatResource
+    from .resources.completions import CompletionsResource, AsyncCompletionsResource
 
 __all__ = [
     "Timeout",
@@ -52,12 +57,6 @@ log: logging.Logger = logging.getLogger(__name__)
 
 
 class Cerebras(SyncAPIClient):
-    chat: chat.ChatResource
-    completions: completions.CompletionsResource
-    models: models.ModelsResource
-    with_raw_response: CerebrasWithRawResponse
-    with_streaming_response: CerebrasWithStreamedResponse
-
     # client options
     api_key: str
 
@@ -113,12 +112,6 @@ class Cerebras(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.chat = chat.ChatResource(self)
-        self.completions = completions.CompletionsResource(self)
-        self.models = models.ModelsResource(self)
-        self.with_raw_response = CerebrasWithRawResponse(self)
-        self.with_streaming_response = CerebrasWithStreamedResponse(self)
-
         if warm_tcp_connection:
             try:
                 self.get(
@@ -128,6 +121,32 @@ class Cerebras(SyncAPIClient):
                 )
             except Exception as e:
                 log.debug(f"TCP Warming had exception: {e}")
+
+    @cached_property
+    def chat(self) -> ChatResource:
+        from .resources.chat import ChatResource
+
+        return ChatResource(self)
+
+    @cached_property
+    def completions(self) -> CompletionsResource:
+        from .resources.completions import CompletionsResource
+
+        return CompletionsResource(self)
+
+    @cached_property
+    def models(self) -> ModelsResource:
+        from .resources.models import ModelsResource
+
+        return ModelsResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> CerebrasWithRawResponse:
+        return CerebrasWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> CerebrasWithStreamedResponse:
+        return CerebrasWithStreamedResponse(self)
 
     @property
     @override
@@ -241,12 +260,6 @@ class Cerebras(SyncAPIClient):
 
 
 class AsyncCerebras(AsyncAPIClient):
-    chat: chat.AsyncChatResource
-    completions: completions.AsyncCompletionsResource
-    models: models.AsyncModelsResource
-    with_raw_response: AsyncCerebrasWithRawResponse
-    with_streaming_response: AsyncCerebrasWithStreamedResponse
-
     # client options
     api_key: str
 
@@ -302,15 +315,35 @@ class AsyncCerebras(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.chat = chat.AsyncChatResource(self)
-        self.completions = completions.AsyncCompletionsResource(self)
-        self.models = models.AsyncModelsResource(self)
-        self.with_raw_response = AsyncCerebrasWithRawResponse(self)
-        self.with_streaming_response = AsyncCerebrasWithStreamedResponse(self)
-
         if warm_tcp_connection:
             # Sync client will warm up the connection, then terminate.
             Cerebras(base_url=base_url, api_key=api_key).close()
+
+    @cached_property
+    def chat(self) -> AsyncChatResource:
+        from .resources.chat import AsyncChatResource
+
+        return AsyncChatResource(self)
+
+    @cached_property
+    def completions(self) -> AsyncCompletionsResource:
+        from .resources.completions import AsyncCompletionsResource
+
+        return AsyncCompletionsResource(self)
+
+    @cached_property
+    def models(self) -> AsyncModelsResource:
+        from .resources.models import AsyncModelsResource
+
+        return AsyncModelsResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> AsyncCerebrasWithRawResponse:
+        return AsyncCerebrasWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncCerebrasWithStreamedResponse:
+        return AsyncCerebrasWithStreamedResponse(self)
 
     @property
     @override
@@ -424,31 +457,103 @@ class AsyncCerebras(AsyncAPIClient):
 
 
 class CerebrasWithRawResponse:
+    _client: Cerebras
+
     def __init__(self, client: Cerebras) -> None:
-        self.chat = chat.ChatResourceWithRawResponse(client.chat)
-        self.completions = completions.CompletionsResourceWithRawResponse(client.completions)
-        self.models = models.ModelsResourceWithRawResponse(client.models)
+        self._client = client
+
+    @cached_property
+    def chat(self) -> chat.ChatResourceWithRawResponse:
+        from .resources.chat import ChatResourceWithRawResponse
+
+        return ChatResourceWithRawResponse(self._client.chat)
+
+    @cached_property
+    def completions(self) -> completions.CompletionsResourceWithRawResponse:
+        from .resources.completions import CompletionsResourceWithRawResponse
+
+        return CompletionsResourceWithRawResponse(self._client.completions)
+
+    @cached_property
+    def models(self) -> models.ModelsResourceWithRawResponse:
+        from .resources.models import ModelsResourceWithRawResponse
+
+        return ModelsResourceWithRawResponse(self._client.models)
 
 
 class AsyncCerebrasWithRawResponse:
+    _client: AsyncCerebras
+
     def __init__(self, client: AsyncCerebras) -> None:
-        self.chat = chat.AsyncChatResourceWithRawResponse(client.chat)
-        self.completions = completions.AsyncCompletionsResourceWithRawResponse(client.completions)
-        self.models = models.AsyncModelsResourceWithRawResponse(client.models)
+        self._client = client
+
+    @cached_property
+    def chat(self) -> chat.AsyncChatResourceWithRawResponse:
+        from .resources.chat import AsyncChatResourceWithRawResponse
+
+        return AsyncChatResourceWithRawResponse(self._client.chat)
+
+    @cached_property
+    def completions(self) -> completions.AsyncCompletionsResourceWithRawResponse:
+        from .resources.completions import AsyncCompletionsResourceWithRawResponse
+
+        return AsyncCompletionsResourceWithRawResponse(self._client.completions)
+
+    @cached_property
+    def models(self) -> models.AsyncModelsResourceWithRawResponse:
+        from .resources.models import AsyncModelsResourceWithRawResponse
+
+        return AsyncModelsResourceWithRawResponse(self._client.models)
 
 
 class CerebrasWithStreamedResponse:
+    _client: Cerebras
+
     def __init__(self, client: Cerebras) -> None:
-        self.chat = chat.ChatResourceWithStreamingResponse(client.chat)
-        self.completions = completions.CompletionsResourceWithStreamingResponse(client.completions)
-        self.models = models.ModelsResourceWithStreamingResponse(client.models)
+        self._client = client
+
+    @cached_property
+    def chat(self) -> chat.ChatResourceWithStreamingResponse:
+        from .resources.chat import ChatResourceWithStreamingResponse
+
+        return ChatResourceWithStreamingResponse(self._client.chat)
+
+    @cached_property
+    def completions(self) -> completions.CompletionsResourceWithStreamingResponse:
+        from .resources.completions import CompletionsResourceWithStreamingResponse
+
+        return CompletionsResourceWithStreamingResponse(self._client.completions)
+
+    @cached_property
+    def models(self) -> models.ModelsResourceWithStreamingResponse:
+        from .resources.models import ModelsResourceWithStreamingResponse
+
+        return ModelsResourceWithStreamingResponse(self._client.models)
 
 
 class AsyncCerebrasWithStreamedResponse:
+    _client: AsyncCerebras
+
     def __init__(self, client: AsyncCerebras) -> None:
-        self.chat = chat.AsyncChatResourceWithStreamingResponse(client.chat)
-        self.completions = completions.AsyncCompletionsResourceWithStreamingResponse(client.completions)
-        self.models = models.AsyncModelsResourceWithStreamingResponse(client.models)
+        self._client = client
+
+    @cached_property
+    def chat(self) -> chat.AsyncChatResourceWithStreamingResponse:
+        from .resources.chat import AsyncChatResourceWithStreamingResponse
+
+        return AsyncChatResourceWithStreamingResponse(self._client.chat)
+
+    @cached_property
+    def completions(self) -> completions.AsyncCompletionsResourceWithStreamingResponse:
+        from .resources.completions import AsyncCompletionsResourceWithStreamingResponse
+
+        return AsyncCompletionsResourceWithStreamingResponse(self._client.completions)
+
+    @cached_property
+    def models(self) -> models.AsyncModelsResourceWithStreamingResponse:
+        from .resources.models import AsyncModelsResourceWithStreamingResponse
+
+        return AsyncModelsResourceWithStreamingResponse(self._client.models)
 
 
 Client = Cerebras

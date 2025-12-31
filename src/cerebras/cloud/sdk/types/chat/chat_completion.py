@@ -20,6 +20,11 @@ __all__ = [
     "ChatCompletionResponseChoiceLogprobsContentTopLogprob",
     "ChatCompletionResponseChoiceLogprobsRefusal",
     "ChatCompletionResponseChoiceLogprobsRefusalTopLogprob",
+    "ChatCompletionResponseChoiceReasoningLogprobs",
+    "ChatCompletionResponseChoiceReasoningLogprobsContent",
+    "ChatCompletionResponseChoiceReasoningLogprobsContentTopLogprob",
+    "ChatCompletionResponseChoiceReasoningLogprobsRefusal",
+    "ChatCompletionResponseChoiceReasoningLogprobsRefusalTopLogprob",
     "ChatCompletionResponseTimeInfo",
     "ChatCompletionResponseUsage",
     "ChatCompletionResponseUsageCompletionTokensDetails",
@@ -34,6 +39,11 @@ __all__ = [
     "ChatChunkResponseChoiceLogprobsContentTopLogprob",
     "ChatChunkResponseChoiceLogprobsRefusal",
     "ChatChunkResponseChoiceLogprobsRefusalTopLogprob",
+    "ChatChunkResponseChoiceReasoningLogprobs",
+    "ChatChunkResponseChoiceReasoningLogprobsContent",
+    "ChatChunkResponseChoiceReasoningLogprobsContentTopLogprob",
+    "ChatChunkResponseChoiceReasoningLogprobsRefusal",
+    "ChatChunkResponseChoiceReasoningLogprobsRefusalTopLogprob",
     "ChatChunkResponseTimeInfo",
     "ChatChunkResponseUsage",
     "ChatChunkResponseUsageCompletionTokensDetails",
@@ -44,6 +54,8 @@ __all__ = [
 
 
 class ChatCompletionResponseChoiceMessageToolCallFunction(BaseModel):
+    """A function call for an assistant tool."""
+
     arguments: str
 
     name: str
@@ -62,6 +74,8 @@ class ChatCompletionResponseChoiceMessageToolCallFunction(BaseModel):
 
 
 class ChatCompletionResponseChoiceMessageToolCall(BaseModel):
+    """A tool call for an assistant."""
+
     id: str
 
     function: ChatCompletionResponseChoiceMessageToolCallFunction
@@ -206,6 +220,108 @@ class ChatCompletionResponseChoiceLogprobs(BaseModel):
         __pydantic_extra__: Dict[str, object]
 
 
+class ChatCompletionResponseChoiceReasoningLogprobsContentTopLogprob(BaseModel):
+    token: str
+
+    logprob: float
+
+    bytes: Optional[List[int]] = None
+
+    if TYPE_CHECKING:
+        # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
+        # value to this field, so for compatibility we avoid doing it at runtime.
+        __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
+
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+    else:
+        __pydantic_extra__: Dict[str, object]
+
+
+class ChatCompletionResponseChoiceReasoningLogprobsContent(BaseModel):
+    token: str
+
+    logprob: float
+
+    top_logprobs: List[ChatCompletionResponseChoiceReasoningLogprobsContentTopLogprob]
+
+    bytes: Optional[List[int]] = None
+
+    if TYPE_CHECKING:
+        # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
+        # value to this field, so for compatibility we avoid doing it at runtime.
+        __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
+
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+    else:
+        __pydantic_extra__: Dict[str, object]
+
+
+class ChatCompletionResponseChoiceReasoningLogprobsRefusalTopLogprob(BaseModel):
+    token: str
+
+    logprob: float
+
+    bytes: Optional[List[int]] = None
+
+    if TYPE_CHECKING:
+        # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
+        # value to this field, so for compatibility we avoid doing it at runtime.
+        __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
+
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+    else:
+        __pydantic_extra__: Dict[str, object]
+
+
+class ChatCompletionResponseChoiceReasoningLogprobsRefusal(BaseModel):
+    token: str
+
+    logprob: float
+
+    top_logprobs: List[ChatCompletionResponseChoiceReasoningLogprobsRefusalTopLogprob]
+
+    bytes: Optional[List[int]] = None
+
+    if TYPE_CHECKING:
+        # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
+        # value to this field, so for compatibility we avoid doing it at runtime.
+        __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
+
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+    else:
+        __pydantic_extra__: Dict[str, object]
+
+
+class ChatCompletionResponseChoiceReasoningLogprobs(BaseModel):
+    content: Optional[List[ChatCompletionResponseChoiceReasoningLogprobsContent]] = None
+
+    refusal: Optional[List[ChatCompletionResponseChoiceReasoningLogprobsRefusal]] = None
+
+    if TYPE_CHECKING:
+        # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
+        # value to this field, so for compatibility we avoid doing it at runtime.
+        __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
+
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+    else:
+        __pydantic_extra__: Dict[str, object]
+
+
 class ChatCompletionResponseChoice(BaseModel):
     finish_reason: Literal["stop", "length", "content_filter", "tool_calls"]
 
@@ -214,6 +330,8 @@ class ChatCompletionResponseChoice(BaseModel):
     message: ChatCompletionResponseChoiceMessage
 
     logprobs: Optional[ChatCompletionResponseChoiceLogprobs] = None
+
+    reasoning_logprobs: Optional[ChatCompletionResponseChoiceReasoningLogprobs] = None
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -341,6 +459,8 @@ class ChatCompletionResponse(BaseModel):
 
 
 class ChatChunkResponseChoiceDeltaToolCallFunction(BaseModel):
+    """Streaming only. Represents a function in an assistant tool call."""
+
     arguments: Optional[str] = None
 
     name: Optional[str] = None
@@ -359,6 +479,8 @@ class ChatChunkResponseChoiceDeltaToolCallFunction(BaseModel):
 
 
 class ChatChunkResponseChoiceDeltaToolCall(BaseModel):
+    """Streaming only. Represents a function call in an assistant tool call."""
+
     function: ChatChunkResponseChoiceDeltaToolCallFunction
     """Streaming only. Represents a function in an assistant tool call."""
 
@@ -507,6 +629,108 @@ class ChatChunkResponseChoiceLogprobs(BaseModel):
         __pydantic_extra__: Dict[str, object]
 
 
+class ChatChunkResponseChoiceReasoningLogprobsContentTopLogprob(BaseModel):
+    token: str
+
+    logprob: float
+
+    bytes: Optional[List[int]] = None
+
+    if TYPE_CHECKING:
+        # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
+        # value to this field, so for compatibility we avoid doing it at runtime.
+        __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
+
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+    else:
+        __pydantic_extra__: Dict[str, object]
+
+
+class ChatChunkResponseChoiceReasoningLogprobsContent(BaseModel):
+    token: str
+
+    logprob: float
+
+    top_logprobs: List[ChatChunkResponseChoiceReasoningLogprobsContentTopLogprob]
+
+    bytes: Optional[List[int]] = None
+
+    if TYPE_CHECKING:
+        # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
+        # value to this field, so for compatibility we avoid doing it at runtime.
+        __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
+
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+    else:
+        __pydantic_extra__: Dict[str, object]
+
+
+class ChatChunkResponseChoiceReasoningLogprobsRefusalTopLogprob(BaseModel):
+    token: str
+
+    logprob: float
+
+    bytes: Optional[List[int]] = None
+
+    if TYPE_CHECKING:
+        # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
+        # value to this field, so for compatibility we avoid doing it at runtime.
+        __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
+
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+    else:
+        __pydantic_extra__: Dict[str, object]
+
+
+class ChatChunkResponseChoiceReasoningLogprobsRefusal(BaseModel):
+    token: str
+
+    logprob: float
+
+    top_logprobs: List[ChatChunkResponseChoiceReasoningLogprobsRefusalTopLogprob]
+
+    bytes: Optional[List[int]] = None
+
+    if TYPE_CHECKING:
+        # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
+        # value to this field, so for compatibility we avoid doing it at runtime.
+        __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
+
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+    else:
+        __pydantic_extra__: Dict[str, object]
+
+
+class ChatChunkResponseChoiceReasoningLogprobs(BaseModel):
+    content: Optional[List[ChatChunkResponseChoiceReasoningLogprobsContent]] = None
+
+    refusal: Optional[List[ChatChunkResponseChoiceReasoningLogprobsRefusal]] = None
+
+    if TYPE_CHECKING:
+        # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
+        # value to this field, so for compatibility we avoid doing it at runtime.
+        __pydantic_extra__: Dict[str, object] = FieldInfo(init=False)  # pyright: ignore[reportIncompatibleVariableOverride]
+
+        # Stub to indicate that arbitrary properties are accepted.
+        # To access properties that are not valid identifiers you can use `getattr`, e.g.
+        # `getattr(obj, '$type')`
+        def __getattr__(self, attr: str) -> object: ...
+    else:
+        __pydantic_extra__: Dict[str, object]
+
+
 class ChatChunkResponseChoice(BaseModel):
     index: int
 
@@ -515,6 +739,8 @@ class ChatChunkResponseChoice(BaseModel):
     finish_reason: Optional[Literal["stop", "length", "content_filter", "tool_calls"]] = None
 
     logprobs: Optional[ChatChunkResponseChoiceLogprobs] = None
+
+    reasoning_logprobs: Optional[ChatChunkResponseChoiceReasoningLogprobs] = None
 
     text: Optional[str] = None
 

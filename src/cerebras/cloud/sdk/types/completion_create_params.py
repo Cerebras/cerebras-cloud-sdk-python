@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Dict, Union, Iterable, Optional
-from typing_extensions import Required, Annotated, TypeAlias, TypedDict
+from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
 
 from .._types import SequenceNotStr
 from .._utils import PropertyInfo
@@ -44,7 +44,7 @@ class CompletionCreateParams(TypedDict, total=False):
     grammar_root: Optional[str]
     """The grammar root used for structured output generation."""
 
-    logit_bias: Optional[object]
+    logit_bias: Optional[Dict[str, float]]
     """Modify the likelihood of specified tokens appearing in the completion.
 
     Accepts a JSON object that maps tokens (specified by their token ID in the
@@ -89,6 +89,15 @@ class CompletionCreateParams(TypedDict, total=False):
 
     Positive values penalize new tokens based on whether they appear in the text so
     far, increasing the model's likelihood to talk about new topics.
+    """
+
+    reasoning_format: Literal["none", "parsed", "text_parsed", "raw", "hidden"]
+    """Determines how reasoning is returned in the response.
+
+    If set to `parsed`, the reasoning will be returned in the `reasoning` field of
+    the response message as a string. If set to `raw`, the reasoning will be
+    returned in the `content` field of the response message with special tokens. If
+    set to `hidden`, the reasoning will not be returned in the response.
     """
 
     return_raw_tokens: Optional[bool]
@@ -148,6 +157,8 @@ class CompletionCreateParams(TypedDict, total=False):
 
 
 class StreamOptionsTyped(TypedDict, total=False):
+    """Options for streaming."""
+
     include_usage: Optional[bool]
 
 

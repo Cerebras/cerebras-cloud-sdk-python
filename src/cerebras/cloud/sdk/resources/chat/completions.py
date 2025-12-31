@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Union, Iterable, Optional, cast
+from typing import Any, Dict, Union, Iterable, Optional, cast
 from typing_extensions import Literal
 
 import httpx
@@ -49,9 +49,10 @@ class CompletionsResource(SyncAPIResource):
         self,
         *,
         model: str,
+        clear_thinking: Optional[bool] | Omit = omit,
         disable_reasoning: Optional[bool] | Omit = omit,
         frequency_penalty: Optional[float] | Omit = omit,
-        logit_bias: Optional[object] | Omit = omit,
+        logit_bias: Optional[Dict[str, float]] | Omit = omit,
         logprobs: Optional[bool] | Omit = omit,
         max_completion_tokens: Optional[int] | Omit = omit,
         max_tokens: Optional[int] | Omit = omit,
@@ -63,6 +64,7 @@ class CompletionsResource(SyncAPIResource):
         prediction: Optional[completion_create_params.Prediction] | Omit = omit,
         presence_penalty: Optional[float] | Omit = omit,
         reasoning_effort: Optional[Literal["low", "medium", "high"]] | Omit = omit,
+        reasoning_format: Literal["none", "parsed", "text_parsed", "raw", "hidden"] | Omit = omit,
         response_format: Optional[completion_create_params.ResponseFormat] | Omit = omit,
         seed: Optional[int] | Omit = omit,
         service_tier: Optional[Literal["auto", "default", "flex", "priority"]] | Omit = omit,
@@ -85,12 +87,14 @@ class CompletionsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ChatCompletion | Stream[ChatCompletion]:
-        """Chat
+        """
+        Chat
 
         Args:
-          disable_reasoning: Disables reasoning for reasoning models.
+          clear_thinking: When True, removes reasoning content from messages that appear before the latest
+              user message.
 
-        If set to True, the model will not use
+          disable_reasoning: Disables reasoning for reasoning models. If set to True, the model will not use
               any reasoning in its response.
 
           frequency_penalty: Number between -2.0 and 2.0. Positive values penalize new tokens based on their
@@ -141,6 +145,16 @@ class CompletionsResource(SyncAPIResource):
               are low, medium, and high. Reducing reasoning effort can result in faster
               responses and fewer tokens used on reasoning in a response. If set to None, the
               model will use the default reasoning effort for the model.
+
+          reasoning_format: Determines how reasoning is returned in the response. If set to `parsed`, the
+              reasoning will be returned in the `reasoning` field of the response message as a
+              string. If set to `raw`, the reasoning will be returned in the `content` field
+              of the response message with special tokens. If set to `hidden`, the reasoning
+              will not be returned in the response. If set to `none`, the model's default
+              behavior will be used. If set to `text_parsed`, the reasoning will be returned
+              in the `reasoning` field of the response message as a string, similar to
+              `parsed`, but logprobs will not be separated into `reasoning_logprobs` and
+              `logprobs`.
 
           response_format: A response format for text.
 
@@ -197,6 +211,7 @@ class CompletionsResource(SyncAPIResource):
                 body=maybe_transform(
                     {
                         "model": model,
+                        "clear_thinking": clear_thinking,
                         "disable_reasoning": disable_reasoning,
                         "frequency_penalty": frequency_penalty,
                         "logit_bias": logit_bias,
@@ -211,6 +226,7 @@ class CompletionsResource(SyncAPIResource):
                         "prediction": prediction,
                         "presence_penalty": presence_penalty,
                         "reasoning_effort": reasoning_effort,
+                        "reasoning_format": reasoning_format,
                         "response_format": response_format,
                         "seed": seed,
                         "service_tier": service_tier,
@@ -260,9 +276,10 @@ class AsyncCompletionsResource(AsyncAPIResource):
         self,
         *,
         model: str,
+        clear_thinking: Optional[bool] | Omit = omit,
         disable_reasoning: Optional[bool] | Omit = omit,
         frequency_penalty: Optional[float] | Omit = omit,
-        logit_bias: Optional[object] | Omit = omit,
+        logit_bias: Optional[Dict[str, float]] | Omit = omit,
         logprobs: Optional[bool] | Omit = omit,
         max_completion_tokens: Optional[int] | Omit = omit,
         max_tokens: Optional[int] | Omit = omit,
@@ -274,6 +291,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
         prediction: Optional[completion_create_params.Prediction] | Omit = omit,
         presence_penalty: Optional[float] | Omit = omit,
         reasoning_effort: Optional[Literal["low", "medium", "high"]] | Omit = omit,
+        reasoning_format: Literal["none", "parsed", "text_parsed", "raw", "hidden"] | Omit = omit,
         response_format: Optional[completion_create_params.ResponseFormat] | Omit = omit,
         seed: Optional[int] | Omit = omit,
         service_tier: Optional[Literal["auto", "default", "flex", "priority"]] | Omit = omit,
@@ -296,12 +314,14 @@ class AsyncCompletionsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ChatCompletion | AsyncStream[ChatCompletion]:
-        """Chat
+        """
+        Chat
 
         Args:
-          disable_reasoning: Disables reasoning for reasoning models.
+          clear_thinking: When True, removes reasoning content from messages that appear before the latest
+              user message.
 
-        If set to True, the model will not use
+          disable_reasoning: Disables reasoning for reasoning models. If set to True, the model will not use
               any reasoning in its response.
 
           frequency_penalty: Number between -2.0 and 2.0. Positive values penalize new tokens based on their
@@ -352,6 +372,16 @@ class AsyncCompletionsResource(AsyncAPIResource):
               are low, medium, and high. Reducing reasoning effort can result in faster
               responses and fewer tokens used on reasoning in a response. If set to None, the
               model will use the default reasoning effort for the model.
+
+          reasoning_format: Determines how reasoning is returned in the response. If set to `parsed`, the
+              reasoning will be returned in the `reasoning` field of the response message as a
+              string. If set to `raw`, the reasoning will be returned in the `content` field
+              of the response message with special tokens. If set to `hidden`, the reasoning
+              will not be returned in the response. If set to `none`, the model's default
+              behavior will be used. If set to `text_parsed`, the reasoning will be returned
+              in the `reasoning` field of the response message as a string, similar to
+              `parsed`, but logprobs will not be separated into `reasoning_logprobs` and
+              `logprobs`.
 
           response_format: A response format for text.
 
@@ -408,6 +438,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
                 body=await async_maybe_transform(
                     {
                         "model": model,
+                        "clear_thinking": clear_thinking,
                         "disable_reasoning": disable_reasoning,
                         "frequency_penalty": frequency_penalty,
                         "logit_bias": logit_bias,
@@ -422,6 +453,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
                         "prediction": prediction,
                         "presence_penalty": presence_penalty,
                         "reasoning_effort": reasoning_effort,
+                        "reasoning_format": reasoning_format,
                         "response_format": response_format,
                         "seed": seed,
                         "service_tier": service_tier,

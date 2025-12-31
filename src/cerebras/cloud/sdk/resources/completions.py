@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Any, Union, Iterable, Optional, cast
+from typing import Any, Dict, Union, Iterable, Optional, cast
+from typing_extensions import Literal
 
 import httpx
 
@@ -53,12 +54,13 @@ class CompletionsResource(SyncAPIResource):
         echo: Optional[bool] | Omit = omit,
         frequency_penalty: Optional[float] | Omit = omit,
         grammar_root: Optional[str] | Omit = omit,
-        logit_bias: Optional[object] | Omit = omit,
+        logit_bias: Optional[Dict[str, float]] | Omit = omit,
         logprobs: Optional[int] | Omit = omit,
         max_tokens: Optional[int] | Omit = omit,
         min_tokens: Optional[int] | Omit = omit,
         n: Optional[int] | Omit = omit,
         presence_penalty: Optional[float] | Omit = omit,
+        reasoning_format: Literal["none", "parsed", "text_parsed", "raw", "hidden"] | Omit = omit,
         return_raw_tokens: Optional[bool] | Omit = omit,
         seed: Optional[int] | Omit = omit,
         stop: Union[str, SequenceNotStr[str], None] | Omit = omit,
@@ -131,6 +133,12 @@ class CompletionsResource(SyncAPIResource):
               whether they appear in the text so far, increasing the model's likelihood to
               talk about new topics.
 
+          reasoning_format: Determines how reasoning is returned in the response. If set to `parsed`, the
+              reasoning will be returned in the `reasoning` field of the response message as a
+              string. If set to `raw`, the reasoning will be returned in the `content` field
+              of the response message with special tokens. If set to `hidden`, the reasoning
+              will not be returned in the response.
+
           return_raw_tokens: Return raw tokens instead of text
 
           seed: If specified, our system will make a best effort to sample deterministically,
@@ -194,6 +202,7 @@ class CompletionsResource(SyncAPIResource):
                         "min_tokens": min_tokens,
                         "n": n,
                         "presence_penalty": presence_penalty,
+                        "reasoning_format": reasoning_format,
                         "return_raw_tokens": return_raw_tokens,
                         "seed": seed,
                         "stop": stop,
@@ -245,12 +254,13 @@ class AsyncCompletionsResource(AsyncAPIResource):
         echo: Optional[bool] | Omit = omit,
         frequency_penalty: Optional[float] | Omit = omit,
         grammar_root: Optional[str] | Omit = omit,
-        logit_bias: Optional[object] | Omit = omit,
+        logit_bias: Optional[Dict[str, float]] | Omit = omit,
         logprobs: Optional[int] | Omit = omit,
         max_tokens: Optional[int] | Omit = omit,
         min_tokens: Optional[int] | Omit = omit,
         n: Optional[int] | Omit = omit,
         presence_penalty: Optional[float] | Omit = omit,
+        reasoning_format: Literal["none", "parsed", "text_parsed", "raw", "hidden"] | Omit = omit,
         return_raw_tokens: Optional[bool] | Omit = omit,
         seed: Optional[int] | Omit = omit,
         stop: Union[str, SequenceNotStr[str], None] | Omit = omit,
@@ -323,6 +333,12 @@ class AsyncCompletionsResource(AsyncAPIResource):
               whether they appear in the text so far, increasing the model's likelihood to
               talk about new topics.
 
+          reasoning_format: Determines how reasoning is returned in the response. If set to `parsed`, the
+              reasoning will be returned in the `reasoning` field of the response message as a
+              string. If set to `raw`, the reasoning will be returned in the `content` field
+              of the response message with special tokens. If set to `hidden`, the reasoning
+              will not be returned in the response.
+
           return_raw_tokens: Return raw tokens instead of text
 
           seed: If specified, our system will make a best effort to sample deterministically,
@@ -386,6 +402,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
                         "min_tokens": min_tokens,
                         "n": n,
                         "presence_penalty": presence_penalty,
+                        "reasoning_format": reasoning_format,
                         "return_raw_tokens": return_raw_tokens,
                         "seed": seed,
                         "stop": stop,

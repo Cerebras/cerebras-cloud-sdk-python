@@ -3,7 +3,7 @@
 <!-- prettier-ignore -->
 [![PyPI version](https://img.shields.io/pypi/v/cerebras_cloud_sdk.svg?label=pypi%20(stable))](https://pypi.org/project/cerebras_cloud_sdk/)
 
-The Cerebras Python library provides convenient access to the Cerebras REST API from any Python 3.8+
+The Cerebras Python library provides convenient access to the Cerebras REST API from any Python 3.9+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
@@ -140,6 +140,7 @@ pip install 'cerebras_cloud_sdk[aiohttp]'
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
+import os
 import asyncio
 from cerebras.cloud.sdk import DefaultAioHttpClient
 from cerebras.cloud.sdk import AsyncCerebras
@@ -147,7 +148,7 @@ from cerebras.cloud.sdk import AsyncCerebras
 
 async def main() -> None:
     async with AsyncCerebras(
-        api_key="My API Key",
+        api_key=os.environ.get("CEREBRAS_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
         chat_completion = await client.chat.completions.create(
@@ -575,7 +576,7 @@ print(cerebras.cloud.sdk.__version__)
 
 ## Requirements
 
-Python 3.8 or higher.
+Python 3.9 or higher.
 
 ## Contributing
 

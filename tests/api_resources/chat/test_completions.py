@@ -28,9 +28,10 @@ class TestCompletions:
     def test_method_create_with_all_params(self, client: Cerebras) -> None:
         completion = client.chat.completions.create(
             model="model",
+            clear_thinking=True,
             disable_reasoning=True,
             frequency_penalty=-2,
-            logit_bias={},
+            logit_bias={"foo": 0},
             logprobs=True,
             max_completion_tokens=0,
             max_tokens=0,
@@ -51,6 +52,7 @@ class TestCompletions:
             },
             presence_penalty=-2,
             reasoning_effort="low",
+            reasoning_format="none",
             response_format={"type": "text"},
             seed=0,
             service_tier="auto",
@@ -120,9 +122,10 @@ class TestAsyncCompletions:
     async def test_method_create_with_all_params(self, async_client: AsyncCerebras) -> None:
         completion = await async_client.chat.completions.create(
             model="model",
+            clear_thinking=True,
             disable_reasoning=True,
             frequency_penalty=-2,
-            logit_bias={},
+            logit_bias={"foo": 0},
             logprobs=True,
             max_completion_tokens=0,
             max_tokens=0,
@@ -143,6 +146,7 @@ class TestAsyncCompletions:
             },
             presence_penalty=-2,
             reasoning_effort="low",
+            reasoning_format="none",
             response_format={"type": "text"},
             seed=0,
             service_tier="auto",
