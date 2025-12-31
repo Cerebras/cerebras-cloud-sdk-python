@@ -50,6 +50,7 @@ class CompletionsResource(SyncAPIResource):
         *,
         model: str,
         disable_reasoning: Optional[bool] | Omit = omit,
+        clear_thinking: Optional[bool] | Omit = omit,
         frequency_penalty: Optional[float] | Omit = omit,
         logit_bias: Optional[object] | Omit = omit,
         logprobs: Optional[bool] | Omit = omit,
@@ -198,6 +199,7 @@ class CompletionsResource(SyncAPIResource):
                     {
                         "model": model,
                         "disable_reasoning": disable_reasoning,
+                        "clear_thinking": clear_thinking,
                         "frequency_penalty": frequency_penalty,
                         "logit_bias": logit_bias,
                         "logprobs": logprobs,
@@ -261,6 +263,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
         *,
         model: str,
         disable_reasoning: Optional[bool] | Omit = omit,
+        clear_thinking: Optional[bool] | Omit = omit,
         frequency_penalty: Optional[float] | Omit = omit,
         logit_bias: Optional[object] | Omit = omit,
         logprobs: Optional[bool] | Omit = omit,
@@ -409,6 +412,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
                     {
                         "model": model,
                         "disable_reasoning": disable_reasoning,
+                        "clear_thinking": clear_thinking,
                         "frequency_penalty": frequency_penalty,
                         "logit_bias": logit_bias,
                         "logprobs": logprobs,

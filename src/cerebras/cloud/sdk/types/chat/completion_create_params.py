@@ -55,6 +55,12 @@ class CompletionCreateParams(TypedDict, total=False):
     If set to True, the model will not use any reasoning in its response.
     """
 
+    clear_thinking: Optional[bool]
+    """Clears the model's reasoning context.
+
+    If set to True, the model will clear its internal reasoning state.
+    """
+
     frequency_penalty: Optional[float]
     """Number between -2.0 and 2.0.
 
