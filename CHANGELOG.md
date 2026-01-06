@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.67.0 (2026-01-06)
+
+Full Changelog: [v1.64.1...v1.67.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.64.1...v1.67.0)
+
+### Chores
+
+* **internal:** codegen related update ([f4a7204](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/f4a7204a5c8d6bc95753ffa6e3d4f9daf548c722))
+
 ## 1.64.1 (2025-12-31)
 
 Full Changelog: [v1.59.0...v1.64.1](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.59.0...v1.64.1)
