@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Dict, Union, Iterable, Optional
-from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
+from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._types import SequenceNotStr
 from .._utils import PropertyInfo
@@ -156,10 +156,7 @@ class CompletionCreateParams(TypedDict, total=False):
     x_delay_time: Annotated[float, PropertyInfo(alias="X-delay-time")]
 
 
-class StreamOptionsTyped(TypedDict, total=False):
+class StreamOptions(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
     """Options for streaming."""
 
     include_usage: Optional[bool]
-
-
-StreamOptions: TypeAlias = Union[StreamOptionsTyped, Dict[str, object]]

@@ -1,5 +1,53 @@
 # Changelog
 
+## 1.79.0 (2026-04-09)
+
+Full Changelog: [v1.67.0...v1.79.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.67.0...v1.79.0)
+
+### Features
+
+* **client:** add custom JSON encoder for extended type support ([db237c2](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/db237c2a5438500161450c7debbc9375e7e06c94))
+* **client:** add support for binary request streaming ([7d1cfdf](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/7d1cfdf8018115bd5eb97b2e6371679983544e02))
+* **internal:** implement indices array format for query and form serialization ([3ce540b](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/3ce540b6e30ab27aedf28f300ee0fbe2ec6d9d41))
+
+
+### Bug Fixes
+
+* **client:** preserve hardcoded query params when merging with user params ([c7debc9](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/c7debc90f2ea24352508d5963a0d577bf76b3a42))
+* **deps:** bump minimum typing-extensions version ([5d2276d](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/5d2276d518f2b5ff6441c733881af06ad6c964d5))
+* **pydantic:** do not pass `by_alias` unless set ([f163314](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/f1633143b4aa2478b78d22ca5b98a1b6836bfb1a))
+* sanitize endpoint path params ([3d130b2](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/3d130b2dc3e40b9874300e977604aa4c0432a9c3))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([017f11f](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/017f11f595dc0d0da0e5f1b602ef3c5d6ce2cbd0))
+* **ci:** skip uploading artifacts on stainless-internal branches ([3ec5b42](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/3ec5b4211f45678af1009011c2dacbef49cd3ecc))
+* **ci:** upgrade `actions/github-script` ([91052b5](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/91052b5f15cb04ef7223fb68d18dfb25f1b10287))
+* format all `api.md` files ([f890765](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/f890765bf0d301f814c25ccb12bfd4a06fcdc0eb))
+* **internal:** add request options to SSE classes ([e0eb5b7](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/e0eb5b798b04d9580ccbe60ae4205f875f1aade1))
+* **internal:** bump dependencies ([3c477b5](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/3c477b52b6b230993b9ce412c0a307423f992786))
+* **internal:** fix lint error on Python 3.14 ([ddd9d61](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/ddd9d6190c860f4b1819b2b7d21d511a7c900484))
+* **internal:** make `test_proxy_environment_variables` more resilient ([4e3da9f](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/4e3da9ff9e420a839562d97948537321ecf13370))
+* **internal:** make `test_proxy_environment_variables` more resilient to env ([1280ff1](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/1280ff197a6ba54e1bb0d5230d53e246546d2fcd))
+* **internal:** tweak CI branches ([6e4d600](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/6e4d600a2d2ddd404af980f252d07fd3dd40abb3))
+* **internal:** update `actions/checkout` version ([7c21132](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/7c21132f8cc906f0fc57710295b64b27da3a1292))
+* **internal:** update gitignore ([c5b4936](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/c5b4936998f1654fd94c44bef9a8577ed8c410f5))
+* **test:** do not count install time for mock server timeout ([e19c66e](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/e19c66e4dc7022cc9317f5a9339b97275df077d3))
+* **tests:** bump steady to v0.19.4 ([d72a864](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/d72a8646630d45186bc8d82a292d6235b1220986))
+* **tests:** bump steady to v0.19.5 ([a375d53](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/a375d53104f525b8b736e3c92dcbbf770630ef5f))
+* **tests:** bump steady to v0.19.6 ([f98ee67](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/f98ee67ecf068297f6cc24ace78ca319fb3652db))
+* **tests:** bump steady to v0.19.7 ([00988f6](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/00988f69ac300bb4dcc27c393b15a0e725d7bd37))
+* **tests:** bump steady to v0.20.1 ([ddae7a1](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/ddae7a15d74816529d1a394fb8d005e8a8b6c758))
+* **tests:** bump steady to v0.20.2 ([b6bacbf](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/b6bacbf7340b4cba9fa5f793822411741a6c758f))
+* update mock server docs ([52c707c](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/52c707ca49ec56f0e42cb11854f6cfa500675834))
+
+
+### Refactors
+
+* **tests:** switch from prism to steady ([2c61e78](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/2c61e78f3c910b2024630c786a6466e55fb0d546))
+* **types:** use `extra_items` from PEP 728 ([714b09e](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/714b09e879c61222de1d72bea2e727bd7f5317f6))
+
 ## 1.67.0 (2026-01-06)
 
 Full Changelog: [v1.64.1...v1.67.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.64.1...v1.67.0)
