@@ -20,26 +20,27 @@ class TestCompletions:
     @parametrize
     def test_method_create(self, client: Cerebras) -> None:
         completion = client.completions.create(
-            model="model",
-            prompt="string",
+            model="llama3.1-70b",
+            prompt="Micheael Jordan is born in ",
         )
         assert_matches_type(Completion, completion, path=["response"])
 
     @parametrize
     def test_method_create_with_all_params(self, client: Cerebras) -> None:
         completion = client.completions.create(
-            model="model",
-            prompt="string",
+            model="llama3.1-70b",
+            prompt="Micheael Jordan is born in ",
             best_of=0,
             echo=True,
             frequency_penalty=-2,
             grammar_root="grammar_root",
             logit_bias={"foo": 0},
             logprobs=0,
-            max_tokens=0,
-            min_tokens=0,
-            n=0,
+            max_tokens=-1,
+            min_tokens=-1,
+            n=1,
             presence_penalty=-2,
+            prompt_cache_key="prompt_cache_key",
             reasoning_format="none",
             return_raw_tokens=True,
             seed=0,
@@ -59,8 +60,8 @@ class TestCompletions:
     @parametrize
     def test_raw_response_create(self, client: Cerebras) -> None:
         response = client.completions.with_raw_response.create(
-            model="model",
-            prompt="string",
+            model="llama3.1-70b",
+            prompt="Micheael Jordan is born in ",
         )
 
         assert response.is_closed is True
@@ -71,8 +72,8 @@ class TestCompletions:
     @parametrize
     def test_streaming_response_create(self, client: Cerebras) -> None:
         with client.completions.with_streaming_response.create(
-            model="model",
-            prompt="string",
+            model="llama3.1-70b",
+            prompt="Micheael Jordan is born in ",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -91,26 +92,27 @@ class TestAsyncCompletions:
     @parametrize
     async def test_method_create(self, async_client: AsyncCerebras) -> None:
         completion = await async_client.completions.create(
-            model="model",
-            prompt="string",
+            model="llama3.1-70b",
+            prompt="Micheael Jordan is born in ",
         )
         assert_matches_type(Completion, completion, path=["response"])
 
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncCerebras) -> None:
         completion = await async_client.completions.create(
-            model="model",
-            prompt="string",
+            model="llama3.1-70b",
+            prompt="Micheael Jordan is born in ",
             best_of=0,
             echo=True,
             frequency_penalty=-2,
             grammar_root="grammar_root",
             logit_bias={"foo": 0},
             logprobs=0,
-            max_tokens=0,
-            min_tokens=0,
-            n=0,
+            max_tokens=-1,
+            min_tokens=-1,
+            n=1,
             presence_penalty=-2,
+            prompt_cache_key="prompt_cache_key",
             reasoning_format="none",
             return_raw_tokens=True,
             seed=0,
@@ -130,8 +132,8 @@ class TestAsyncCompletions:
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncCerebras) -> None:
         response = await async_client.completions.with_raw_response.create(
-            model="model",
-            prompt="string",
+            model="llama3.1-70b",
+            prompt="Micheael Jordan is born in ",
         )
 
         assert response.is_closed is True
@@ -142,8 +144,8 @@ class TestAsyncCompletions:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncCerebras) -> None:
         async with async_client.completions.with_streaming_response.create(
-            model="model",
-            prompt="string",
+            model="llama3.1-70b",
+            prompt="Micheael Jordan is born in ",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

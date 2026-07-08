@@ -20,38 +20,55 @@ class TestCompletions:
     @parametrize
     def test_method_create(self, client: Cerebras) -> None:
         completion = client.chat.completions.create(
-            model="model",
+            messages=[
+                {
+                    "content": "You are a helpful assistant running on a CS-3 hardware at Cerebras Systems",
+                    "role": "system",
+                },
+                {
+                    "content": "What is Generative AI?",
+                    "role": "user",
+                },
+            ],
+            model="gpt-oss-120b",
         )
         assert_matches_type(ChatCompletion, completion, path=["response"])
 
     @parametrize
     def test_method_create_with_all_params(self, client: Cerebras) -> None:
         completion = client.chat.completions.create(
-            model="model",
+            messages=[
+                {
+                    "content": "You are a helpful assistant running on a CS-3 hardware at Cerebras Systems",
+                    "name": "name",
+                    "role": "system",
+                },
+                {
+                    "content": "What is Generative AI?",
+                    "name": "name",
+                    "role": "user",
+                },
+            ],
+            model="gpt-oss-120b",
             clear_thinking=True,
             disable_reasoning=True,
             frequency_penalty=-2,
             logit_bias={"foo": 0},
             logprobs=True,
-            max_completion_tokens=0,
-            max_tokens=0,
-            messages=[
-                {
-                    "content": "string",
-                    "name": "name",
-                    "role": "system",
-                }
-            ],
-            min_completion_tokens=0,
-            min_tokens=0,
-            n=0,
+            max_completion_tokens=-1,
+            max_tokens=-1,
+            min_completion_tokens=-1,
+            min_tokens=1000,
+            model_parameters={"foo": "bar"},
+            n=1,
             parallel_tool_calls=True,
             prediction={
                 "content": "string",
                 "type": "content",
             },
             presence_penalty=-2,
-            reasoning_effort="low",
+            prompt_cache_key="prompt_cache_key",
+            reasoning_effort="none",
             reasoning_format="none",
             response_format={"type": "text"},
             seed=0,
@@ -66,14 +83,14 @@ class TestCompletions:
                     "function": {
                         "name": "name",
                         "description": "description",
-                        "parameters": {},
+                        "parameters": {"foo": "bar"},
                         "strict": True,
                     },
                     "type": "type",
                 }
             ],
             top_logprobs=0,
-            top_p=0,
+            top_p=1,
             user="user",
             cf_ray="CF-RAY",
             x_amz_cf_id="X-Amz-Cf-Id",
@@ -84,7 +101,17 @@ class TestCompletions:
     @parametrize
     def test_raw_response_create(self, client: Cerebras) -> None:
         response = client.chat.completions.with_raw_response.create(
-            model="model",
+            messages=[
+                {
+                    "content": "You are a helpful assistant running on a CS-3 hardware at Cerebras Systems",
+                    "role": "system",
+                },
+                {
+                    "content": "What is Generative AI?",
+                    "role": "user",
+                },
+            ],
+            model="gpt-oss-120b",
         )
 
         assert response.is_closed is True
@@ -95,7 +122,17 @@ class TestCompletions:
     @parametrize
     def test_streaming_response_create(self, client: Cerebras) -> None:
         with client.chat.completions.with_streaming_response.create(
-            model="model",
+            messages=[
+                {
+                    "content": "You are a helpful assistant running on a CS-3 hardware at Cerebras Systems",
+                    "role": "system",
+                },
+                {
+                    "content": "What is Generative AI?",
+                    "role": "user",
+                },
+            ],
+            model="gpt-oss-120b",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -114,38 +151,55 @@ class TestAsyncCompletions:
     @parametrize
     async def test_method_create(self, async_client: AsyncCerebras) -> None:
         completion = await async_client.chat.completions.create(
-            model="model",
+            messages=[
+                {
+                    "content": "You are a helpful assistant running on a CS-3 hardware at Cerebras Systems",
+                    "role": "system",
+                },
+                {
+                    "content": "What is Generative AI?",
+                    "role": "user",
+                },
+            ],
+            model="gpt-oss-120b",
         )
         assert_matches_type(ChatCompletion, completion, path=["response"])
 
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncCerebras) -> None:
         completion = await async_client.chat.completions.create(
-            model="model",
+            messages=[
+                {
+                    "content": "You are a helpful assistant running on a CS-3 hardware at Cerebras Systems",
+                    "name": "name",
+                    "role": "system",
+                },
+                {
+                    "content": "What is Generative AI?",
+                    "name": "name",
+                    "role": "user",
+                },
+            ],
+            model="gpt-oss-120b",
             clear_thinking=True,
             disable_reasoning=True,
             frequency_penalty=-2,
             logit_bias={"foo": 0},
             logprobs=True,
-            max_completion_tokens=0,
-            max_tokens=0,
-            messages=[
-                {
-                    "content": "string",
-                    "name": "name",
-                    "role": "system",
-                }
-            ],
-            min_completion_tokens=0,
-            min_tokens=0,
-            n=0,
+            max_completion_tokens=-1,
+            max_tokens=-1,
+            min_completion_tokens=-1,
+            min_tokens=1000,
+            model_parameters={"foo": "bar"},
+            n=1,
             parallel_tool_calls=True,
             prediction={
                 "content": "string",
                 "type": "content",
             },
             presence_penalty=-2,
-            reasoning_effort="low",
+            prompt_cache_key="prompt_cache_key",
+            reasoning_effort="none",
             reasoning_format="none",
             response_format={"type": "text"},
             seed=0,
@@ -160,14 +214,14 @@ class TestAsyncCompletions:
                     "function": {
                         "name": "name",
                         "description": "description",
-                        "parameters": {},
+                        "parameters": {"foo": "bar"},
                         "strict": True,
                     },
                     "type": "type",
                 }
             ],
             top_logprobs=0,
-            top_p=0,
+            top_p=1,
             user="user",
             cf_ray="CF-RAY",
             x_amz_cf_id="X-Amz-Cf-Id",
@@ -178,7 +232,17 @@ class TestAsyncCompletions:
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncCerebras) -> None:
         response = await async_client.chat.completions.with_raw_response.create(
-            model="model",
+            messages=[
+                {
+                    "content": "You are a helpful assistant running on a CS-3 hardware at Cerebras Systems",
+                    "role": "system",
+                },
+                {
+                    "content": "What is Generative AI?",
+                    "role": "user",
+                },
+            ],
+            model="gpt-oss-120b",
         )
 
         assert response.is_closed is True
@@ -189,7 +253,17 @@ class TestAsyncCompletions:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncCerebras) -> None:
         async with async_client.chat.completions.with_streaming_response.create(
-            model="model",
+            messages=[
+                {
+                    "content": "You are a helpful assistant running on a CS-3 hardware at Cerebras Systems",
+                    "role": "system",
+                },
+                {
+                    "content": "What is Generative AI?",
+                    "role": "user",
+                },
+            ],
+            model="gpt-oss-120b",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

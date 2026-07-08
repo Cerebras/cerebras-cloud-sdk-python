@@ -48,6 +48,7 @@ class CompletionsResource(SyncAPIResource):
     def create(
         self,
         *,
+        messages: Iterable[completion_create_params.Message],
         model: str,
         clear_thinking: Optional[bool] | Omit = omit,
         disable_reasoning: Optional[bool] | Omit = omit,
@@ -56,14 +57,15 @@ class CompletionsResource(SyncAPIResource):
         logprobs: Optional[bool] | Omit = omit,
         max_completion_tokens: Optional[int] | Omit = omit,
         max_tokens: Optional[int] | Omit = omit,
-        messages: Optional[Iterable[completion_create_params.Message]] | Omit = omit,
         min_completion_tokens: Optional[int] | Omit = omit,
         min_tokens: Optional[int] | Omit = omit,
+        model_parameters: Optional[Dict[str, object]] | Omit = omit,
         n: Optional[int] | Omit = omit,
         parallel_tool_calls: Optional[bool] | Omit = omit,
         prediction: Optional[completion_create_params.Prediction] | Omit = omit,
         presence_penalty: Optional[float] | Omit = omit,
-        reasoning_effort: Optional[Literal["low", "medium", "high"]] | Omit = omit,
+        prompt_cache_key: Optional[str] | Omit = omit,
+        reasoning_effort: Optional[Literal["none", "low", "medium", "high"]] | Omit = omit,
         reasoning_format: Literal["none", "parsed", "text_parsed", "raw", "hidden"] | Omit = omit,
         response_format: Optional[completion_create_params.ResponseFormat] | Omit = omit,
         seed: Optional[int] | Omit = omit,
@@ -129,6 +131,10 @@ class CompletionsResource(SyncAPIResource):
               set to 0, the model will generate as many tokens as it deems necessary. Setting
               to -1 sets to max sequence length.
 
+          model_parameters: Model-specific parameters. The accepted keys and values are defined per-model by
+              the model's `model_parameters` schema. The schema is used downstream to validate
+              the contents of this field. Unsupported for models that declare none.
+
           n: How many chat completion choices to generate for each input message. Note that
               you will be charged based on the number of generated tokens across all of the
               choices. Keep n as 1 to minimize costs.
@@ -141,10 +147,15 @@ class CompletionsResource(SyncAPIResource):
               whether they appear in the text so far, increasing the model's likelihood to
               talk about new topics.
 
+          prompt_cache_key: An optional opaque string. The requests with the same prompt cache key would
+              highly likely share the same prompt prefixes. Examples would be IDs of chat
+              conversations, IDs of users, the hashes of system prompts, etc.
+
           reasoning_effort: Constrains effort on reasoning for reasoning models. Currently supported values
-              are low, medium, and high. Reducing reasoning effort can result in faster
+              are none, low, medium, and high. Reducing reasoning effort can result in faster
               responses and fewer tokens used on reasoning in a response. If set to None, the
-              model will use the default reasoning effort for the model.
+              model will use the default reasoning effort for the model. If set to 'none', the
+              model will not reason
 
           reasoning_format: Determines how reasoning is returned in the response. If set to `parsed`, the
               reasoning will be returned in the `reasoning` field of the response message as a
@@ -167,12 +178,12 @@ class CompletionsResource(SyncAPIResource):
 
           stream_options: Options for streaming.
 
-          temperature: What sampling temperature to use, between 0 and 1.5. Higher values like 0.8 will
+          temperature: What sampling temperature to use, between 0 and 2. Higher values like 0.8 will
               make the output more random, while lower values like 0.2 will make it more
               focused and deterministic. We generally recommend altering this or `top_p` but
               not both.
 
-          tool_choice: A choice object.
+          tool_choice: A tool choice object.
 
           top_logprobs: An integer between 0 and 20 specifying the number of most likely tokens to
               return at each token position, each with an associated log probability. logprobs
@@ -210,6 +221,7 @@ class CompletionsResource(SyncAPIResource):
                 "/v1/chat/completions",
                 body=maybe_transform(
                     {
+                        "messages": messages,
                         "model": model,
                         "clear_thinking": clear_thinking,
                         "disable_reasoning": disable_reasoning,
@@ -218,13 +230,14 @@ class CompletionsResource(SyncAPIResource):
                         "logprobs": logprobs,
                         "max_completion_tokens": max_completion_tokens,
                         "max_tokens": max_tokens,
-                        "messages": messages,
                         "min_completion_tokens": min_completion_tokens,
                         "min_tokens": min_tokens,
+                        "model_parameters": model_parameters,
                         "n": n,
                         "parallel_tool_calls": parallel_tool_calls,
                         "prediction": prediction,
                         "presence_penalty": presence_penalty,
+                        "prompt_cache_key": prompt_cache_key,
                         "reasoning_effort": reasoning_effort,
                         "reasoning_format": reasoning_format,
                         "response_format": response_format,
@@ -275,6 +288,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
     async def create(
         self,
         *,
+        messages: Iterable[completion_create_params.Message],
         model: str,
         clear_thinking: Optional[bool] | Omit = omit,
         disable_reasoning: Optional[bool] | Omit = omit,
@@ -283,14 +297,15 @@ class AsyncCompletionsResource(AsyncAPIResource):
         logprobs: Optional[bool] | Omit = omit,
         max_completion_tokens: Optional[int] | Omit = omit,
         max_tokens: Optional[int] | Omit = omit,
-        messages: Optional[Iterable[completion_create_params.Message]] | Omit = omit,
         min_completion_tokens: Optional[int] | Omit = omit,
         min_tokens: Optional[int] | Omit = omit,
+        model_parameters: Optional[Dict[str, object]] | Omit = omit,
         n: Optional[int] | Omit = omit,
         parallel_tool_calls: Optional[bool] | Omit = omit,
         prediction: Optional[completion_create_params.Prediction] | Omit = omit,
         presence_penalty: Optional[float] | Omit = omit,
-        reasoning_effort: Optional[Literal["low", "medium", "high"]] | Omit = omit,
+        prompt_cache_key: Optional[str] | Omit = omit,
+        reasoning_effort: Optional[Literal["none", "low", "medium", "high"]] | Omit = omit,
         reasoning_format: Literal["none", "parsed", "text_parsed", "raw", "hidden"] | Omit = omit,
         response_format: Optional[completion_create_params.ResponseFormat] | Omit = omit,
         seed: Optional[int] | Omit = omit,
@@ -356,6 +371,10 @@ class AsyncCompletionsResource(AsyncAPIResource):
               set to 0, the model will generate as many tokens as it deems necessary. Setting
               to -1 sets to max sequence length.
 
+          model_parameters: Model-specific parameters. The accepted keys and values are defined per-model by
+              the model's `model_parameters` schema. The schema is used downstream to validate
+              the contents of this field. Unsupported for models that declare none.
+
           n: How many chat completion choices to generate for each input message. Note that
               you will be charged based on the number of generated tokens across all of the
               choices. Keep n as 1 to minimize costs.
@@ -368,10 +387,15 @@ class AsyncCompletionsResource(AsyncAPIResource):
               whether they appear in the text so far, increasing the model's likelihood to
               talk about new topics.
 
+          prompt_cache_key: An optional opaque string. The requests with the same prompt cache key would
+              highly likely share the same prompt prefixes. Examples would be IDs of chat
+              conversations, IDs of users, the hashes of system prompts, etc.
+
           reasoning_effort: Constrains effort on reasoning for reasoning models. Currently supported values
-              are low, medium, and high. Reducing reasoning effort can result in faster
+              are none, low, medium, and high. Reducing reasoning effort can result in faster
               responses and fewer tokens used on reasoning in a response. If set to None, the
-              model will use the default reasoning effort for the model.
+              model will use the default reasoning effort for the model. If set to 'none', the
+              model will not reason
 
           reasoning_format: Determines how reasoning is returned in the response. If set to `parsed`, the
               reasoning will be returned in the `reasoning` field of the response message as a
@@ -394,12 +418,12 @@ class AsyncCompletionsResource(AsyncAPIResource):
 
           stream_options: Options for streaming.
 
-          temperature: What sampling temperature to use, between 0 and 1.5. Higher values like 0.8 will
+          temperature: What sampling temperature to use, between 0 and 2. Higher values like 0.8 will
               make the output more random, while lower values like 0.2 will make it more
               focused and deterministic. We generally recommend altering this or `top_p` but
               not both.
 
-          tool_choice: A choice object.
+          tool_choice: A tool choice object.
 
           top_logprobs: An integer between 0 and 20 specifying the number of most likely tokens to
               return at each token position, each with an associated log probability. logprobs
@@ -437,6 +461,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
                 "/v1/chat/completions",
                 body=await async_maybe_transform(
                     {
+                        "messages": messages,
                         "model": model,
                         "clear_thinking": clear_thinking,
                         "disable_reasoning": disable_reasoning,
@@ -445,13 +470,14 @@ class AsyncCompletionsResource(AsyncAPIResource):
                         "logprobs": logprobs,
                         "max_completion_tokens": max_completion_tokens,
                         "max_tokens": max_tokens,
-                        "messages": messages,
                         "min_completion_tokens": min_completion_tokens,
                         "min_tokens": min_tokens,
+                        "model_parameters": model_parameters,
                         "n": n,
                         "parallel_tool_calls": parallel_tool_calls,
                         "prediction": prediction,
                         "presence_penalty": presence_penalty,
+                        "prompt_cache_key": prompt_cache_key,
                         "reasoning_effort": reasoning_effort,
                         "reasoning_format": reasoning_format,
                         "response_format": response_format,

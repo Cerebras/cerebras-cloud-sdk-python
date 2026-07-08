@@ -1,6 +1,6 @@
 [project]
 name = "cerebras_cloud_sdk"
-version = "1.79.0"
+version = "1.91.0"
 description = "The official Python library for the cerebras API"
 dynamic = ["readme"]
 license = "Apache-2.0"
@@ -171,7 +171,7 @@ show_error_codes = true
 #
 # We also exclude our `tests` as mypy doesn't always infer
 # types correctly and Pyright will still catch any type errors.
-exclude = ['src/cerebras/cloud/sdk/_files.py', '_dev/.*.py', 'tests/.*']
+exclude = ["src/cerebras/cloud/sdk/_files.py", "_dev/.*.py", "tests/.*"]
 
 strict_equality = true
 implicit_reexport = true

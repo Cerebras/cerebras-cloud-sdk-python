@@ -1,5 +1,43 @@
 # Changelog
 
+## 1.91.0 (2026-07-08)
+
+Full Changelog: [v1.79.0...v1.91.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.79.0...v1.91.0)
+
+### Features
+
+* **api:** manual updates ([59a0f79](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/59a0f79491c2d67cfbd7c55439b9eb344f341891))
+* **api:** manual updates ([714febe](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/714febe998e7881ace82cde04a47a77fba64c0d6))
+* **api:** v1.84.0 ([d43353a](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/d43353aa33fa344599bab7bac3c48d38c76f2474))
+* **api:** v1.90.0 ([8c6988a](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/8c6988ab445e095b000a2268425b5a9af1ded7fc))
+* **api:** v1.91.0 ([4b27837](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/4b278371155569e5d035ce6bf37ba1adb0b51575))
+* **internal/types:** support eagerly validating pydantic iterators ([2fe82b5](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/2fe82b5cb998587b1ab7c62153e692df5ea3e92a))
+* support setting headers via env ([79e76f5](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/79e76f5e281ed81c2e9aa20de1514212ed1051d8))
+
+
+### Bug Fixes
+
+* **client:** add missing f-string prefix in file type error message ([3aa9ef4](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/3aa9ef422bdcc46f4644feb3d351cf25c332d74c))
+* ensure file data are only sent as 1 parameter ([0ab4ba1](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/0ab4ba1e37c38ab352a99d0d9024ff1b03875247))
+* use correct field name format for multipart file arrays ([6c8cbfc](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/6c8cbfc751785f925e98a3c6ad965d2534eb0d6a))
+
+
+### Performance Improvements
+
+* **client:** optimize file structure copying in multipart requests ([b02d2fe](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/b02d2fe50d799bae5ba3d34aabcc954d1d829a0b))
+
+
+### Chores
+
+* **internal:** more robust bootstrap script ([3d80abf](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/3d80abf6e761cc65e8c6ca206119f329417ae360))
+* **internal:** reformat pyproject.toml ([a4c6d84](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/a4c6d84b5e1fd9a964b0b9c39cbefedac83d3225))
+* **tests:** bump steady to v0.22.1 ([074db14](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/074db14a253d5f4c056e7f054c3b7acd74442bac))
+
+
+### Documentation
+
+* update examples ([9bec28e](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/commit/9bec28e5a93991fa4a7bc05d3bf52b4f8150f2e0))
+
 ## 1.79.0 (2026-04-09)
 
 Full Changelog: [v1.67.0...v1.79.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.67.0...v1.79.0)

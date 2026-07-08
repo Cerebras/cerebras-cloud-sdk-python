@@ -57,13 +57,13 @@ client = Cerebras(
 )
 
 chat_completion = client.chat.completions.create(
-    model="llama3.1-8b",
     messages=[
         {
             "role": "user",
             "content": "Why is fast inference important?",
         }
     ],
+    model="gpt-oss-120b",
 )
 
 print(chat_completion)
@@ -82,7 +82,7 @@ client = Cerebras(
 completion = client.completions.create(
     prompt="It was a dark and stormy ",
     max_tokens=100,
-    model="llama3.1-8b",
+    model="gpt-oss-120b",
 )
 
 print(completion)
@@ -111,13 +111,13 @@ client = AsyncCerebras(
 
 async def main() -> None:
     chat_completion = await client.chat.completions.create(
-        model="llama3.1-8b",
         messages=[
             {
                 "role": "user",
                 "content": "Why is fast inference important?",
             }
         ],
+        model="gpt-oss-120b",
     )
     print(chat_completion)
 
@@ -152,13 +152,13 @@ async def main() -> None:
         http_client=DefaultAioHttpClient(),
     ) as client:
         chat_completion = await client.chat.completions.create(
-            model="llama3.1-8b",
             messages=[
                 {
                     "role": "user",
                     "content": "Why is fast inference important?",
                 }
             ],
+            model="gpt-oss-120b",
         )
 
 
@@ -189,7 +189,7 @@ stream = client.chat.completions.create(
             "content": "Why is fast inference important?",
         }
     ],
-    model="llama3.1-8b",
+    model="gpt-oss-120b",
     stream=True,
 )
 
@@ -219,7 +219,7 @@ async def main() -> None:
                 "content": "Why is fast inference important?",
             }
         ],
-        model="llama3.1-8b",
+        model="gpt-oss-120b",
         stream=True,
     )
     async for chunk in stream:
@@ -243,7 +243,7 @@ client = Cerebras(
 stream = client.completions.create(
     prompt="It was a dark and stormy ",
     max_tokens=100,
-    model="llama3.1-8b",
+    model="gpt-oss-120b",
     stream=True,
 )
 
@@ -271,7 +271,17 @@ from cerebras.cloud.sdk import Cerebras
 client = Cerebras()
 
 chat_completion = client.chat.completions.create(
-    model="model",
+    messages=[
+        {
+            "content": "You are a helpful assistant running on a CS-3 hardware at Cerebras Systems",
+            "role": "system",
+        },
+        {
+            "content": "What is Generative AI?",
+            "role": "user",
+        },
+    ],
+    model="gpt-oss-120b",
     prediction={
         "content": "string",
         "type": "content",
@@ -298,13 +308,13 @@ client = Cerebras()
 
 try:
     client.chat.completions.create(
-        model="some-model-that-doesnt-exist",
         messages=[
             {
                 "role": "user",
                 "content": "This should cause an error!",
             }
         ],
+        model="some-model-that-doesnt-exist",
     )
 except cerebras.cloud.sdk.APIConnectionError as e:
     print("The server could not be reached")
@@ -350,13 +360,13 @@ client = Cerebras(
 
 # Or, configure per-request:
 client.with_options(max_retries=5).chat.completions.create(
-    model="llama3.1-8b",
     messages=[
         {
             "role": "user",
             "content": "Why is fast inference important?",
         }
     ],
+    model="gpt-oss-120b",
 )
 ```
 
@@ -383,13 +393,13 @@ client = Cerebras(
 
 # Override per-request:
 client.with_options(timeout=5.0).chat.completions.create(
-    model="llama3.1-8b",
     messages=[
         {
             "role": "user",
             "content": "Why is fast inference important?",
         }
     ],
+    model="gpt-oss-120b",
 )
 ```
 
@@ -433,11 +443,11 @@ from cerebras.cloud.sdk import Cerebras
 
 client = Cerebras()
 response = client.chat.completions.with_raw_response.create(
-    model="llama3.1-8b",
     messages=[{
         "role": "user",
         "content": "Why is fast inference important?",
     }],
+    model="gpt-oss-120b",
 )
 print(response.headers.get('X-My-Header'))
 
@@ -458,13 +468,13 @@ To stream the response body, use `.with_streaming_response` instead, which requi
 
 ```python
 with client.chat.completions.with_streaming_response.create(
-    model="llama3.1-8b",
     messages=[
         {
             "role": "user",
             "content": "Why is fast inference important?",
         }
     ],
+    model="gpt-oss-120b",
 ) as response:
     print(response.headers.get("X-My-Header"))
 

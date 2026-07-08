@@ -17,6 +17,12 @@ __all__ = [
     "MessageSystemMessageRequestContentUnionMember1ImageURLContent",
     "MessageSystemMessageRequestContentUnionMember1ImageURLContentImageURL",
     "MessageSystemMessageRequestContentUnionMember1ImageContent",
+    "MessageDeveloperMessageRequest",
+    "MessageDeveloperMessageRequestContentUnionMember1",
+    "MessageDeveloperMessageRequestContentUnionMember1TextContent",
+    "MessageDeveloperMessageRequestContentUnionMember1ImageURLContent",
+    "MessageDeveloperMessageRequestContentUnionMember1ImageURLContentImageURL",
+    "MessageDeveloperMessageRequestContentUnionMember1ImageContent",
     "MessageUserMessageRequest",
     "MessageUserMessageRequestContentUnionMember1",
     "MessageUserMessageRequestContentUnionMember1TextContent",
@@ -47,6 +53,8 @@ __all__ = [
 
 
 class CompletionCreateParams(TypedDict, total=False):
+    messages: Required[Iterable[Message]]
+
     model: Required[str]
 
     clear_thinking: Optional[bool]
@@ -99,8 +107,6 @@ class CompletionCreateParams(TypedDict, total=False):
     context length. This value is now deprecated in favor of max_completion_tokens.
     """
 
-    messages: Optional[Iterable[Message]]
-
     min_completion_tokens: Optional[int]
     """The minimum number of tokens to generate for a completion.
 
@@ -113,6 +119,14 @@ class CompletionCreateParams(TypedDict, total=False):
 
     If not specified or set to 0, the model will generate as many tokens as it deems
     necessary. Setting to -1 sets to max sequence length.
+    """
+
+    model_parameters: Optional[Dict[str, object]]
+    """Model-specific parameters.
+
+    The accepted keys and values are defined per-model by the model's
+    `model_parameters` schema. The schema is used downstream to validate the
+    contents of this field. Unsupported for models that declare none.
     """
 
     n: Optional[int]
@@ -138,12 +152,21 @@ class CompletionCreateParams(TypedDict, total=False):
     far, increasing the model's likelihood to talk about new topics.
     """
 
-    reasoning_effort: Optional[Literal["low", "medium", "high"]]
+    prompt_cache_key: Optional[str]
+    """An optional opaque string.
+
+    The requests with the same prompt cache key would highly likely share the same
+    prompt prefixes. Examples would be IDs of chat conversations, IDs of users, the
+    hashes of system prompts, etc.
+    """
+
+    reasoning_effort: Optional[Literal["none", "low", "medium", "high"]]
     """Constrains effort on reasoning for reasoning models.
 
-    Currently supported values are low, medium, and high. Reducing reasoning effort
-    can result in faster responses and fewer tokens used on reasoning in a response.
-    If set to None, the model will use the default reasoning effort for the model.
+    Currently supported values are none, low, medium, and high. Reducing reasoning
+    effort can result in faster responses and fewer tokens used on reasoning in a
+    response. If set to None, the model will use the default reasoning effort for
+    the model. If set to 'none', the model will not reason
     """
 
     reasoning_format: Literal["none", "parsed", "text_parsed", "raw", "hidden"]
@@ -183,7 +206,7 @@ class CompletionCreateParams(TypedDict, total=False):
     """Options for streaming."""
 
     temperature: Optional[float]
-    """What sampling temperature to use, between 0 and 1.5.
+    """What sampling temperature to use, between 0 and 2.
 
     Higher values like 0.8 will make the output more random, while lower values like
     0.2 will make it more focused and deterministic. We generally recommend altering
@@ -191,7 +214,7 @@ class CompletionCreateParams(TypedDict, total=False):
     """
 
     tool_choice: Optional[ToolChoice]
-    """A choice object."""
+    """A tool choice object."""
 
     tools: Optional[Iterable[Tool]]
 
@@ -223,7 +246,7 @@ class CompletionCreateParams(TypedDict, total=False):
     x_delay_time: Annotated[float, PropertyInfo(alias="X-delay-time")]
 
 
-class MessageSystemMessageRequestContentUnionMember1TextContent(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class MessageSystemMessageRequestContentUnionMember1TextContent(TypedDict, total=False):
     """Text content for a message."""
 
     text: Required[str]
@@ -231,7 +254,7 @@ class MessageSystemMessageRequestContentUnionMember1TextContent(TypedDict, total
     type: Required[Literal["text"]]
 
 
-class MessageSystemMessageRequestContentUnionMember1ImageURLContentImageURL(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class MessageSystemMessageRequestContentUnionMember1ImageURLContentImageURL(TypedDict, total=False):
     """Image URL"""
 
     url: Required[str]
@@ -239,7 +262,7 @@ class MessageSystemMessageRequestContentUnionMember1ImageURLContentImageURL(Type
     detail: Optional[str]
 
 
-class MessageSystemMessageRequestContentUnionMember1ImageURLContent(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class MessageSystemMessageRequestContentUnionMember1ImageURLContent(TypedDict, total=False):
     """Image URL content for a message."""
 
     image_url: Required[MessageSystemMessageRequestContentUnionMember1ImageURLContentImageURL]
@@ -248,7 +271,7 @@ class MessageSystemMessageRequestContentUnionMember1ImageURLContent(TypedDict, t
     type: Required[Literal["image_url"]]
 
 
-class MessageSystemMessageRequestContentUnionMember1ImageContent(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class MessageSystemMessageRequestContentUnionMember1ImageContent(TypedDict, total=False):
     """Image URL content for a message."""
 
     image: Required[str]
@@ -263,7 +286,7 @@ MessageSystemMessageRequestContentUnionMember1: TypeAlias = Union[
 ]
 
 
-class MessageSystemMessageRequest(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class MessageSystemMessageRequest(TypedDict, total=False):
     """A message request from the system."""
 
     content: Required[Union[str, Iterable[MessageSystemMessageRequestContentUnionMember1]]]
@@ -273,7 +296,7 @@ class MessageSystemMessageRequest(TypedDict, total=False, extra_items=object):  
     role: Literal["system"]
 
 
-class MessageUserMessageRequestContentUnionMember1TextContent(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class MessageDeveloperMessageRequestContentUnionMember1TextContent(TypedDict, total=False):
     """Text content for a message."""
 
     text: Required[str]
@@ -281,7 +304,7 @@ class MessageUserMessageRequestContentUnionMember1TextContent(TypedDict, total=F
     type: Required[Literal["text"]]
 
 
-class MessageUserMessageRequestContentUnionMember1ImageURLContentImageURL(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class MessageDeveloperMessageRequestContentUnionMember1ImageURLContentImageURL(TypedDict, total=False):
     """Image URL"""
 
     url: Required[str]
@@ -289,7 +312,60 @@ class MessageUserMessageRequestContentUnionMember1ImageURLContentImageURL(TypedD
     detail: Optional[str]
 
 
-class MessageUserMessageRequestContentUnionMember1ImageURLContent(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class MessageDeveloperMessageRequestContentUnionMember1ImageURLContent(TypedDict, total=False):
+    """Image URL content for a message."""
+
+    image_url: Required[MessageDeveloperMessageRequestContentUnionMember1ImageURLContentImageURL]
+    """Image URL"""
+
+    type: Required[Literal["image_url"]]
+
+
+class MessageDeveloperMessageRequestContentUnionMember1ImageContent(TypedDict, total=False):
+    """Image URL content for a message."""
+
+    image: Required[str]
+
+    type: Required[Literal["image"]]
+
+
+MessageDeveloperMessageRequestContentUnionMember1: TypeAlias = Union[
+    MessageDeveloperMessageRequestContentUnionMember1TextContent,
+    MessageDeveloperMessageRequestContentUnionMember1ImageURLContent,
+    MessageDeveloperMessageRequestContentUnionMember1ImageContent,
+]
+
+
+class MessageDeveloperMessageRequest(TypedDict, total=False):
+    """
+    A message request from the developer:
+    Currently only for openai models, where they are functionally the same as system
+    """
+
+    content: Required[Union[str, Iterable[MessageDeveloperMessageRequestContentUnionMember1]]]
+
+    name: Optional[str]
+
+    role: Literal["developer"]
+
+
+class MessageUserMessageRequestContentUnionMember1TextContent(TypedDict, total=False):
+    """Text content for a message."""
+
+    text: Required[str]
+
+    type: Required[Literal["text"]]
+
+
+class MessageUserMessageRequestContentUnionMember1ImageURLContentImageURL(TypedDict, total=False):
+    """Image URL"""
+
+    url: Required[str]
+
+    detail: Optional[str]
+
+
+class MessageUserMessageRequestContentUnionMember1ImageURLContent(TypedDict, total=False):
     """Image URL content for a message."""
 
     image_url: Required[MessageUserMessageRequestContentUnionMember1ImageURLContentImageURL]
@@ -298,7 +374,7 @@ class MessageUserMessageRequestContentUnionMember1ImageURLContent(TypedDict, tot
     type: Required[Literal["image_url"]]
 
 
-class MessageUserMessageRequestContentUnionMember1ImageContent(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class MessageUserMessageRequestContentUnionMember1ImageContent(TypedDict, total=False):
     """Image URL content for a message."""
 
     image: Required[str]
@@ -313,7 +389,7 @@ MessageUserMessageRequestContentUnionMember1: TypeAlias = Union[
 ]
 
 
-class MessageUserMessageRequest(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class MessageUserMessageRequest(TypedDict, total=False):
     """A message request from the user."""
 
     content: Required[Union[str, Iterable[MessageUserMessageRequestContentUnionMember1]]]
@@ -323,7 +399,7 @@ class MessageUserMessageRequest(TypedDict, total=False, extra_items=object):  # 
     role: Literal["user"]
 
 
-class MessageAssistantMessageRequestContentUnionMember1(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class MessageAssistantMessageRequestContentUnionMember1(TypedDict, total=False):
     """Text content for a message."""
 
     text: Required[str]
@@ -331,7 +407,7 @@ class MessageAssistantMessageRequestContentUnionMember1(TypedDict, total=False, 
     type: Required[Literal["text"]]
 
 
-class MessageAssistantMessageRequestReasoningUnionMember1(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class MessageAssistantMessageRequestReasoningUnionMember1(TypedDict, total=False):
     """Text content for a message."""
 
     text: Required[str]
@@ -339,7 +415,7 @@ class MessageAssistantMessageRequestReasoningUnionMember1(TypedDict, total=False
     type: Required[Literal["text"]]
 
 
-class MessageAssistantMessageRequestToolCallFunction(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class MessageAssistantMessageRequestToolCallFunction(TypedDict, total=False):
     """A function call for an assistant tool."""
 
     arguments: Required[str]
@@ -347,7 +423,7 @@ class MessageAssistantMessageRequestToolCallFunction(TypedDict, total=False, ext
     name: Required[str]
 
 
-class MessageAssistantMessageRequestToolCall(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class MessageAssistantMessageRequestToolCall(TypedDict, total=False):
     """A tool call for an assistant."""
 
     id: Required[str]
@@ -357,8 +433,10 @@ class MessageAssistantMessageRequestToolCall(TypedDict, total=False, extra_items
 
     type: Required[Literal["function"]]
 
+    index: Optional[int]
 
-class MessageAssistantMessageRequest(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+
+class MessageAssistantMessageRequest(TypedDict, total=False):
     """A message request from an assistant."""
 
     content: Union[str, Iterable[MessageAssistantMessageRequestContentUnionMember1], None]
@@ -372,7 +450,7 @@ class MessageAssistantMessageRequest(TypedDict, total=False, extra_items=object)
     tool_calls: Optional[Iterable[MessageAssistantMessageRequestToolCall]]
 
 
-class MessageToolMessageRequestContentUnionMember1(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class MessageToolMessageRequestContentUnionMember1(TypedDict, total=False):
     """Text content for a message."""
 
     text: Required[str]
@@ -380,7 +458,7 @@ class MessageToolMessageRequestContentUnionMember1(TypedDict, total=False, extra
     type: Required[Literal["text"]]
 
 
-class MessageToolMessageRequest(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class MessageToolMessageRequest(TypedDict, total=False):
     """A message request from a tool."""
 
     content: Required[Union[str, Iterable[MessageToolMessageRequestContentUnionMember1]]]
@@ -393,11 +471,15 @@ class MessageToolMessageRequest(TypedDict, total=False, extra_items=object):  # 
 
 
 Message: TypeAlias = Union[
-    MessageSystemMessageRequest, MessageUserMessageRequest, MessageAssistantMessageRequest, MessageToolMessageRequest
+    MessageSystemMessageRequest,
+    MessageDeveloperMessageRequest,
+    MessageUserMessageRequest,
+    MessageAssistantMessageRequest,
+    MessageToolMessageRequest,
 ]
 
 
-class PredictionContentUnionMember1(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class PredictionContentUnionMember1(TypedDict, total=False):
     """Text content for a message."""
 
     text: Required[str]
@@ -405,7 +487,7 @@ class PredictionContentUnionMember1(TypedDict, total=False, extra_items=object):
     type: Required[Literal["text"]]
 
 
-class Prediction(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class Prediction(TypedDict, total=False):
     """
     Configuration for a Predicted Output, which can greatly improve response times when large parts of the model response are known ahead of time. This is most common when regenerating a file with only minor changes to most of the content.
     """
@@ -415,31 +497,31 @@ class Prediction(TypedDict, total=False, extra_items=object):  # type: ignore[ca
     type: Required[Literal["content"]]
 
 
-class ResponseFormatResponseFormatText(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class ResponseFormatResponseFormatText(TypedDict, total=False):
     """A response format for text."""
 
     type: Required[Literal["text"]]
 
 
-class ResponseFormatResponseFormatJsonObject(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class ResponseFormatResponseFormatJsonObject(TypedDict, total=False):
     """A response format for a JSON object."""
 
     type: Required[Literal["json_object"]]
 
 
-class ResponseFormatResponseFormatJsonSchemaJsonSchema(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class ResponseFormatResponseFormatJsonSchemaJsonSchema(TypedDict, total=False):
     """A JSON Schema object."""
 
     name: Required[str]
 
     description: Optional[str]
 
-    schema: Optional[object]
+    schema: Optional[Dict[str, object]]
 
     strict: Optional[bool]
 
 
-class ResponseFormatResponseFormatJsonSchema(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class ResponseFormatResponseFormatJsonSchema(TypedDict, total=False):
     """A response format for a JSON schema."""
 
     json_schema: Required[ResponseFormatResponseFormatJsonSchemaJsonSchema]
@@ -453,19 +535,19 @@ ResponseFormat: TypeAlias = Union[
 ]
 
 
-class StreamOptions(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class StreamOptions(TypedDict, total=False):
     """Options for streaming."""
 
     include_usage: Optional[bool]
 
 
-class ToolChoiceChoiceObjectFunction(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class ToolChoiceChoiceObjectFunction(TypedDict, total=False):
     """A function for a choice object."""
 
     name: Required[str]
 
 
-class ToolChoiceChoiceObject(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class ToolChoiceChoiceObject(TypedDict, total=False):
     """A choice object."""
 
     function: Required[ToolChoiceChoiceObjectFunction]
@@ -477,14 +559,14 @@ class ToolChoiceChoiceObject(TypedDict, total=False, extra_items=object):  # typ
 ToolChoice: TypeAlias = Union[Literal["none", "auto", "required"], ToolChoiceChoiceObject]
 
 
-class ToolFunction(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class ToolFunction(TypedDict, total=False):
     """A function object."""
 
     name: Required[str]
 
     description: Optional[str]
 
-    parameters: Optional[object]
+    parameters: Optional[Dict[str, object]]
     """
     Represents the parameters a function accepts. This model is designed to be
     flexible to accommodate any JSON Schema. The key-value pairs you provide will
@@ -494,7 +576,7 @@ class ToolFunction(TypedDict, total=False, extra_items=object):  # type: ignore[
     strict: bool
 
 
-class Tool(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class Tool(TypedDict, total=False):
     """A tool object"""
 
     function: Required[ToolFunction]

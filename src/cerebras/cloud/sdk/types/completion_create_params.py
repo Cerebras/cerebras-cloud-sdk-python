@@ -91,7 +91,15 @@ class CompletionCreateParams(TypedDict, total=False):
     far, increasing the model's likelihood to talk about new topics.
     """
 
-    reasoning_format: Literal["none", "parsed", "text_parsed", "raw", "hidden"]
+    prompt_cache_key: Optional[str]
+    """An optional opaque string.
+
+    The requests with the same prompt cache key would highly likely share the same
+    prompt prefixes. Examples would be IDs of chat conversations, IDs of users, the
+    hashes of system prompts, etc.
+    """
+
+    reasoning_format: Optional[Literal["none", "parsed", "text_parsed", "raw", "hidden"]]
     """Determines how reasoning is returned in the response.
 
     If set to `parsed`, the reasoning will be returned in the `reasoning` field of
@@ -128,7 +136,7 @@ class CompletionCreateParams(TypedDict, total=False):
     """
 
     temperature: Optional[float]
-    """What sampling temperature to use, between 0 and 1.5.
+    """What sampling temperature to use, between 0 and 2.
 
     Higher values like 0.8 will make the output more random, while lower values like
     0.2 will make it more focused and deterministic. We generally recommend altering
@@ -156,7 +164,7 @@ class CompletionCreateParams(TypedDict, total=False):
     x_delay_time: Annotated[float, PropertyInfo(alias="X-delay-time")]
 
 
-class StreamOptions(TypedDict, total=False, extra_items=object):  # type: ignore[call-arg]
+class StreamOptions(TypedDict, total=False):
     """Options for streaming."""
 
     include_usage: Optional[bool]

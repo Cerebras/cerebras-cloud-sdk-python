@@ -2,10 +2,14 @@
 
 from __future__ import annotations
 
+from typing import Any, cast
+from typing_extensions import Literal
+
 import httpx
 
+from ..types import model_list_params, model_retrieve_params
 from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from .._utils import path_template, strip_not_given
+from .._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -45,6 +49,7 @@ class ModelsResource(SyncAPIResource):
         self,
         model_id: str,
         *,
+        format: Literal["default", "openrouter", "huggingface"] | Omit = omit,
         cf_ray: str | Omit = omit,
         x_amz_cf_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -58,6 +63,8 @@ class ModelsResource(SyncAPIResource):
         Get Model
 
         Args:
+          format: Output format: 'default' (OpenAI-compatible), 'openrouter', or 'huggingface'
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -77,17 +84,27 @@ class ModelsResource(SyncAPIResource):
             ),
             **(extra_headers or {}),
         }
-        return self._get(
-            path_template("/v1/models/{model_id}", model_id=model_id),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+        return cast(
+            ModelRetrieveResponse,
+            self._get(
+                path_template("/v1/models/{model_id}", model_id=model_id),
+                options=make_request_options(
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    query=maybe_transform({"format": format}, model_retrieve_params.ModelRetrieveParams),
+                ),
+                cast_to=cast(
+                    Any, ModelRetrieveResponse
+                ),  # Union types cannot be passed in as arguments in the type system
             ),
-            cast_to=ModelRetrieveResponse,
         )
 
     def list(
         self,
         *,
+        format: Literal["default", "openrouter", "huggingface"] | Omit = omit,
         cf_ray: str | Omit = omit,
         x_amz_cf_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -101,6 +118,8 @@ class ModelsResource(SyncAPIResource):
         List Models
 
         Args:
+          format: Output format: 'default' (OpenAI-compatible), 'openrouter', or 'huggingface'
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -118,12 +137,19 @@ class ModelsResource(SyncAPIResource):
             ),
             **(extra_headers or {}),
         }
-        return self._get(
-            "/v1/models",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+        return cast(
+            ModelListResponse,
+            self._get(
+                "/v1/models",
+                options=make_request_options(
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    query=maybe_transform({"format": format}, model_list_params.ModelListParams),
+                ),
+                cast_to=cast(Any, ModelListResponse),  # Union types cannot be passed in as arguments in the type system
             ),
-            cast_to=ModelListResponse,
         )
 
 
@@ -151,6 +177,7 @@ class AsyncModelsResource(AsyncAPIResource):
         self,
         model_id: str,
         *,
+        format: Literal["default", "openrouter", "huggingface"] | Omit = omit,
         cf_ray: str | Omit = omit,
         x_amz_cf_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -164,6 +191,8 @@ class AsyncModelsResource(AsyncAPIResource):
         Get Model
 
         Args:
+          format: Output format: 'default' (OpenAI-compatible), 'openrouter', or 'huggingface'
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -183,17 +212,27 @@ class AsyncModelsResource(AsyncAPIResource):
             ),
             **(extra_headers or {}),
         }
-        return await self._get(
-            path_template("/v1/models/{model_id}", model_id=model_id),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+        return cast(
+            ModelRetrieveResponse,
+            await self._get(
+                path_template("/v1/models/{model_id}", model_id=model_id),
+                options=make_request_options(
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    query=await async_maybe_transform({"format": format}, model_retrieve_params.ModelRetrieveParams),
+                ),
+                cast_to=cast(
+                    Any, ModelRetrieveResponse
+                ),  # Union types cannot be passed in as arguments in the type system
             ),
-            cast_to=ModelRetrieveResponse,
         )
 
     async def list(
         self,
         *,
+        format: Literal["default", "openrouter", "huggingface"] | Omit = omit,
         cf_ray: str | Omit = omit,
         x_amz_cf_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -207,6 +246,8 @@ class AsyncModelsResource(AsyncAPIResource):
         List Models
 
         Args:
+          format: Output format: 'default' (OpenAI-compatible), 'openrouter', or 'huggingface'
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -224,12 +265,19 @@ class AsyncModelsResource(AsyncAPIResource):
             ),
             **(extra_headers or {}),
         }
-        return await self._get(
-            "/v1/models",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+        return cast(
+            ModelListResponse,
+            await self._get(
+                "/v1/models",
+                options=make_request_options(
+                    extra_headers=extra_headers,
+                    extra_query=extra_query,
+                    extra_body=extra_body,
+                    timeout=timeout,
+                    query=await async_maybe_transform({"format": format}, model_list_params.ModelListParams),
+                ),
+                cast_to=cast(Any, ModelListResponse),  # Union types cannot be passed in as arguments in the type system
             ),
-            cast_to=ModelListResponse,
         )
 
 

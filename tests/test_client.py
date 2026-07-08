@@ -884,7 +884,19 @@ class TestCerebras:
         respx_mock.post("/v1/chat/completions").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            client.chat.completions.with_streaming_response.create(model="model").__enter__()
+            client.chat.completions.with_streaming_response.create(
+                messages=[
+                    {
+                        "content": "You are a helpful assistant running on a CS-3 hardware at Cerebras Systems",
+                        "role": "system",
+                    },
+                    {
+                        "content": "What is Generative AI?",
+                        "role": "user",
+                    },
+                ],
+                model="gpt-oss-120b",
+            ).__enter__()
 
         assert _get_open_connections(client) == 0
 
@@ -894,7 +906,19 @@ class TestCerebras:
         respx_mock.post("/v1/chat/completions").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            client.chat.completions.with_streaming_response.create(model="model").__enter__()
+            client.chat.completions.with_streaming_response.create(
+                messages=[
+                    {
+                        "content": "You are a helpful assistant running on a CS-3 hardware at Cerebras Systems",
+                        "role": "system",
+                    },
+                    {
+                        "content": "What is Generative AI?",
+                        "role": "user",
+                    },
+                ],
+                model="gpt-oss-120b",
+            ).__enter__()
         assert _get_open_connections(client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -914,7 +938,19 @@ class TestCerebras:
 
         respx_mock.post("/v1/chat/completions").mock(side_effect=retry_handler)
 
-        response = client.chat.completions.with_raw_response.create(model="model")
+        response = client.chat.completions.with_raw_response.create(
+            messages=[
+                {
+                    "content": "You are a helpful assistant running on a CS-3 hardware at Cerebras Systems",
+                    "role": "system",
+                },
+                {
+                    "content": "What is Generative AI?",
+                    "role": "user",
+                },
+            ],
+            model="gpt-oss-120b",
+        )
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -939,7 +975,18 @@ class TestCerebras:
         respx_mock.post("/v1/chat/completions").mock(side_effect=retry_handler)
 
         response = client.chat.completions.with_raw_response.create(
-            model="model", extra_headers={"x-stainless-retry-count": Omit()}
+            messages=[
+                {
+                    "content": "You are a helpful assistant running on a CS-3 hardware at Cerebras Systems",
+                    "role": "system",
+                },
+                {
+                    "content": "What is Generative AI?",
+                    "role": "user",
+                },
+            ],
+            model="gpt-oss-120b",
+            extra_headers={"x-stainless-retry-count": Omit()},
         )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
@@ -964,7 +1011,18 @@ class TestCerebras:
         respx_mock.post("/v1/chat/completions").mock(side_effect=retry_handler)
 
         response = client.chat.completions.with_raw_response.create(
-            model="model", extra_headers={"x-stainless-retry-count": "42"}
+            messages=[
+                {
+                    "content": "You are a helpful assistant running on a CS-3 hardware at Cerebras Systems",
+                    "role": "system",
+                },
+                {
+                    "content": "What is Generative AI?",
+                    "role": "user",
+                },
+            ],
+            model="gpt-oss-120b",
+            extra_headers={"x-stainless-retry-count": "42"},
         )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
@@ -1817,7 +1875,19 @@ class TestAsyncCerebras:
         respx_mock.post("/v1/chat/completions").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            await async_client.chat.completions.with_streaming_response.create(model="model").__aenter__()
+            await async_client.chat.completions.with_streaming_response.create(
+                messages=[
+                    {
+                        "content": "You are a helpful assistant running on a CS-3 hardware at Cerebras Systems",
+                        "role": "system",
+                    },
+                    {
+                        "content": "What is Generative AI?",
+                        "role": "user",
+                    },
+                ],
+                model="gpt-oss-120b",
+            ).__aenter__()
 
         assert _get_open_connections(async_client) == 0
 
@@ -1829,7 +1899,19 @@ class TestAsyncCerebras:
         respx_mock.post("/v1/chat/completions").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            await async_client.chat.completions.with_streaming_response.create(model="model").__aenter__()
+            await async_client.chat.completions.with_streaming_response.create(
+                messages=[
+                    {
+                        "content": "You are a helpful assistant running on a CS-3 hardware at Cerebras Systems",
+                        "role": "system",
+                    },
+                    {
+                        "content": "What is Generative AI?",
+                        "role": "user",
+                    },
+                ],
+                model="gpt-oss-120b",
+            ).__aenter__()
         assert _get_open_connections(async_client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -1852,7 +1934,19 @@ class TestAsyncCerebras:
 
         respx_mock.post("/v1/chat/completions").mock(side_effect=retry_handler)
 
-        response = await client.chat.completions.with_raw_response.create(model="model")
+        response = await client.chat.completions.with_raw_response.create(
+            messages=[
+                {
+                    "content": "You are a helpful assistant running on a CS-3 hardware at Cerebras Systems",
+                    "role": "system",
+                },
+                {
+                    "content": "What is Generative AI?",
+                    "role": "user",
+                },
+            ],
+            model="gpt-oss-120b",
+        )
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1877,7 +1971,18 @@ class TestAsyncCerebras:
         respx_mock.post("/v1/chat/completions").mock(side_effect=retry_handler)
 
         response = await client.chat.completions.with_raw_response.create(
-            model="model", extra_headers={"x-stainless-retry-count": Omit()}
+            messages=[
+                {
+                    "content": "You are a helpful assistant running on a CS-3 hardware at Cerebras Systems",
+                    "role": "system",
+                },
+                {
+                    "content": "What is Generative AI?",
+                    "role": "user",
+                },
+            ],
+            model="gpt-oss-120b",
+            extra_headers={"x-stainless-retry-count": Omit()},
         )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
@@ -1902,7 +2007,18 @@ class TestAsyncCerebras:
         respx_mock.post("/v1/chat/completions").mock(side_effect=retry_handler)
 
         response = await client.chat.completions.with_raw_response.create(
-            model="model", extra_headers={"x-stainless-retry-count": "42"}
+            messages=[
+                {
+                    "content": "You are a helpful assistant running on a CS-3 hardware at Cerebras Systems",
+                    "role": "system",
+                },
+                {
+                    "content": "What is Generative AI?",
+                    "role": "user",
+                },
+            ],
+            model="gpt-oss-120b",
+            extra_headers={"x-stainless-retry-count": "42"},
         )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"

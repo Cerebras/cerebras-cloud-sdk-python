@@ -60,7 +60,8 @@ class CompletionsResource(SyncAPIResource):
         min_tokens: Optional[int] | Omit = omit,
         n: Optional[int] | Omit = omit,
         presence_penalty: Optional[float] | Omit = omit,
-        reasoning_format: Literal["none", "parsed", "text_parsed", "raw", "hidden"] | Omit = omit,
+        prompt_cache_key: Optional[str] | Omit = omit,
+        reasoning_format: Optional[Literal["none", "parsed", "text_parsed", "raw", "hidden"]] | Omit = omit,
         return_raw_tokens: Optional[bool] | Omit = omit,
         seed: Optional[int] | Omit = omit,
         stop: Union[str, SequenceNotStr[str], None] | Omit = omit,
@@ -133,6 +134,10 @@ class CompletionsResource(SyncAPIResource):
               whether they appear in the text so far, increasing the model's likelihood to
               talk about new topics.
 
+          prompt_cache_key: An optional opaque string. The requests with the same prompt cache key would
+              highly likely share the same prompt prefixes. Examples would be IDs of chat
+              conversations, IDs of users, the hashes of system prompts, etc.
+
           reasoning_format: Determines how reasoning is returned in the response. If set to `parsed`, the
               reasoning will be returned in the `reasoning` field of the response message as a
               string. If set to `raw`, the reasoning will be returned in the `content` field
@@ -153,7 +158,7 @@ class CompletionsResource(SyncAPIResource):
           suffix: The suffix that comes after a completion of inserted text. (OpenAI feature, not
               supported)
 
-          temperature: What sampling temperature to use, between 0 and 1.5. Higher values like 0.8 will
+          temperature: What sampling temperature to use, between 0 and 2. Higher values like 0.8 will
               make the output more random, while lower values like 0.2 will make it more
               focused and deterministic. We generally recommend altering this or `top_p` but
               not both.
@@ -202,6 +207,7 @@ class CompletionsResource(SyncAPIResource):
                         "min_tokens": min_tokens,
                         "n": n,
                         "presence_penalty": presence_penalty,
+                        "prompt_cache_key": prompt_cache_key,
                         "reasoning_format": reasoning_format,
                         "return_raw_tokens": return_raw_tokens,
                         "seed": seed,
@@ -260,7 +266,8 @@ class AsyncCompletionsResource(AsyncAPIResource):
         min_tokens: Optional[int] | Omit = omit,
         n: Optional[int] | Omit = omit,
         presence_penalty: Optional[float] | Omit = omit,
-        reasoning_format: Literal["none", "parsed", "text_parsed", "raw", "hidden"] | Omit = omit,
+        prompt_cache_key: Optional[str] | Omit = omit,
+        reasoning_format: Optional[Literal["none", "parsed", "text_parsed", "raw", "hidden"]] | Omit = omit,
         return_raw_tokens: Optional[bool] | Omit = omit,
         seed: Optional[int] | Omit = omit,
         stop: Union[str, SequenceNotStr[str], None] | Omit = omit,
@@ -333,6 +340,10 @@ class AsyncCompletionsResource(AsyncAPIResource):
               whether they appear in the text so far, increasing the model's likelihood to
               talk about new topics.
 
+          prompt_cache_key: An optional opaque string. The requests with the same prompt cache key would
+              highly likely share the same prompt prefixes. Examples would be IDs of chat
+              conversations, IDs of users, the hashes of system prompts, etc.
+
           reasoning_format: Determines how reasoning is returned in the response. If set to `parsed`, the
               reasoning will be returned in the `reasoning` field of the response message as a
               string. If set to `raw`, the reasoning will be returned in the `content` field
@@ -353,7 +364,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
           suffix: The suffix that comes after a completion of inserted text. (OpenAI feature, not
               supported)
 
-          temperature: What sampling temperature to use, between 0 and 1.5. Higher values like 0.8 will
+          temperature: What sampling temperature to use, between 0 and 2. Higher values like 0.8 will
               make the output more random, while lower values like 0.2 will make it more
               focused and deterministic. We generally recommend altering this or `top_p` but
               not both.
@@ -402,6 +413,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
                         "min_tokens": min_tokens,
                         "n": n,
                         "presence_penalty": presence_penalty,
+                        "prompt_cache_key": prompt_cache_key,
                         "reasoning_format": reasoning_format,
                         "return_raw_tokens": return_raw_tokens,
                         "seed": seed,
