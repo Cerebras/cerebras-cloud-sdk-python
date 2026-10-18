@@ -397,9 +397,10 @@ class BaseClient(Generic[_HttpxClientT, _DefaultStreamT]):
             )
 
     def _enforce_trailing_slash(self, url: URL) -> URL:
-        if url.raw_path.endswith(b"/"):
+        raw_path = url.copy_with(query=None).raw_path
+        if raw_path.endswith(b"/"):
             return url
-        return url.copy_with(raw_path=url.raw_path + b"/")
+        return url.copy_with(raw_path=raw_path + b"/").copy_with(query=url.query or None)
 
     def _make_status_error_from_response(
         self,
@@ -466,8 +467,14 @@ class BaseClient(Generic[_HttpxClientT, _DefaultStreamT]):
         # Copied from httpx's `_merge_url` method.
         merge_url = URL(url)
         if merge_url.is_relative_url:
-            merge_raw_path = self.base_url.raw_path + merge_url.raw_path.lstrip(b"/")
-            return self.base_url.copy_with(raw_path=merge_raw_path)
+            merge_raw_path = self.base_url.copy_with(query=None).raw_path + merge_url.copy_with(
+                query=None
+            ).raw_path.lstrip(b"/")
+            return (
+                self.base_url.copy_with(raw_path=merge_raw_path, query=None)
+                .copy_merge_params(self.base_url.params)
+                .copy_merge_params(merge_url.params)
+            )
 
         return merge_url
 
