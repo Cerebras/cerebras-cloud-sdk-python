@@ -160,13 +160,13 @@ class CompletionCreateParams(TypedDict, total=False):
     hashes of system prompts, etc.
     """
 
-    reasoning_effort: Optional[Literal["none", "low", "medium", "high"]]
+    reasoning_effort: Optional[Literal["none", "low", "medium", "high", "max"]]
     """Constrains effort on reasoning for reasoning models.
 
-    Currently supported values are none, low, medium, and high. Reducing reasoning
-    effort can result in faster responses and fewer tokens used on reasoning in a
-    response. If set to None, the model will use the default reasoning effort for
-    the model. If set to 'none', the model will not reason
+    Available values are none, low, medium, high, and max. Model support varies.
+    Reducing reasoning effort can result in faster responses and fewer tokens used
+    on reasoning in a response. If set to None, the model will use its default
+    reasoning effort. Models that support 'none' use it to disable reasoning.
     """
 
     reasoning_format: Literal["none", "parsed", "text_parsed", "raw", "hidden"]
