@@ -18,7 +18,7 @@ def openapi_dumps(obj: Any) -> bytes:
     return json.dumps(
         obj,
         cls=_CustomEncoder,
-        # Uses the same defaults as httpx's JSON serialization
+        # Uses the same defaults as httpx2's JSON serialization
         ensure_ascii=False,
         separators=(",", ":"),
         allow_nan=False,

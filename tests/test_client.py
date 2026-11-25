@@ -15,6 +15,7 @@ from unittest import mock
 from typing_extensions import AsyncIterator, override
 
 import httpx
+import httpx2
 import pytest
 from respx import MockRouter
 from pydantic import ValidationError
@@ -44,7 +45,7 @@ api_key = "My API Key"
 
 def _get_params(client: BaseClient[Any, Any]) -> dict[str, str]:
     request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-    url = httpx.URL(request.url)
+    url = httpx2.URL(request.url)
     return dict(url.params)
 
 
@@ -56,21 +57,21 @@ def mirror_request_content(request: httpx.Request) -> httpx.Response:
     return httpx.Response(200, content=request.content)
 
 
-# note: we can't use the httpx.MockTransport class as it consumes the request
+# note: we can't use the httpx2.MockTransport class as it consumes the request
 #       body itself, which means we can't test that the body is read lazily
-class MockTransport(httpx.BaseTransport, httpx.AsyncBaseTransport):
+class MockTransport(httpx2.BaseTransport, httpx2.AsyncBaseTransport):
     def __init__(
         self,
-        handler: Callable[[httpx.Request], httpx.Response]
-        | Callable[[httpx.Request], Coroutine[Any, Any, httpx.Response]],
+        handler: Callable[[httpx2.Request], httpx2.Response]
+        | Callable[[httpx2.Request], Coroutine[Any, Any, httpx2.Response]],
     ) -> None:
         self.handler = handler
 
     @override
     def handle_request(
         self,
-        request: httpx.Request,
-    ) -> httpx.Response:
+        request: httpx2.Request,
+    ) -> httpx2.Response:
         assert not inspect.iscoroutinefunction(self.handler), "handler must not be a coroutine function"
         assert inspect.isfunction(self.handler), "handler must be a function"
         return self.handler(request)
@@ -78,8 +79,8 @@ class MockTransport(httpx.BaseTransport, httpx.AsyncBaseTransport):
     @override
     async def handle_async_request(
         self,
-        request: httpx.Request,
-    ) -> httpx.Response:
+        request: httpx2.Request,
+    ) -> httpx2.Response:
         assert inspect.iscoroutinefunction(self.handler), "handler must be a coroutine function"
         return await self.handler(request)
 
@@ -105,31 +106,31 @@ async def _make_async_iterator(iterable: Iterable[T], counter: Optional[Counter]
 
 def _get_open_connections(client: Cerebras | AsyncCerebras) -> int:
     transport = client._client._transport
-    assert isinstance(transport, httpx.HTTPTransport) or isinstance(transport, httpx.AsyncHTTPTransport)
+    assert isinstance(transport, httpx2.HTTPTransport) or isinstance(transport, httpx2.AsyncHTTPTransport)
 
     pool = transport._pool
     return len(pool._requests)
 
 
 class TestCerebras:
-    @pytest.mark.respx(base_url=base_url)
-    def test_raw_response(self, respx_mock: MockRouter, client: Cerebras) -> None:
-        respx_mock.post("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+    @pytest.mark.httpx2(base_url=base_url)
+    def test_raw_response(self, httpx2_mock: MockRouter, client: Cerebras) -> None:
+        httpx2_mock.post("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
-        response = client.post("/foo", cast_to=httpx.Response)
+        response = client.post("/foo", cast_to=httpx2.Response)
         assert response.status_code == 200
-        assert isinstance(response, httpx.Response)
+        assert isinstance(response, httpx2.Response)
         assert response.json() == {"foo": "bar"}
 
-    @pytest.mark.respx(base_url=base_url)
-    def test_raw_response_for_binary(self, respx_mock: MockRouter, client: Cerebras) -> None:
-        respx_mock.post("/foo").mock(
+    @pytest.mark.httpx2(base_url=base_url)
+    def test_raw_response_for_binary(self, httpx2_mock: MockRouter, client: Cerebras) -> None:
+        httpx2_mock.post("/foo").mock(
             return_value=httpx.Response(200, headers={"Content-Type": "application/binary"}, content='{"foo": "bar"}')
         )
 
-        response = client.post("/foo", cast_to=httpx.Response)
+        response = client.post("/foo", cast_to=httpx2.Response)
         assert response.status_code == 200
-        assert isinstance(response, httpx.Response)
+        assert isinstance(response, httpx2.Response)
         assert response.json() == {"foo": "bar"}
 
     def test_copy(self, client: Cerebras) -> None:
@@ -151,10 +152,10 @@ class TestCerebras:
         assert copied.max_retries == 7
 
         # timeout
-        assert isinstance(client.timeout, httpx.Timeout)
+        assert isinstance(client.timeout, httpx2.Timeout)
         copied = client.copy(timeout=None)
         assert copied.timeout is None
-        assert isinstance(client.timeout, httpx.Timeout)
+        assert isinstance(client.timeout, httpx2.Timeout)
 
     def test_copy_default_headers(self) -> None:
         client = Cerebras(
@@ -293,10 +294,10 @@ class TestCerebras:
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                         # Mystery "leak" that appears when making request in constructor.
-                        "httpx/_client.py",
-                        "httpx/_models.py",
-                        "httpx/_urlparse.py",
-                        "httpx/_base_client.py",
+                        "httpx2/_client.py",
+                        "httpx2/_models.py",
+                        "httpx2/_urlparse.py",
+                        "httpx2/_base_client.py",
                         "sdk/_base_client.py",
                     ]
                 ):
@@ -316,64 +317,64 @@ class TestCerebras:
 
     def test_request_timeout(self, client: Cerebras) -> None:
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-        timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
+        timeout = httpx2.Timeout(**request.extensions["timeout"])  # type: ignore
         assert timeout == DEFAULT_TIMEOUT
 
-        request = client._build_request(FinalRequestOptions(method="get", url="/foo", timeout=httpx.Timeout(100.0)))
-        timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
-        assert timeout == httpx.Timeout(100.0)
+        request = client._build_request(FinalRequestOptions(method="get", url="/foo", timeout=httpx2.Timeout(100.0)))
+        timeout = httpx2.Timeout(**request.extensions["timeout"])  # type: ignore
+        assert timeout == httpx2.Timeout(100.0)
 
     def test_client_timeout_option(self) -> None:
         client = Cerebras(
-            base_url=base_url, api_key=api_key, _strict_response_validation=True, timeout=httpx.Timeout(0)
+            base_url=base_url, api_key=api_key, _strict_response_validation=True, timeout=httpx2.Timeout(0)
         )
 
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-        timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
-        assert timeout == httpx.Timeout(0)
+        timeout = httpx2.Timeout(**request.extensions["timeout"])  # type: ignore
+        assert timeout == httpx2.Timeout(0)
 
         client.close()
 
     def test_http_client_timeout_option(self) -> None:
-        # custom timeout given to the httpx client should be used
-        with httpx.Client(timeout=None) as http_client:
+        # custom timeout given to the httpx2 client should be used
+        with httpx2.Client(timeout=None) as http_client:
             client = Cerebras(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
             request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-            timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
-            assert timeout == httpx.Timeout(None)
+            timeout = httpx2.Timeout(**request.extensions["timeout"])  # type: ignore
+            assert timeout == httpx2.Timeout(None)
 
             client.close()
 
-        # no timeout given to the httpx client should not use the httpx default
-        with httpx.Client() as http_client:
+        # no timeout given to the httpx2 client should not use the httpx2 default
+        with httpx2.Client() as http_client:
             client = Cerebras(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
             request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-            timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
+            timeout = httpx2.Timeout(**request.extensions["timeout"])  # type: ignore
             assert timeout == DEFAULT_TIMEOUT
 
             client.close()
 
         # explicitly passing the default timeout currently results in it being ignored
-        with httpx.Client(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
+        with httpx2.Client(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
             client = Cerebras(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
             request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-            timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
+            timeout = httpx2.Timeout(**request.extensions["timeout"])  # type: ignore
             assert timeout == DEFAULT_TIMEOUT  # our default
 
             client.close()
 
     async def test_invalid_http_client(self) -> None:
         with pytest.raises(TypeError, match="Invalid `http_client` arg"):
-            async with httpx.AsyncClient() as http_client:
+            async with httpx2.AsyncClient() as http_client:
                 Cerebras(
                     base_url=base_url,
                     api_key=api_key,
@@ -420,7 +421,7 @@ class TestCerebras:
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"query_param": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-        url = httpx.URL(request.url)
+        url = httpx2.URL(request.url)
         assert dict(url.params) == {"query_param": "bar"}
 
         request = client._build_request(
@@ -430,14 +431,14 @@ class TestCerebras:
                 params={"foo": "baz", "query_param": "overridden"},
             )
         )
-        url = httpx.URL(request.url)
+        url = httpx2.URL(request.url)
         assert dict(url.params) == {"foo": "baz", "query_param": "overridden"}
 
         client.close()
 
     def test_hardcoded_query_params_in_url(self, client: Cerebras) -> None:
         request = client._build_request(FinalRequestOptions(method="get", url="/foo?beta=true"))
-        url = httpx.URL(request.url)
+        url = httpx2.URL(request.url)
         assert dict(url.params) == {"beta": "true"}
 
         request = client._build_request(
@@ -447,7 +448,7 @@ class TestCerebras:
                 params={"limit": "10", "page": "abc"},
             )
         )
-        url = httpx.URL(request.url)
+        url = httpx2.URL(request.url)
         assert dict(url.params) == {"beta": "true", "limit": "10", "page": "abc"}
 
         request = client._build_request(
@@ -585,16 +586,16 @@ class TestCerebras:
             b"",
         ]
 
-    @pytest.mark.respx(base_url=base_url)
-    def test_binary_content_upload(self, respx_mock: MockRouter, client: Cerebras) -> None:
-        respx_mock.post("/upload").mock(side_effect=mirror_request_content)
+    @pytest.mark.httpx2(base_url=base_url)
+    def test_binary_content_upload(self, httpx2_mock: MockRouter, client: Cerebras) -> None:
+        httpx2_mock.post("/upload").mock(side_effect=mirror_request_content)
 
         file_content = b"Hello, this is a test file."
 
         response = client.post(
             "/upload",
             content=file_content,
-            cast_to=httpx.Response,
+            cast_to=httpx2.Response,
             options={"headers": {"Content-Type": "application/octet-stream"}},
         )
 
@@ -607,20 +608,20 @@ class TestCerebras:
         counter = Counter()
         iterator = _make_sync_iterator([file_content], counter=counter)
 
-        def mock_handler(request: httpx.Request) -> httpx.Response:
+        def mock_handler(request: httpx2.Request) -> httpx2.Response:
             assert counter.value == 0, "the request body should not have been read"
-            return httpx.Response(200, content=request.read())
+            return httpx2.Response(200, content=request.read())
 
         with Cerebras(
             base_url=base_url,
             api_key=api_key,
             _strict_response_validation=True,
-            http_client=httpx.Client(transport=MockTransport(handler=mock_handler)),
+            http_client=httpx2.Client(transport=MockTransport(handler=mock_handler)),
         ) as client:
             response = client.post(
                 "/upload",
                 content=iterator,
-                cast_to=httpx.Response,
+                cast_to=httpx2.Response,
                 options={"headers": {"Content-Type": "application/octet-stream"}},
             )
 
@@ -629,9 +630,9 @@ class TestCerebras:
             assert response.content == file_content
             assert counter.value == 1
 
-    @pytest.mark.respx(base_url=base_url)
-    def test_binary_content_upload_with_body_is_deprecated(self, respx_mock: MockRouter, client: Cerebras) -> None:
-        respx_mock.post("/upload").mock(side_effect=mirror_request_content)
+    @pytest.mark.httpx2(base_url=base_url)
+    def test_binary_content_upload_with_body_is_deprecated(self, httpx2_mock: MockRouter, client: Cerebras) -> None:
+        httpx2_mock.post("/upload").mock(side_effect=mirror_request_content)
 
         file_content = b"Hello, this is a test file."
 
@@ -641,7 +642,7 @@ class TestCerebras:
             response = client.post(
                 "/upload",
                 body=file_content,
-                cast_to=httpx.Response,
+                cast_to=httpx2.Response,
                 options={"headers": {"Content-Type": "application/octet-stream"}},
             )
 
@@ -649,22 +650,22 @@ class TestCerebras:
         assert response.request.headers["Content-Type"] == "application/octet-stream"
         assert response.content == file_content
 
-    @pytest.mark.respx(base_url=base_url)
-    def test_basic_union_response(self, respx_mock: MockRouter, client: Cerebras) -> None:
+    @pytest.mark.httpx2(base_url=base_url)
+    def test_basic_union_response(self, httpx2_mock: MockRouter, client: Cerebras) -> None:
         class Model1(BaseModel):
             name: str
 
         class Model2(BaseModel):
             foo: str
 
-        respx_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+        httpx2_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
         response = client.get("/foo", cast_to=cast(Any, Union[Model1, Model2]))
         assert isinstance(response, Model2)
         assert response.foo == "bar"
 
-    @pytest.mark.respx(base_url=base_url)
-    def test_union_response_different_types(self, respx_mock: MockRouter, client: Cerebras) -> None:
+    @pytest.mark.httpx2(base_url=base_url)
+    def test_union_response_different_types(self, httpx2_mock: MockRouter, client: Cerebras) -> None:
         """Union of objects with the same field name using a different type"""
 
         class Model1(BaseModel):
@@ -673,20 +674,20 @@ class TestCerebras:
         class Model2(BaseModel):
             foo: str
 
-        respx_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+        httpx2_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
         response = client.get("/foo", cast_to=cast(Any, Union[Model1, Model2]))
         assert isinstance(response, Model2)
         assert response.foo == "bar"
 
-        respx_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": 1}))
+        httpx2_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": 1}))
 
         response = client.get("/foo", cast_to=cast(Any, Union[Model1, Model2]))
         assert isinstance(response, Model1)
         assert response.foo == 1
 
-    @pytest.mark.respx(base_url=base_url)
-    def test_non_application_json_content_type_for_json_data(self, respx_mock: MockRouter, client: Cerebras) -> None:
+    @pytest.mark.httpx2(base_url=base_url)
+    def test_non_application_json_content_type_for_json_data(self, httpx2_mock: MockRouter, client: Cerebras) -> None:
         """
         Response that sets Content-Type to something other than application/json but returns json data
         """
@@ -694,7 +695,7 @@ class TestCerebras:
         class Model(BaseModel):
             foo: int
 
-        respx_mock.get("/foo").mock(
+        httpx2_mock.get("/foo").mock(
             return_value=httpx.Response(
                 200,
                 content=json.dumps({"foo": 2}),
@@ -729,7 +730,7 @@ class TestCerebras:
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
-                http_client=httpx.Client(),
+                http_client=httpx2.Client(),
             ),
         ],
         ids=["standard", "custom http client"],
@@ -753,7 +754,7 @@ class TestCerebras:
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
-                http_client=httpx.Client(),
+                http_client=httpx2.Client(),
             ),
         ],
         ids=["standard", "custom http client"],
@@ -777,7 +778,7 @@ class TestCerebras:
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
-                http_client=httpx.Client(),
+                http_client=httpx2.Client(),
             ),
         ],
         ids=["standard", "custom http client"],
@@ -812,12 +813,12 @@ class TestCerebras:
             assert not test_client.is_closed()
         assert test_client.is_closed()
 
-    @pytest.mark.respx(base_url=base_url)
-    def test_client_response_validation_error(self, respx_mock: MockRouter, client: Cerebras) -> None:
+    @pytest.mark.httpx2(base_url=base_url)
+    def test_client_response_validation_error(self, httpx2_mock: MockRouter, client: Cerebras) -> None:
         class Model(BaseModel):
             foo: str
 
-        respx_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": {"invalid": True}}))
+        httpx2_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": {"invalid": True}}))
 
         with pytest.raises(APIResponseValidationError) as exc:
             client.get("/foo", cast_to=Model)
@@ -828,12 +829,12 @@ class TestCerebras:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
             Cerebras(base_url=base_url, api_key=api_key, _strict_response_validation=True, max_retries=cast(Any, None))
 
-    @pytest.mark.respx(base_url=base_url)
-    def test_received_text_for_expected_json(self, respx_mock: MockRouter) -> None:
+    @pytest.mark.httpx2(base_url=base_url)
+    def test_received_text_for_expected_json(self, httpx2_mock: MockRouter) -> None:
         class Model(BaseModel):
             name: str
 
-        respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
+        httpx2_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
         strict_client = Cerebras(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
@@ -873,15 +874,15 @@ class TestCerebras:
     def test_parse_retry_after_header(
         self, remaining_retries: int, retry_after: str, timeout: float, client: Cerebras
     ) -> None:
-        headers = httpx.Headers({"retry-after": retry_after})
+        headers = httpx2.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
     @mock.patch("cerebras.cloud.sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
-    @pytest.mark.respx(base_url=base_url)
-    def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: Cerebras) -> None:
-        respx_mock.post("/v1/chat/completions").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+    @pytest.mark.httpx2(base_url=base_url)
+    def test_retrying_timeout_errors_doesnt_leak(self, httpx2_mock: MockRouter, client: Cerebras) -> None:
+        httpx2_mock.post("/v1/chat/completions").mock(side_effect=httpx2.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             client.chat.completions.with_streaming_response.create(
@@ -901,9 +902,9 @@ class TestCerebras:
         assert _get_open_connections(client) == 0
 
     @mock.patch("cerebras.cloud.sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
-    @pytest.mark.respx(base_url=base_url)
-    def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: Cerebras) -> None:
-        respx_mock.post("/v1/chat/completions").mock(return_value=httpx.Response(500))
+    @pytest.mark.httpx2(base_url=base_url)
+    def test_retrying_status_errors_doesnt_leak(self, httpx2_mock: MockRouter, client: Cerebras) -> None:
+        httpx2_mock.post("/v1/chat/completions").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             client.chat.completions.with_streaming_response.create(
@@ -923,8 +924,8 @@ class TestCerebras:
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
     @mock.patch("cerebras.cloud.sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
-    @pytest.mark.respx(base_url=base_url)
-    def test_retries_taken(self, client: Cerebras, failures_before_success: int, respx_mock: MockRouter) -> None:
+    @pytest.mark.httpx2(base_url=base_url)
+    def test_retries_taken(self, client: Cerebras, failures_before_success: int, httpx2_mock: MockRouter) -> None:
         client = client.with_options(max_retries=4)
 
         nb_retries = 0
@@ -936,7 +937,7 @@ class TestCerebras:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/chat/completions").mock(side_effect=retry_handler)
+        httpx2_mock.post("/v1/chat/completions").mock(side_effect=retry_handler)
 
         response = client.chat.completions.with_raw_response.create(
             messages=[
@@ -953,13 +954,13 @@ class TestCerebras:
         )
 
         assert response.retries_taken == failures_before_success
-        assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
+        assert int(response.http_request.headers["x-stainless-retry-count"]) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
     @mock.patch("cerebras.cloud.sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
-    @pytest.mark.respx(base_url=base_url)
+    @pytest.mark.httpx2(base_url=base_url)
     def test_omit_retry_count_header(
-        self, client: Cerebras, failures_before_success: int, respx_mock: MockRouter
+        self, client: Cerebras, failures_before_success: int, httpx2_mock: MockRouter
     ) -> None:
         client = client.with_options(max_retries=4)
 
@@ -972,7 +973,7 @@ class TestCerebras:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/chat/completions").mock(side_effect=retry_handler)
+        httpx2_mock.post("/v1/chat/completions").mock(side_effect=retry_handler)
 
         response = client.chat.completions.with_raw_response.create(
             messages=[
@@ -993,9 +994,9 @@ class TestCerebras:
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
     @mock.patch("cerebras.cloud.sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
-    @pytest.mark.respx(base_url=base_url)
+    @pytest.mark.httpx2(base_url=base_url)
     def test_overwrite_retry_count_header(
-        self, client: Cerebras, failures_before_success: int, respx_mock: MockRouter
+        self, client: Cerebras, failures_before_success: int, httpx2_mock: MockRouter
     ) -> None:
         client = client.with_options(max_retries=4)
 
@@ -1008,7 +1009,7 @@ class TestCerebras:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/chat/completions").mock(side_effect=retry_handler)
+        httpx2_mock.post("/v1/chat/completions").mock(side_effect=retry_handler)
 
         response = client.chat.completions.with_raw_response.create(
             messages=[
@@ -1054,54 +1055,56 @@ class TestCerebras:
             trust_env=True,
             http1=True,
             http2=False,
-            limits=httpx.Limits(max_connections=100, max_keepalive_connections=20),
+            limits=httpx2.Limits(max_connections=100, max_keepalive_connections=20),
         )
 
-    @pytest.mark.respx(base_url=base_url)
-    def test_follow_redirects(self, respx_mock: MockRouter, client: Cerebras) -> None:
+    @pytest.mark.httpx2(base_url=base_url)
+    def test_follow_redirects(self, httpx2_mock: MockRouter, client: Cerebras) -> None:
         # Test that the default follow_redirects=True allows following redirects
-        respx_mock.post("/redirect").mock(
+        httpx2_mock.post("/redirect").mock(
             return_value=httpx.Response(302, headers={"Location": f"{base_url}/redirected"})
         )
-        respx_mock.get("/redirected").mock(return_value=httpx.Response(200, json={"status": "ok"}))
+        httpx2_mock.get("/redirected").mock(return_value=httpx.Response(200, json={"status": "ok"}))
 
-        response = client.post("/redirect", body={"key": "value"}, cast_to=httpx.Response)
+        response = client.post("/redirect", body={"key": "value"}, cast_to=httpx2.Response)
         assert response.status_code == 200
         assert response.json() == {"status": "ok"}
 
-    @pytest.mark.respx(base_url=base_url)
-    def test_follow_redirects_disabled(self, respx_mock: MockRouter, client: Cerebras) -> None:
+    @pytest.mark.httpx2(base_url=base_url)
+    def test_follow_redirects_disabled(self, httpx2_mock: MockRouter, client: Cerebras) -> None:
         # Test that follow_redirects=False prevents following redirects
-        respx_mock.post("/redirect").mock(
+        httpx2_mock.post("/redirect").mock(
             return_value=httpx.Response(302, headers={"Location": f"{base_url}/redirected"})
         )
 
         with pytest.raises(APIStatusError) as exc_info:
-            client.post("/redirect", body={"key": "value"}, options={"follow_redirects": False}, cast_to=httpx.Response)
+            client.post(
+                "/redirect", body={"key": "value"}, options={"follow_redirects": False}, cast_to=httpx2.Response
+            )
 
         assert exc_info.value.response.status_code == 302
         assert exc_info.value.response.headers["Location"] == f"{base_url}/redirected"
 
 
 class TestAsyncCerebras:
-    @pytest.mark.respx(base_url=base_url)
-    async def test_raw_response(self, respx_mock: MockRouter, async_client: AsyncCerebras) -> None:
-        respx_mock.post("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+    @pytest.mark.httpx2(base_url=base_url)
+    async def test_raw_response(self, httpx2_mock: MockRouter, async_client: AsyncCerebras) -> None:
+        httpx2_mock.post("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
-        response = await async_client.post("/foo", cast_to=httpx.Response)
+        response = await async_client.post("/foo", cast_to=httpx2.Response)
         assert response.status_code == 200
-        assert isinstance(response, httpx.Response)
+        assert isinstance(response, httpx2.Response)
         assert response.json() == {"foo": "bar"}
 
-    @pytest.mark.respx(base_url=base_url)
-    async def test_raw_response_for_binary(self, respx_mock: MockRouter, async_client: AsyncCerebras) -> None:
-        respx_mock.post("/foo").mock(
+    @pytest.mark.httpx2(base_url=base_url)
+    async def test_raw_response_for_binary(self, httpx2_mock: MockRouter, async_client: AsyncCerebras) -> None:
+        httpx2_mock.post("/foo").mock(
             return_value=httpx.Response(200, headers={"Content-Type": "application/binary"}, content='{"foo": "bar"}')
         )
 
-        response = await async_client.post("/foo", cast_to=httpx.Response)
+        response = await async_client.post("/foo", cast_to=httpx2.Response)
         assert response.status_code == 200
-        assert isinstance(response, httpx.Response)
+        assert isinstance(response, httpx2.Response)
         assert response.json() == {"foo": "bar"}
 
     def test_copy(self, async_client: AsyncCerebras) -> None:
@@ -1123,10 +1126,10 @@ class TestAsyncCerebras:
         assert copied.max_retries == 7
 
         # timeout
-        assert isinstance(async_client.timeout, httpx.Timeout)
+        assert isinstance(async_client.timeout, httpx2.Timeout)
         copied = async_client.copy(timeout=None)
         assert copied.timeout is None
-        assert isinstance(async_client.timeout, httpx.Timeout)
+        assert isinstance(async_client.timeout, httpx2.Timeout)
 
     async def test_copy_default_headers(self) -> None:
         client = AsyncCerebras(
@@ -1265,10 +1268,10 @@ class TestAsyncCerebras:
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                         # Mystery "leak" that appears when making request in constructor.
-                        "httpx/_client.py",
-                        "httpx/_models.py",
-                        "httpx/_urlparse.py",
-                        "httpx/_base_client.py",
+                        "httpx2/_client.py",
+                        "httpx2/_models.py",
+                        "httpx2/_urlparse.py",
+                        "httpx2/_base_client.py",
                         "sdk/_base_client.py",
                     ]
                 ):
@@ -1288,66 +1291,66 @@ class TestAsyncCerebras:
 
     async def test_request_timeout(self, async_client: AsyncCerebras) -> None:
         request = async_client._build_request(FinalRequestOptions(method="get", url="/foo"))
-        timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
+        timeout = httpx2.Timeout(**request.extensions["timeout"])  # type: ignore
         assert timeout == DEFAULT_TIMEOUT
 
         request = async_client._build_request(
-            FinalRequestOptions(method="get", url="/foo", timeout=httpx.Timeout(100.0))
+            FinalRequestOptions(method="get", url="/foo", timeout=httpx2.Timeout(100.0))
         )
-        timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
-        assert timeout == httpx.Timeout(100.0)
+        timeout = httpx2.Timeout(**request.extensions["timeout"])  # type: ignore
+        assert timeout == httpx2.Timeout(100.0)
 
     async def test_client_timeout_option(self) -> None:
         client = AsyncCerebras(
-            base_url=base_url, api_key=api_key, _strict_response_validation=True, timeout=httpx.Timeout(0)
+            base_url=base_url, api_key=api_key, _strict_response_validation=True, timeout=httpx2.Timeout(0)
         )
 
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-        timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
-        assert timeout == httpx.Timeout(0)
+        timeout = httpx2.Timeout(**request.extensions["timeout"])  # type: ignore
+        assert timeout == httpx2.Timeout(0)
 
         await client.close()
 
     async def test_http_client_timeout_option(self) -> None:
-        # custom timeout given to the httpx client should be used
-        async with httpx.AsyncClient(timeout=None) as http_client:
+        # custom timeout given to the httpx2 client should be used
+        async with httpx2.AsyncClient(timeout=None) as http_client:
             client = AsyncCerebras(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
             request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-            timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
-            assert timeout == httpx.Timeout(None)
+            timeout = httpx2.Timeout(**request.extensions["timeout"])  # type: ignore
+            assert timeout == httpx2.Timeout(None)
 
             await client.close()
 
-        # no timeout given to the httpx client should not use the httpx default
-        async with httpx.AsyncClient() as http_client:
+        # no timeout given to the httpx2 client should not use the httpx2 default
+        async with httpx2.AsyncClient() as http_client:
             client = AsyncCerebras(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
             request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-            timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
+            timeout = httpx2.Timeout(**request.extensions["timeout"])  # type: ignore
             assert timeout == DEFAULT_TIMEOUT
 
             await client.close()
 
         # explicitly passing the default timeout currently results in it being ignored
-        async with httpx.AsyncClient(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
+        async with httpx2.AsyncClient(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
             client = AsyncCerebras(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
             request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-            timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
+            timeout = httpx2.Timeout(**request.extensions["timeout"])  # type: ignore
             assert timeout == DEFAULT_TIMEOUT  # our default
 
             await client.close()
 
     def test_invalid_http_client(self) -> None:
         with pytest.raises(TypeError, match="Invalid `http_client` arg"):
-            with httpx.Client() as http_client:
+            with httpx2.Client() as http_client:
                 AsyncCerebras(
                     base_url=base_url,
                     api_key=api_key,
@@ -1394,7 +1397,7 @@ class TestAsyncCerebras:
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"query_param": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-        url = httpx.URL(request.url)
+        url = httpx2.URL(request.url)
         assert dict(url.params) == {"query_param": "bar"}
 
         request = client._build_request(
@@ -1404,14 +1407,14 @@ class TestAsyncCerebras:
                 params={"foo": "baz", "query_param": "overridden"},
             )
         )
-        url = httpx.URL(request.url)
+        url = httpx2.URL(request.url)
         assert dict(url.params) == {"foo": "baz", "query_param": "overridden"}
 
         await client.close()
 
     async def test_hardcoded_query_params_in_url(self, async_client: AsyncCerebras) -> None:
         request = async_client._build_request(FinalRequestOptions(method="get", url="/foo?beta=true"))
-        url = httpx.URL(request.url)
+        url = httpx2.URL(request.url)
         assert dict(url.params) == {"beta": "true"}
 
         request = async_client._build_request(
@@ -1421,7 +1424,7 @@ class TestAsyncCerebras:
                 params={"limit": "10", "page": "abc"},
             )
         )
-        url = httpx.URL(request.url)
+        url = httpx2.URL(request.url)
         assert dict(url.params) == {"beta": "true", "limit": "10", "page": "abc"}
 
         request = async_client._build_request(
@@ -1559,16 +1562,16 @@ class TestAsyncCerebras:
             b"",
         ]
 
-    @pytest.mark.respx(base_url=base_url)
-    async def test_binary_content_upload(self, respx_mock: MockRouter, async_client: AsyncCerebras) -> None:
-        respx_mock.post("/upload").mock(side_effect=mirror_request_content)
+    @pytest.mark.httpx2(base_url=base_url)
+    async def test_binary_content_upload(self, httpx2_mock: MockRouter, async_client: AsyncCerebras) -> None:
+        httpx2_mock.post("/upload").mock(side_effect=mirror_request_content)
 
         file_content = b"Hello, this is a test file."
 
         response = await async_client.post(
             "/upload",
             content=file_content,
-            cast_to=httpx.Response,
+            cast_to=httpx2.Response,
             options={"headers": {"Content-Type": "application/octet-stream"}},
         )
 
@@ -1581,20 +1584,20 @@ class TestAsyncCerebras:
         counter = Counter()
         iterator = _make_async_iterator([file_content], counter=counter)
 
-        async def mock_handler(request: httpx.Request) -> httpx.Response:
+        async def mock_handler(request: httpx2.Request) -> httpx2.Response:
             assert counter.value == 0, "the request body should not have been read"
-            return httpx.Response(200, content=await request.aread())
+            return httpx2.Response(200, content=await request.aread())
 
         async with AsyncCerebras(
             base_url=base_url,
             api_key=api_key,
             _strict_response_validation=True,
-            http_client=httpx.AsyncClient(transport=MockTransport(handler=mock_handler)),
+            http_client=httpx2.AsyncClient(transport=MockTransport(handler=mock_handler)),
         ) as client:
             response = await client.post(
                 "/upload",
                 content=iterator,
-                cast_to=httpx.Response,
+                cast_to=httpx2.Response,
                 options={"headers": {"Content-Type": "application/octet-stream"}},
             )
 
@@ -1603,11 +1606,11 @@ class TestAsyncCerebras:
             assert response.content == file_content
             assert counter.value == 1
 
-    @pytest.mark.respx(base_url=base_url)
+    @pytest.mark.httpx2(base_url=base_url)
     async def test_binary_content_upload_with_body_is_deprecated(
-        self, respx_mock: MockRouter, async_client: AsyncCerebras
+        self, httpx2_mock: MockRouter, async_client: AsyncCerebras
     ) -> None:
-        respx_mock.post("/upload").mock(side_effect=mirror_request_content)
+        httpx2_mock.post("/upload").mock(side_effect=mirror_request_content)
 
         file_content = b"Hello, this is a test file."
 
@@ -1617,7 +1620,7 @@ class TestAsyncCerebras:
             response = await async_client.post(
                 "/upload",
                 body=file_content,
-                cast_to=httpx.Response,
+                cast_to=httpx2.Response,
                 options={"headers": {"Content-Type": "application/octet-stream"}},
             )
 
@@ -1625,22 +1628,22 @@ class TestAsyncCerebras:
         assert response.request.headers["Content-Type"] == "application/octet-stream"
         assert response.content == file_content
 
-    @pytest.mark.respx(base_url=base_url)
-    async def test_basic_union_response(self, respx_mock: MockRouter, async_client: AsyncCerebras) -> None:
+    @pytest.mark.httpx2(base_url=base_url)
+    async def test_basic_union_response(self, httpx2_mock: MockRouter, async_client: AsyncCerebras) -> None:
         class Model1(BaseModel):
             name: str
 
         class Model2(BaseModel):
             foo: str
 
-        respx_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+        httpx2_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
         response = await async_client.get("/foo", cast_to=cast(Any, Union[Model1, Model2]))
         assert isinstance(response, Model2)
         assert response.foo == "bar"
 
-    @pytest.mark.respx(base_url=base_url)
-    async def test_union_response_different_types(self, respx_mock: MockRouter, async_client: AsyncCerebras) -> None:
+    @pytest.mark.httpx2(base_url=base_url)
+    async def test_union_response_different_types(self, httpx2_mock: MockRouter, async_client: AsyncCerebras) -> None:
         """Union of objects with the same field name using a different type"""
 
         class Model1(BaseModel):
@@ -1649,21 +1652,21 @@ class TestAsyncCerebras:
         class Model2(BaseModel):
             foo: str
 
-        respx_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
+        httpx2_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
         response = await async_client.get("/foo", cast_to=cast(Any, Union[Model1, Model2]))
         assert isinstance(response, Model2)
         assert response.foo == "bar"
 
-        respx_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": 1}))
+        httpx2_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": 1}))
 
         response = await async_client.get("/foo", cast_to=cast(Any, Union[Model1, Model2]))
         assert isinstance(response, Model1)
         assert response.foo == 1
 
-    @pytest.mark.respx(base_url=base_url)
+    @pytest.mark.httpx2(base_url=base_url)
     async def test_non_application_json_content_type_for_json_data(
-        self, respx_mock: MockRouter, async_client: AsyncCerebras
+        self, httpx2_mock: MockRouter, async_client: AsyncCerebras
     ) -> None:
         """
         Response that sets Content-Type to something other than application/json but returns json data
@@ -1672,7 +1675,7 @@ class TestAsyncCerebras:
         class Model(BaseModel):
             foo: int
 
-        respx_mock.get("/foo").mock(
+        httpx2_mock.get("/foo").mock(
             return_value=httpx.Response(
                 200,
                 content=json.dumps({"foo": 2}),
@@ -1711,7 +1714,7 @@ class TestAsyncCerebras:
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
-                http_client=httpx.AsyncClient(),
+                http_client=httpx2.AsyncClient(),
             ),
         ],
         ids=["standard", "custom http client"],
@@ -1737,7 +1740,7 @@ class TestAsyncCerebras:
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
-                http_client=httpx.AsyncClient(),
+                http_client=httpx2.AsyncClient(),
             ),
         ],
         ids=["standard", "custom http client"],
@@ -1763,7 +1766,7 @@ class TestAsyncCerebras:
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
-                http_client=httpx.AsyncClient(),
+                http_client=httpx2.AsyncClient(),
             ),
         ],
         ids=["standard", "custom http client"],
@@ -1799,12 +1802,12 @@ class TestAsyncCerebras:
             assert not test_client.is_closed()
         assert test_client.is_closed()
 
-    @pytest.mark.respx(base_url=base_url)
-    async def test_client_response_validation_error(self, respx_mock: MockRouter, async_client: AsyncCerebras) -> None:
+    @pytest.mark.httpx2(base_url=base_url)
+    async def test_client_response_validation_error(self, httpx2_mock: MockRouter, async_client: AsyncCerebras) -> None:
         class Model(BaseModel):
             foo: str
 
-        respx_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": {"invalid": True}}))
+        httpx2_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": {"invalid": True}}))
 
         with pytest.raises(APIResponseValidationError) as exc:
             await async_client.get("/foo", cast_to=Model)
@@ -1817,12 +1820,12 @@ class TestAsyncCerebras:
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, max_retries=cast(Any, None)
             )
 
-    @pytest.mark.respx(base_url=base_url)
-    async def test_received_text_for_expected_json(self, respx_mock: MockRouter) -> None:
+    @pytest.mark.httpx2(base_url=base_url)
+    async def test_received_text_for_expected_json(self, httpx2_mock: MockRouter) -> None:
         class Model(BaseModel):
             name: str
 
-        respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
+        httpx2_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
         strict_client = AsyncCerebras(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
@@ -1862,17 +1865,17 @@ class TestAsyncCerebras:
     async def test_parse_retry_after_header(
         self, remaining_retries: int, retry_after: str, timeout: float, async_client: AsyncCerebras
     ) -> None:
-        headers = httpx.Headers({"retry-after": retry_after})
+        headers = httpx2.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)
         calculated = async_client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
     @mock.patch("cerebras.cloud.sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
-    @pytest.mark.respx(base_url=base_url)
+    @pytest.mark.httpx2(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(
-        self, respx_mock: MockRouter, async_client: AsyncCerebras
+        self, httpx2_mock: MockRouter, async_client: AsyncCerebras
     ) -> None:
-        respx_mock.post("/v1/chat/completions").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        httpx2_mock.post("/v1/chat/completions").mock(side_effect=httpx2.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             await async_client.chat.completions.with_streaming_response.create(
@@ -1892,11 +1895,11 @@ class TestAsyncCerebras:
         assert _get_open_connections(async_client) == 0
 
     @mock.patch("cerebras.cloud.sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
-    @pytest.mark.respx(base_url=base_url)
+    @pytest.mark.httpx2(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(
-        self, respx_mock: MockRouter, async_client: AsyncCerebras
+        self, httpx2_mock: MockRouter, async_client: AsyncCerebras
     ) -> None:
-        respx_mock.post("/v1/chat/completions").mock(return_value=httpx.Response(500))
+        httpx2_mock.post("/v1/chat/completions").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             await async_client.chat.completions.with_streaming_response.create(
@@ -1916,10 +1919,10 @@ class TestAsyncCerebras:
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
     @mock.patch("cerebras.cloud.sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
-    @pytest.mark.respx(base_url=base_url)
+    @pytest.mark.httpx2(base_url=base_url)
     @pytest.mark.asyncio
     async def test_retries_taken(
-        self, async_client: AsyncCerebras, failures_before_success: int, respx_mock: MockRouter
+        self, async_client: AsyncCerebras, failures_before_success: int, httpx2_mock: MockRouter
     ) -> None:
         client = async_client.with_options(max_retries=4)
 
@@ -1932,7 +1935,7 @@ class TestAsyncCerebras:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/chat/completions").mock(side_effect=retry_handler)
+        httpx2_mock.post("/v1/chat/completions").mock(side_effect=retry_handler)
 
         response = await client.chat.completions.with_raw_response.create(
             messages=[
@@ -1949,13 +1952,13 @@ class TestAsyncCerebras:
         )
 
         assert response.retries_taken == failures_before_success
-        assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
+        assert int(response.http_request.headers["x-stainless-retry-count"]) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
     @mock.patch("cerebras.cloud.sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
-    @pytest.mark.respx(base_url=base_url)
+    @pytest.mark.httpx2(base_url=base_url)
     async def test_omit_retry_count_header(
-        self, async_client: AsyncCerebras, failures_before_success: int, respx_mock: MockRouter
+        self, async_client: AsyncCerebras, failures_before_success: int, httpx2_mock: MockRouter
     ) -> None:
         client = async_client.with_options(max_retries=4)
 
@@ -1968,7 +1971,7 @@ class TestAsyncCerebras:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/chat/completions").mock(side_effect=retry_handler)
+        httpx2_mock.post("/v1/chat/completions").mock(side_effect=retry_handler)
 
         response = await client.chat.completions.with_raw_response.create(
             messages=[
@@ -1989,9 +1992,9 @@ class TestAsyncCerebras:
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
     @mock.patch("cerebras.cloud.sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
-    @pytest.mark.respx(base_url=base_url)
+    @pytest.mark.httpx2(base_url=base_url)
     async def test_overwrite_retry_count_header(
-        self, async_client: AsyncCerebras, failures_before_success: int, respx_mock: MockRouter
+        self, async_client: AsyncCerebras, failures_before_success: int, httpx2_mock: MockRouter
     ) -> None:
         client = async_client.with_options(max_retries=4)
 
@@ -2004,7 +2007,7 @@ class TestAsyncCerebras:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/chat/completions").mock(side_effect=retry_handler)
+        httpx2_mock.post("/v1/chat/completions").mock(side_effect=retry_handler)
 
         response = await client.chat.completions.with_raw_response.create(
             messages=[
@@ -2054,31 +2057,31 @@ class TestAsyncCerebras:
             trust_env=True,
             http1=True,
             http2=False,
-            limits=httpx.Limits(max_connections=100, max_keepalive_connections=20),
+            limits=httpx2.Limits(max_connections=100, max_keepalive_connections=20),
         )
 
-    @pytest.mark.respx(base_url=base_url)
-    async def test_follow_redirects(self, respx_mock: MockRouter, async_client: AsyncCerebras) -> None:
+    @pytest.mark.httpx2(base_url=base_url)
+    async def test_follow_redirects(self, httpx2_mock: MockRouter, async_client: AsyncCerebras) -> None:
         # Test that the default follow_redirects=True allows following redirects
-        respx_mock.post("/redirect").mock(
+        httpx2_mock.post("/redirect").mock(
             return_value=httpx.Response(302, headers={"Location": f"{base_url}/redirected"})
         )
-        respx_mock.get("/redirected").mock(return_value=httpx.Response(200, json={"status": "ok"}))
+        httpx2_mock.get("/redirected").mock(return_value=httpx.Response(200, json={"status": "ok"}))
 
-        response = await async_client.post("/redirect", body={"key": "value"}, cast_to=httpx.Response)
+        response = await async_client.post("/redirect", body={"key": "value"}, cast_to=httpx2.Response)
         assert response.status_code == 200
         assert response.json() == {"status": "ok"}
 
-    @pytest.mark.respx(base_url=base_url)
-    async def test_follow_redirects_disabled(self, respx_mock: MockRouter, async_client: AsyncCerebras) -> None:
+    @pytest.mark.httpx2(base_url=base_url)
+    async def test_follow_redirects_disabled(self, httpx2_mock: MockRouter, async_client: AsyncCerebras) -> None:
         # Test that follow_redirects=False prevents following redirects
-        respx_mock.post("/redirect").mock(
+        httpx2_mock.post("/redirect").mock(
             return_value=httpx.Response(302, headers={"Location": f"{base_url}/redirected"})
         )
 
         with pytest.raises(APIStatusError) as exc_info:
             await async_client.post(
-                "/redirect", body={"key": "value"}, options={"follow_redirects": False}, cast_to=httpx.Response
+                "/redirect", body={"key": "value"}, options={"follow_redirects": False}, cast_to=httpx2.Response
             )
 
         assert exc_info.value.response.status_code == 302

@@ -1,0 +1,2860 @@
+components:
+  schemas:
+    AssistantMessageRequest:
+      additionalProperties: false
+      description: A message request from an assistant.
+      properties:
+        content:
+          anyOf:
+            - type: string
+            - items:
+                $ref: '#/components/schemas/TextContent'
+              type: array
+            - type: 'null'
+          default: null
+          title: Content
+        name:
+          anyOf:
+            - type: string
+            - type: 'null'
+          default: null
+          title: Name
+        reasoning:
+          anyOf:
+            - type: string
+            - items:
+                $ref: '#/components/schemas/TextContent'
+              type: array
+            - type: 'null'
+          default: null
+          title: Reasoning
+        role:
+          const: assistant
+          default: assistant
+          title: Role
+          type: string
+        tool_calls:
+          anyOf:
+            - items:
+                $ref: '#/components/schemas/AssistantToolCall'
+              type: array
+            - type: 'null'
+          default: null
+          title: Tool Calls
+      title: AssistantMessageRequest
+      type: object
+    AssistantToolCall:
+      additionalProperties: false
+      description: A tool call for an assistant.
+      properties:
+        function:
+          $ref: '#/components/schemas/AssistantToolCallFunction'
+        id:
+          title: Id
+          type: string
+        index:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          default: null
+          title: Index
+        type:
+          const: function
+          title: Type
+          type: string
+      required:
+        - id
+        - type
+        - function
+      title: AssistantToolCall
+      type: object
+    AssistantToolCallFunction:
+      additionalProperties: false
+      description: A function call for an assistant tool.
+      properties:
+        arguments:
+          title: Arguments
+          type: string
+        name:
+          title: Name
+          type: string
+      required:
+        - name
+        - arguments
+      title: AssistantToolCallFunction
+      type: object
+    ChatChunkChoice:
+      additionalProperties: false
+      properties:
+        delta:
+          anyOf:
+            - $ref: '#/components/schemas/ChunkResponseMessage'
+            - type: 'null'
+        finish_reason:
+          anyOf:
+            - enum:
+                - stop
+                - length
+                - content_filter
+                - tool_calls
+              type: string
+            - type: 'null'
+          title: Finish Reason
+        index:
+          title: Index
+          type: integer
+        logprobs:
+          anyOf:
+            - $ref: '#/components/schemas/ChatCompletionLogProbs'
+            - type: 'null'
+        reasoning_logprobs:
+          anyOf:
+            - $ref: '#/components/schemas/ChatCompletionLogProbs'
+            - type: 'null'
+        text:
+          anyOf:
+            - type: string
+            - type: 'null'
+          deprecated: true
+          title: Text
+        tokens:
+          anyOf:
+            - items:
+                type: integer
+              type: array
+            - type: 'null'
+          deprecated: true
+          title: Tokens
+      required:
+        - index
+      title: ChatChunkChoice
+      type: object
+    ChatChunkResponse:
+      additionalProperties: false
+      examples:
+        - choices:
+            - delta:
+                role: assistant
+              index: 0
+          created: 1721088719
+          id: response_1721
+          model: llama3.1-8b
+          object: chat.completion.chunk
+          system_fingerprint: '88719'
+        - choices:
+            - delta:
+                content: 'Generative '
+              index: 0
+          created: 1721088719
+          id: response_1721
+          model: llama3.1-8b
+          object: chat.completion.chunk
+          system_fingerprint: '88719'
+        - choices:
+            - delta: {}
+              finish_reason: stop
+              index: 0
+          created: 1721088719
+          id: response_1721
+          model: llama3.1-8b
+          object: chat.completion.chunk
+          system_fingerprint: '88719'
+          time_info:
+            completion_time: 0.44
+            prompt_time: 0.02
+            queue_time: 0.0
+            total_time: 0.46
+          usage:
+            completion_tokens: 1020
+            prompt_tokens: 40
+            prompt_tokens_details:
+              cached_tokens: 1020
+            total_tokens: 1060
+      properties:
+        choices:
+          anyOf:
+            - items:
+                $ref: '#/components/schemas/ChatChunkChoice'
+              type: array
+            - type: 'null'
+          title: Choices
+        created:
+          title: Created
+          type: integer
+        id:
+          title: Id
+          type: string
+        model:
+          title: Model
+          type: string
+        object:
+          const: chat.completion.chunk
+          title: Object
+          type: string
+        service_tier:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Service Tier
+        system_fingerprint:
+          title: System Fingerprint
+          type: string
+        time_info:
+          anyOf:
+            - $ref: '#/components/schemas/TimeInfo'
+            - type: 'null'
+        usage:
+          anyOf:
+            - $ref: '#/components/schemas/Usage'
+            - type: 'null'
+      required:
+        - id
+        - created
+        - model
+        - system_fingerprint
+        - object
+      title: ChatChunkResponse
+      type: object
+    ChatCompletionChoice:
+      additionalProperties: false
+      properties:
+        finish_reason:
+          anyOf:
+            - enum:
+                - stop
+                - length
+                - content_filter
+                - tool_calls
+              type: string
+            - type: 'null'
+          title: Finish Reason
+        index:
+          title: Index
+          type: integer
+        logprobs:
+          anyOf:
+            - $ref: '#/components/schemas/ChatCompletionLogProbs'
+            - type: 'null'
+        message:
+          $ref: '#/components/schemas/ChatCompletionResponseMessage'
+        reasoning_logprobs:
+          anyOf:
+            - $ref: '#/components/schemas/ChatCompletionLogProbs'
+            - type: 'null'
+      required:
+        - index
+        - message
+      title: ChatCompletionChoice
+      type: object
+    ChatCompletionLogProbs:
+      additionalProperties: false
+      properties:
+        content:
+          anyOf:
+            - items:
+                $ref: '#/components/schemas/LogProbsContent'
+              type: array
+            - type: 'null'
+          title: Content
+        refusal:
+          anyOf:
+            - items:
+                $ref: '#/components/schemas/LogProbsContent'
+              type: array
+            - type: 'null'
+          title: Refusal
+      title: ChatCompletionLogProbs
+      type: object
+    ChatCompletionRequest:
+      additionalProperties: false
+      description: Generic base class for chat completion requests.
+      examples:
+        - max_completion_tokens: -1
+          messages:
+            - content: You are a helpful assistant running on a CS-3 hardware at Cerebras
+                Systems
+              role: system
+            - content: What is Generative AI?
+              role: user
+          min_tokens: 1000
+          model: llama3.1-8b
+          seed: 0
+          stop_sequence: null
+          stream: false
+          temperature: 0
+          top_p: 1
+      properties:
+        clear_thinking:
+          anyOf:
+            - type: boolean
+            - type: 'null'
+          default: null
+          description: When True, removes reasoning content from messages that appear
+            before the latest user message.
+          title: Clear Thinking
+        disable_reasoning:
+          anyOf:
+            - type: boolean
+            - type: 'null'
+          default: null
+          description: Disables reasoning for reasoning models. If set to True, the
+            model will not use any reasoning in its response.
+          title: Disable Reasoning
+        frequency_penalty:
+          anyOf:
+            - maximum: 2
+              minimum: -2
+              type: number
+            - type: 'null'
+          default: 0.0
+          description: Number between -2.0 and 2.0. Positive values penalize new tokens
+            based on their existing frequency in the text so far, decreasing the model's
+            likelihood to repeat the same line verbatim.
+          title: Frequency Penalty
+        logit_bias:
+          anyOf:
+            - additionalProperties:
+                type: number
+              type: object
+            - type: 'null'
+          default: null
+          description: 'Modify the likelihood of specified tokens appearing in the
+            completion.
+
+
+            Accepts a JSON object that maps tokens (specified by their token ID in
+            the tokenizer) to an associated bias value from -100 to 100. Mathematically,
+            the bias is added to the logits generated by the model prior to sampling.
+            The exact effect will vary per model, but values between -1 and 1 should
+            decrease or increase likelihood of selection; values like -100 or 100
+            should result in a ban or exclusive selection of the relevant token.'
+          title: Logit Bias
+        logprobs:
+          anyOf:
+            - type: boolean
+            - type: 'null'
+          default: false
+          description: Whether to return log probabilities of the output tokens or
+            not. If true, returns the log probabilities of each output token returned
+            in the content of message.
+          title: Logprobs
+        max_completion_tokens:
+          anyOf:
+            - maximum: 2147483647
+              minimum: -1
+              type: integer
+            - type: 'null'
+          default: null
+          description: An upper bound for the number of tokens that can be generated
+            for a completion, including visible output tokens and reasoning tokens.
+          title: Max Completion Tokens
+        max_tokens:
+          anyOf:
+            - maximum: 2147483647
+              minimum: -1
+              type: integer
+            - type: 'null'
+          default: null
+          description: The maximum number of tokens that can be generated in the chat
+            completion. The total length of input tokens and generated tokens is limited
+            by the model's context length. This value is now deprecated in favor of
+            max_completion_tokens.
+          title: Max Tokens
+        messages:
+          items:
+            discriminator:
+              mapping:
+                assistant: '#/components/schemas/AssistantMessageRequest'
+                developer: '#/components/schemas/DeveloperMessageRequest'
+                system: '#/components/schemas/SystemMessageRequest'
+                tool: '#/components/schemas/ToolMessageRequest'
+                user: '#/components/schemas/UserMessageRequest'
+              propertyName: role
+            oneOf:
+              - $ref: '#/components/schemas/SystemMessageRequest'
+              - $ref: '#/components/schemas/DeveloperMessageRequest'
+              - $ref: '#/components/schemas/UserMessageRequest'
+              - $ref: '#/components/schemas/AssistantMessageRequest'
+              - $ref: '#/components/schemas/ToolMessageRequest'
+          minItems: 1
+          title: Messages
+          type: array
+        min_completion_tokens:
+          anyOf:
+            - maximum: 2147483647
+              minimum: -1
+              type: integer
+            - type: 'null'
+          default: null
+          description: The minimum number of tokens to generate for a completion.
+            If not specified or set to 0, the model will generate as many tokens as
+            it deems necessary. Setting to -1 sets to max sequence length.
+          title: Min Completion Tokens
+        min_tokens:
+          anyOf:
+            - maximum: 2147483647
+              minimum: -1
+              type: integer
+            - type: 'null'
+          default: null
+          description: The minimum number of tokens to generate for a completion.
+            If not specified or set to 0, the model will generate as many tokens as
+            it deems necessary. Setting to -1 sets to max sequence length.
+          title: Min Tokens
+        model:
+          title: Model
+          type: string
+        model_parameters:
+          anyOf:
+            - additionalProperties: true
+              type: object
+            - type: 'null'
+          default: null
+          description: Model-specific parameters. The accepted keys and values are
+            defined per-model by the model's ``model_parameters`` schema. The schema
+            is used downstream to validate the contents of this field. Unsupported
+            for models that declare none.
+          title: Model Parameters
+        n:
+          anyOf:
+            - minimum: 1
+              type: integer
+            - type: 'null'
+          default: 1
+          description: How many chat completion choices to generate for each input
+            message. Note that you will be charged based on the number of generated
+            tokens across all of the choices. Keep n as 1 to minimize costs.
+          title: N
+        parallel_tool_calls:
+          anyOf:
+            - type: boolean
+            - type: 'null'
+          default: true
+          title: Parallel Tool Calls
+        prediction:
+          anyOf:
+            - $ref: '#/components/schemas/Prediction'
+            - type: 'null'
+          default: null
+          description: Configuration for a Predicted Output, which can greatly improve
+            response times when large parts of the model response are known ahead
+            of time. This is most common when regenerating a file with only minor
+            changes to most of the content.
+        presence_penalty:
+          anyOf:
+            - maximum: 2.0
+              minimum: -2.0
+              type: number
+            - type: 'null'
+          default: 0.0
+          description: Number between -2.0 and 2.0. Positive values penalize new tokens
+            based on whether they appear in the text so far, increasing the model's
+            likelihood to talk about new topics.
+          title: Presence Penalty
+        prompt_cache_key:
+          anyOf:
+            - maxLength: 1024
+              type: string
+            - type: 'null'
+          default: null
+          description: An optional opaque string. The requests with the same prompt
+            cache key would highly likely share the same prompt prefixes. Examples
+            would be IDs of chat conversations, IDs of users, the hashes of system
+            prompts, etc.
+          title: Prompt Cache Key
+        reasoning_effort:
+          anyOf:
+            - $ref: '#/components/schemas/ReasoningEffort'
+            - type: 'null'
+          default: null
+          description: Constrains effort on reasoning for reasoning models. Supported
+            values are none, minimal, low, medium, high, xhigh, and max. Reducing
+            reasoning effort can result in faster responses and fewer tokens used
+            on reasoning in a response. If set to None, the model will use the default
+            reasoning effort for the model. If set to 'none', the model will not reason.
+            Not every model supports every value; unsupported values are rejected
+            per-model downstream.
+        reasoning_format:
+          $ref: '#/components/schemas/ReasoningFormat'
+          default: none
+          description: Determines how reasoning is returned in the response. If set
+            to `parsed`, the reasoning will be returned in the `reasoning` field of
+            the response message as a string. If set to `raw`, the reasoning will
+            be returned in the `content` field of the response message with special
+            tokens. If set to `hidden`, the reasoning will not be returned in the
+            response. If set to `none`, the model's default behavior will be used.
+            If set to `text_parsed`, the reasoning will be returned in the `reasoning`
+            field of the response message as a string, similar to `parsed`, but logprobs
+            will not be separated into `reasoning_logprobs` and `logprobs`.
+        response_format:
+          anyOf:
+            - discriminator:
+                mapping:
+                  json_object: '#/components/schemas/ResponseFormatJSONObject'
+                  json_schema: '#/components/schemas/ResponseFormatJSONSchema'
+                  text: '#/components/schemas/ResponseFormatText'
+                propertyName: type
+              oneOf:
+                - $ref: '#/components/schemas/ResponseFormatText'
+                - $ref: '#/components/schemas/ResponseFormatJSONObject'
+                - $ref: '#/components/schemas/ResponseFormatJSONSchema'
+            - type: 'null'
+          default: null
+          title: Response Format
+        seed:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          default: null
+          description: If specified, our system will make a best effort to sample
+            deterministically, such that repeated requests with the same `seed` and
+            parameters should return the same result. Determinism is not guaranteed.
+          title: Seed
+        service_tier:
+          anyOf:
+            - $ref: '#/components/schemas/ServiceTier'
+            - type: 'null'
+          default: null
+        stop:
+          anyOf:
+            - type: string
+            - items:
+                type: string
+              maxItems: 4
+              type: array
+            - type: 'null'
+          default: null
+          description: Up to 4 sequences where the API will stop generating further
+            tokens. The returned text will not contain the stop sequence.
+          title: Stop
+        stream:
+          anyOf:
+            - type: boolean
+            - type: 'null'
+          default: false
+          title: Stream
+        stream_options:
+          anyOf:
+            - $ref: '#/components/schemas/StreamOptions'
+            - type: 'null'
+          default: null
+        temperature:
+          anyOf:
+            - maximum: 2.0
+              minimum: 0
+              type: number
+            - type: 'null'
+          default: 1.0
+          description: What sampling temperature to use, between 0 and 2. Higher values
+            like 0.8 will make the output more random, while lower values like 0.2
+            will make it more focused and deterministic. We generally recommend altering
+            this or `top_p` but not both.
+          title: Temperature
+        tool_choice:
+          anyOf:
+            - $ref: '#/components/schemas/ToolChoice'
+            - $ref: '#/components/schemas/ChoiceObject'
+            - type: 'null'
+          default: null
+          title: Tool Choice
+        tools:
+          anyOf:
+            - items:
+                $ref: '#/components/schemas/Tool'
+              type: array
+            - type: 'null'
+          default: null
+          title: Tools
+        top_logprobs:
+          anyOf:
+            - maximum: 20
+              minimum: 0
+              type: integer
+            - type: 'null'
+          default: null
+          description: An integer between 0 and 20 specifying the number of most likely
+            tokens to return at each token position, each with an associated log probability.
+            logprobs must be set to true if this parameter is used.
+          title: Top Logprobs
+        top_p:
+          anyOf:
+            - maximum: 1
+              minimum: 0
+              type: number
+            - type: 'null'
+          default: 1.0
+          description: An alternative to sampling with temperature, called nucleus
+            sampling, where the model considers the results of the tokens with top_p
+            probability mass. So 0.1 means only the tokens comprising the top 10%
+            probability mass are considered. We generally recommend altering this
+            or `temperature` but not both.
+          title: Top P
+        user:
+          anyOf:
+            - type: string
+            - type: 'null'
+          default: null
+          description: 'A unique identifier representing your end-user, which can
+            help Cerebras to monitor and detect abuse. '
+          title: User
+      required:
+        - model
+        - messages
+      title: ChatCompletionRequest
+      type: object
+    ChatCompletionResponse:
+      additionalProperties: false
+      examples:
+        - choices:
+            - finish_reason: stop
+              index: 0
+              message:
+                content: "Generative AI is a subfield of artificial intelligence that\
+                  \ focuses on generating new, original content, such as images, music,\
+                  \ text, or videos. These models are trained on large datasets and\
+                  \ learn to recognize patterns, relationships, and structures within\
+                  \ the data, allowing them to generate new content that is similar\
+                  \ in style, tone, or characteristics to the training data. \n \n\
+                  \ Generative AI models can be categorized into two main types: Generative\
+                  \ Adversarial Networks (GANs) and Variational Autoencoders (VAEs).\
+                  \ GANs consist of two neural networks: a generator and a discriminator.\
+                  \ The generator creates new content, while the discriminator evaluates\
+                  \ the generated content and tells the generator whether it's realistic\
+                  \ or not. VAEs are neural networks that learn to compress and reconstruct\
+                  \ data. \n \n Generative AI has numerous applications across various\
+                  \ industries, including art and design, content generation, data\
+                  \ augmentation, and recommendation systems. Some examples of Generative\
+                  \ AI in action include Deep Dream Generator, Amper Music, and DALL-E.\
+                  \ \n \n In summary, Generative AI is a powerful technology that\
+                  \ enables the creation of new, original content using machine learning\
+                  \ models. It has the potential to revolutionize various industries\
+                  \ and create new opportunities for artists, designers, and content\
+                  \ creators."
+                role: assistant
+          created: 1721088719
+          id: response_1721
+          model: llama3.1-8b
+          object: chat.completion
+          system_fingerprint: '88719'
+          time_info:
+            completion_time: 0.44
+            prompt_time: 0.02
+            queue_time: 0.0
+            total_time: 0.46
+          usage:
+            completion_tokens: 1020
+            prompt_tokens: 40
+            prompt_tokens_details:
+              cached_tokens: 1020
+            total_tokens: 1060
+      properties:
+        choices:
+          items:
+            $ref: '#/components/schemas/ChatCompletionChoice'
+          minItems: 1
+          title: Choices
+          type: array
+        created:
+          title: Created
+          type: integer
+        id:
+          title: Id
+          type: string
+        model:
+          title: Model
+          type: string
+        object:
+          const: chat.completion
+          title: Object
+          type: string
+        service_tier:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Service Tier
+        system_fingerprint:
+          title: System Fingerprint
+          type: string
+        time_info:
+          anyOf:
+            - $ref: '#/components/schemas/TimeInfo'
+            - type: 'null'
+        usage:
+          anyOf:
+            - $ref: '#/components/schemas/Usage'
+            - type: 'null'
+      required:
+        - id
+        - choices
+        - created
+        - model
+        - system_fingerprint
+        - object
+      title: ChatCompletionResponse
+      type: object
+    ChatCompletionResponseMessage:
+      additionalProperties: false
+      properties:
+        content:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Content
+        reasoning:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Reasoning
+        role:
+          enum:
+            - assistant
+            - user
+            - system
+            - tool
+          title: Role
+          type: string
+        tool_calls:
+          anyOf:
+            - items:
+                $ref: '#/components/schemas/ChunkAssistantToolCall'
+              type: array
+            - type: 'null'
+          title: Tool Calls
+      required:
+        - role
+      title: ChatCompletionResponseMessage
+      type: object
+    ChoiceObject:
+      additionalProperties: false
+      description: A choice object.
+      properties:
+        function:
+          $ref: '#/components/schemas/ChoiceObjectFunction'
+        type:
+          title: Type
+          type: string
+      required:
+        - type
+        - function
+      title: ChoiceObject
+      type: object
+    ChoiceObjectFunction:
+      additionalProperties: false
+      description: A function for a choice object.
+      properties:
+        name:
+          title: Name
+          type: string
+      required:
+        - name
+      title: ChoiceObjectFunction
+      type: object
+    ChunkAssistantToolCall:
+      additionalProperties: false
+      description: Streaming only. Represents a function call in an assistant tool
+        call.
+      properties:
+        function:
+          $ref: '#/components/schemas/ChunkAssistantToolCallFunction'
+        id:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Id
+        index:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Index
+        type:
+          const: function
+          title: Type
+          type: string
+      required:
+        - function
+        - type
+      title: ChunkAssistantToolCall
+      type: object
+    ChunkAssistantToolCallFunction:
+      additionalProperties: false
+      description: Streaming only. Represents a function in an assistant tool call.
+      properties:
+        arguments:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Arguments
+        name:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Name
+      title: ChunkAssistantToolCallFunction
+      type: object
+    ChunkResponseMessage:
+      additionalProperties: false
+      properties:
+        content:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Content
+        reasoning:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Reasoning
+        role:
+          anyOf:
+            - enum:
+                - assistant
+                - user
+                - system
+                - tool
+              type: string
+            - type: 'null'
+          title: Role
+        tokens:
+          anyOf:
+            - items:
+                type: integer
+              type: array
+            - type: 'null'
+          deprecated: true
+          title: Tokens
+        tool_calls:
+          anyOf:
+            - items:
+                $ref: '#/components/schemas/ChunkAssistantToolCall'
+              type: array
+            - type: 'null'
+          title: Tool Calls
+      title: ChunkResponseMessage
+      type: object
+    CompletionChoice:
+      additionalProperties: false
+      properties:
+        finish_reason:
+          anyOf:
+            - enum:
+                - stop
+                - length
+                - content_filter
+                - tool_calls
+              type: string
+            - type: 'null'
+          title: Finish Reason
+        index:
+          title: Index
+          type: integer
+        logprobs:
+          anyOf:
+            - $ref: '#/components/schemas/CompletionLogProbs'
+            - type: 'null'
+        text:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Text
+        tokens:
+          anyOf:
+            - items:
+                type: integer
+              type: array
+            - type: 'null'
+          title: Tokens
+      required:
+        - index
+      title: CompletionChoice
+      type: object
+    CompletionLogProbs:
+      additionalProperties: false
+      properties:
+        text_offset:
+          anyOf:
+            - items:
+                type: integer
+              type: array
+            - type: 'null'
+          title: Text Offset
+        token_logprobs:
+          anyOf:
+            - items:
+                type: number
+              type: array
+            - type: 'null'
+          title: Token Logprobs
+        tokens:
+          anyOf:
+            - items:
+                type: string
+              type: array
+            - type: 'null'
+          title: Tokens
+        top_logprobs:
+          anyOf:
+            - items:
+                additionalProperties:
+                  type: number
+                type: object
+              type: array
+            - type: 'null'
+          title: Top Logprobs
+      title: CompletionLogProbs
+      type: object
+    CompletionRequest:
+      additionalProperties: false
+      description: Request for completions endpoint
+      examples:
+        - model: llama3.1-70b
+          prompt: 'Micheael Jordan is born in '
+          stream: true
+      properties:
+        best_of:
+          anyOf:
+            - maximum: 20
+              minimum: 0
+              type: integer
+            - type: 'null'
+          default: 1
+          description: "Generates `best_of` completions server-side and returns the\
+            \ \"best\" (the one with the highest log probability per token). Results\
+            \ cannot be streamed. When used with `n`, `best_of` controls the number\
+            \ of candidate completions and `n` specifies how many to return \u2013\
+            \ `best_of` must be greater than `n`. **Note:** Because this parameter\
+            \ generates many completions, it can quickly consume your token quota.\
+            \ Use carefully and ensure that you have reasonable settings for `max_tokens`\
+            \ and `stop`"
+          title: Best Of
+        echo:
+          anyOf:
+            - type: boolean
+            - type: 'null'
+          default: false
+          description: Echo back the prompt in addition to the completion
+          title: Echo
+        frequency_penalty:
+          anyOf:
+            - maximum: 2
+              minimum: -2
+              type: number
+            - type: 'null'
+          default: 0.0
+          description: Number between -2.0 and 2.0. Positive values penalize new tokens
+            based on their existing frequency in the text so far, decreasing the model's
+            likelihood to repeat the same line verbatim.
+          title: Frequency Penalty
+        grammar_root:
+          anyOf:
+            - type: string
+            - type: 'null'
+          default: null
+          description: The grammar root used for structured output generation.
+          title: Grammar Root
+        logit_bias:
+          anyOf:
+            - additionalProperties:
+                type: number
+              type: object
+            - type: 'null'
+          default: null
+          description: "Modify the likelihood of specified tokens appearing in the\
+            \ completion.\n \n Accepts a JSON object that maps tokens (specified by\
+            \ their token ID in the tokenizer) to an associated bias value from -100\
+            \ to 100. Mathematically, the bias is added to the logits generated by\
+            \ the model prior to sampling. The exact effect will vary per model, but\
+            \ values between -1 and 1 should decrease or increase likelihood of selection;\
+            \ values like -100 or 100 should result in a ban or exclusive selection\
+            \ of the relevant token."
+          title: Logit Bias
+        logprobs:
+          anyOf:
+            - maximum: 20
+              minimum: 0
+              type: integer
+            - type: 'null'
+          default: null
+          description: Include the log probabilities on the logprobs most likely output
+            tokens, as well the chosen tokens. For example, if logprobs is 5, the
+            API will return a list of the 5 most likely tokens. The API will always
+            return the logprob of the sampled token, so there may be up to logprobs+1
+            elements in the response.
+          title: Logprobs
+        max_tokens:
+          anyOf:
+            - maximum: 2147483647
+              minimum: -1
+              type: integer
+            - type: 'null'
+          default: null
+          description: 'The maximum number of tokens that can be generated in the
+            chat completion. The total length of input tokens and generated tokens
+            is limited by the model''s context length. '
+          title: Max Tokens
+        min_tokens:
+          anyOf:
+            - maximum: 2147483647
+              minimum: -1
+              type: integer
+            - type: 'null'
+          default: null
+          description: The minimum number of tokens to generate for a completion.
+            If not specified or set to 0, the model will generate as many tokens as
+            it deems necessary. Setting to -1 sets to max sequence length.
+          title: Min Tokens
+        model:
+          title: Model
+          type: string
+        n:
+          anyOf:
+            - minimum: 1
+              type: integer
+            - type: 'null'
+          default: 1
+          description: How many chat completion choices to generate for each input
+            message. Note that you will be charged based on the number of generated
+            tokens across all of the choices. Keep n as 1 to minimize costs.
+          title: N
+        presence_penalty:
+          anyOf:
+            - maximum: 2.0
+              minimum: -2.0
+              type: number
+            - type: 'null'
+          default: 0.0
+          description: Number between -2.0 and 2.0. Positive values penalize new tokens
+            based on whether they appear in the text so far, increasing the model's
+            likelihood to talk about new topics.
+          title: Presence Penalty
+        prompt:
+          anyOf:
+            - type: string
+            - items:
+                type: string
+              type: array
+            - items:
+                minimum: 0
+                type: integer
+              type: array
+            - items:
+                items:
+                  minimum: 0
+                  type: integer
+                type: array
+              type: array
+          description: The prompt(s) to generate completions for, encoded as a string,
+            array of strings, array of tokens, or array of token arrays.
+          title: Prompt
+        prompt_cache_key:
+          anyOf:
+            - maxLength: 1024
+              type: string
+            - type: 'null'
+          default: null
+          description: An optional opaque string. The requests with the same prompt
+            cache key would highly likely share the same prompt prefixes. Examples
+            would be IDs of chat conversations, IDs of users, the hashes of system
+            prompts, etc.
+          title: Prompt Cache Key
+        reasoning_format:
+          anyOf:
+            - $ref: '#/components/schemas/ReasoningFormat'
+            - type: 'null'
+          default: null
+          deprecated: true
+          description: Determines how reasoning is returned in the response. If set
+            to `parsed`, the reasoning will be returned in the `reasoning` field of
+            the response message as a string. If set to `raw`, the reasoning will
+            be returned in the `content` field of the response message with special
+            tokens. If set to `hidden`, the reasoning will not be returned in the
+            response.
+        return_raw_tokens:
+          anyOf:
+            - type: boolean
+            - type: 'null'
+          default: false
+          description: Return raw tokens instead of text
+          title: Return Raw Tokens
+        seed:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          default: null
+          description: If specified, our system will make a best effort to sample
+            deterministically, such that repeated requests with the same `seed` and
+            parameters should return the same result. Determinism is not guaranteed.
+          title: Seed
+        stop:
+          anyOf:
+            - type: string
+            - items:
+                type: string
+              maxItems: 4
+              type: array
+            - type: 'null'
+          default: null
+          description: Up to 4 sequences where the API will stop generating further
+            tokens. The returned text will not contain the stop sequence.
+          title: Stop
+        stream:
+          anyOf:
+            - type: boolean
+            - type: 'null'
+          default: false
+          title: Stream
+        stream_options:
+          anyOf:
+            - $ref: '#/components/schemas/StreamOptions'
+            - type: 'null'
+          default: null
+        suffix:
+          anyOf:
+            - type: string
+            - type: 'null'
+          default: null
+          description: The suffix that comes after a completion of inserted text.
+            (OpenAI feature, not supported)
+          title: Suffix
+        temperature:
+          anyOf:
+            - maximum: 2.0
+              minimum: 0
+              type: number
+            - type: 'null'
+          default: 1.0
+          description: What sampling temperature to use, between 0 and 2. Higher values
+            like 0.8 will make the output more random, while lower values like 0.2
+            will make it more focused and deterministic. We generally recommend altering
+            this or `top_p` but not both.
+          title: Temperature
+        top_p:
+          anyOf:
+            - maximum: 1
+              minimum: 0
+              type: number
+            - type: 'null'
+          default: 1.0
+          description: An alternative to sampling with temperature, called nucleus
+            sampling, where the model considers the results of the tokens with top_p
+            probability mass. So 0.1 means only the tokens comprising the top 10%
+            probability mass are considered. We generally recommend altering this
+            or `temperature` but not both.
+          title: Top P
+        user:
+          anyOf:
+            - type: string
+            - type: 'null'
+          default: null
+          description: 'A unique identifier representing your end-user, which can
+            help Cerebras to monitor and detect abuse. '
+          title: User
+      required:
+        - model
+        - prompt
+      title: CompletionRequest
+      type: object
+    CompletionResponse:
+      additionalProperties: false
+      examples:
+        - choices:
+            - finish_reason: stop
+              index: 0
+              text: "Generative AI is a subfield of artificial intelligence that focuses\
+                \ on generating new, original content, such as images, music, text,\
+                \ or videos. These models are trained on large datasets and learn\
+                \ to recognize patterns, relationships, and structures within the\
+                \ data, allowing them to generate new content that is similar in style,\
+                \ tone, or characteristics to the training data. \n \n Generative\
+                \ AI models can be categorized into two main types: Generative Adversarial\
+                \ Networks (GANs) and Variational Autoencoders (VAEs). GANs consist\
+                \ of two neural networks: a generator and a discriminator. The generator\
+                \ creates new content, while the discriminator evaluates the generated\
+                \ content and tells the generator whether it's realistic or not. VAEs\
+                \ are neural networks that learn to compress and reconstruct data.\
+                \ \n \n Generative AI has numerous applications across various industries,\
+                \ including art and design, content generation, data augmentation,\
+                \ and recommendation systems. Some examples of Generative AI in action\
+                \ include Deep Dream Generator, Amper Music, and DALL-E. \n \n In\
+                \ summary, Generative AI is a powerful technology that enables the\
+                \ creation of new, original content using machine learning models.\
+                \ It has the potential to revolutionize various industries and create\
+                \ new opportunities for artists, designers, and content creators."
+          created: 1721088719
+          id: response_1721
+          model: llama3.1-8b
+          object: text_completion
+          system_fingerprint: '88719'
+          time_info:
+            completion_time: 0.44
+            prompt_time: 0.02
+            queue_time: 0.0
+            total_time: 0.46
+          usage:
+            completion_tokens: 1020
+            prompt_tokens: 40
+            total_tokens: 1060
+      properties:
+        choices:
+          items:
+            $ref: '#/components/schemas/CompletionChoice'
+          minItems: 1
+          title: Choices
+          type: array
+        created:
+          title: Created
+          type: integer
+        id:
+          title: Id
+          type: string
+        model:
+          title: Model
+          type: string
+        object:
+          const: text_completion
+          title: Object
+          type: string
+        system_fingerprint:
+          title: System Fingerprint
+          type: string
+        time_info:
+          anyOf:
+            - $ref: '#/components/schemas/TimeInfo'
+            - type: 'null'
+        usage:
+          anyOf:
+            - $ref: '#/components/schemas/Usage'
+            - type: 'null'
+      required:
+        - id
+        - choices
+        - created
+        - model
+        - system_fingerprint
+        - object
+      title: CompletionResponse
+      type: object
+    CompletionTokensDetails:
+      additionalProperties: false
+      examples:
+        - accepted_prediction_tokens: 900
+          rejected_prediction_tokens: 100
+      properties:
+        accepted_prediction_tokens:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Accepted Prediction Tokens
+        reasoning_tokens:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Reasoning Tokens
+        rejected_prediction_tokens:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Rejected Prediction Tokens
+      title: CompletionTokensDetails
+      type: object
+    CreateChatCompletionResponse:
+      anyOf:
+        - $ref: '#/components/schemas/ChatCompletionResponse'
+        - $ref: '#/components/schemas/ChatChunkResponse'
+        - $ref: '#/components/schemas/ErrorChunkResponse'
+      title: CreateChatCompletionResponse
+    CreateCompletionResponse:
+      anyOf:
+        - $ref: '#/components/schemas/CompletionResponse'
+        - $ref: '#/components/schemas/ErrorChunkResponse'
+      title: CreateCompletionResponse
+    DatacenterLocation:
+      description: Datacenter location information.
+      properties:
+        country_code:
+          description: ISO 3166 Alpha-2 country code
+          title: Country Code
+          type: string
+      required:
+        - country_code
+      title: DatacenterLocation
+      type: object
+    DeveloperMessageRequest:
+      additionalProperties: false
+      description: 'A message request from the developer:
+
+        Currently only for openai models, where they are functionally the same as
+        system'
+      properties:
+        content:
+          anyOf:
+            - type: string
+            - items:
+                discriminator:
+                  mapping:
+                    image: '#/components/schemas/ImageContent'
+                    image_url: '#/components/schemas/ImageUrlContent'
+                    text: '#/components/schemas/TextContent'
+                  propertyName: type
+                oneOf:
+                  - $ref: '#/components/schemas/TextContent'
+                  - $ref: '#/components/schemas/ImageUrlContent'
+                  - $ref: '#/components/schemas/ImageContent'
+              type: array
+          title: Content
+        name:
+          anyOf:
+            - type: string
+            - type: 'null'
+          default: null
+          title: Name
+        role:
+          const: developer
+          default: developer
+          title: Role
+          type: string
+      required:
+        - content
+      title: DeveloperMessageRequest
+      type: object
+    ErrorChunkContent:
+      additionalProperties: false
+      properties:
+        code:
+          anyOf:
+            - type: string
+            - type: 'null'
+          default: ''
+          title: Code
+        id:
+          anyOf:
+            - type: string
+            - type: 'null'
+          default: ''
+          title: Id
+        message:
+          anyOf:
+            - type: string
+            - type: 'null'
+          default: ''
+          title: Message
+        param:
+          anyOf:
+            - type: string
+            - type: 'null'
+          default: ''
+          title: Param
+        type:
+          anyOf:
+            - type: string
+            - type: 'null'
+          default: ''
+          title: Type
+      title: ErrorChunkContent
+      type: object
+    ErrorChunkResponse:
+      additionalProperties: false
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorChunkContent'
+        status_code:
+          title: Status Code
+          type: integer
+      required:
+        - status_code
+        - error
+      title: ErrorChunkResponse
+      type: object
+    FunctionObject:
+      additionalProperties: false
+      description: A function object.
+      properties:
+        description:
+          anyOf:
+            - type: string
+            - type: 'null'
+          default: null
+          title: Description
+        name:
+          title: Name
+          type: string
+        parameters:
+          anyOf:
+            - $ref: '#/components/schemas/Parameters'
+            - type: 'null'
+          default: null
+        strict:
+          default: false
+          title: Strict
+          type: boolean
+      required:
+        - name
+      title: FunctionObject
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    HuggingFaceCapabilities:
+      description: HuggingFace capabilities format.
+      properties:
+        function_calling:
+          default: false
+          title: Function Calling
+          type: boolean
+        streaming:
+          default: true
+          title: Streaming
+          type: boolean
+        structured_outputs:
+          default: false
+          title: Structured Outputs
+          type: boolean
+        vision:
+          default: false
+          title: Vision
+          type: boolean
+      title: HuggingFaceCapabilities
+      type: object
+    HuggingFaceModel:
+      description: 'Model in HuggingFace-compatible format for inference providers.
+
+
+        This format is used by HuggingFace to power their provider comparison table
+
+        and provider selection features.'
+      properties:
+        capabilities:
+          $ref: '#/components/schemas/HuggingFaceCapabilities'
+        context_length:
+          description: Supported context length in tokens
+          title: Context Length
+          type: integer
+        created:
+          title: Created
+          type: integer
+        hugging_face_id:
+          anyOf:
+            - type: string
+            - type: 'null'
+          description: The corresponding HuggingFace Hub model ID
+          title: Hugging Face Id
+        id:
+          title: Id
+          type: string
+        object:
+          const: model
+          default: model
+          title: Object
+          type: string
+        owned_by:
+          title: Owned By
+          type: string
+        pricing:
+          $ref: '#/components/schemas/HuggingFacePricing'
+      required:
+        - id
+        - created
+        - owned_by
+        - context_length
+        - pricing
+      title: HuggingFaceModel
+      type: object
+    HuggingFaceModelsResponse:
+      description: HuggingFace-compatible list of models.
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/HuggingFaceModel'
+          title: Data
+          type: array
+        object:
+          const: list
+          default: list
+          title: Object
+          type: string
+      required:
+        - data
+      title: HuggingFaceModelsResponse
+      type: object
+    HuggingFacePricing:
+      description: HuggingFace pricing format - price in USD per million tokens.
+      properties:
+        input:
+          description: Price in USD per million input tokens
+          title: Input
+          type: number
+        output:
+          description: Price in USD per million output tokens
+          title: Output
+          type: number
+      required:
+        - input
+        - output
+      title: HuggingFacePricing
+      type: object
+    ImageContent:
+      additionalProperties: false
+      description: Image URL content for a message.
+      properties:
+        image:
+          title: Image
+          type: string
+        type:
+          const: image
+          title: Type
+          type: string
+      required:
+        - type
+        - image
+      title: ImageContent
+      type: object
+    ImageUrl:
+      additionalProperties: false
+      description: Image URL
+      properties:
+        detail:
+          anyOf:
+            - enum:
+                - low
+                - medium
+                - high
+                - original
+                - auto
+              type: string
+            - type: 'null'
+          default: auto
+          title: Detail
+        url:
+          title: Url
+          type: string
+      required:
+        - url
+      title: ImageUrl
+      type: object
+    ImageUrlContent:
+      additionalProperties: false
+      description: Image URL content for a message.
+      properties:
+        image_url:
+          $ref: '#/components/schemas/ImageUrl'
+        type:
+          const: image_url
+          title: Type
+          type: string
+      required:
+        - type
+        - image_url
+      title: ImageUrlContent
+      type: object
+    JSONSchema:
+      additionalProperties: false
+      description: A JSON Schema object.
+      properties:
+        description:
+          anyOf:
+            - type: string
+            - type: 'null'
+          default: null
+          title: Description
+        name:
+          title: Name
+          type: string
+        schema:
+          anyOf:
+            - additionalProperties: true
+              type: object
+            - type: 'null'
+          default: null
+          title: Schema
+        strict:
+          anyOf:
+            - type: boolean
+            - type: 'null'
+          default: null
+          title: Strict
+      required:
+        - name
+      title: JSONSchema
+      type: object
+    LogProbsContent:
+      additionalProperties: false
+      properties:
+        bytes:
+          anyOf:
+            - items:
+                type: integer
+              type: array
+            - type: 'null'
+          title: Bytes
+        logprob:
+          title: Logprob
+          type: number
+        token:
+          title: Token
+          type: string
+        top_logprobs:
+          items:
+            $ref: '#/components/schemas/TopLogProbs'
+          title: Top Logprobs
+          type: array
+      required:
+        - token
+        - logprob
+        - top_logprobs
+      title: LogProbsContent
+      type: object
+    ModelArchitecture:
+      description: Architecture details of the model.
+      properties:
+        instruct_type:
+          anyOf:
+            - type: string
+            - type: 'null'
+          description: The instruction format type used for fine-tuning (e.g., 'llama3',
+            'chatml').
+          title: Instruct Type
+        modality:
+          description: The modality of the model (e.g., 'text', 'text+vision', 'multimodal').
+          enum:
+            - text
+            - text+vision
+            - multimodal
+          title: Modality
+          type: string
+        tokenizer:
+          description: The tokenizer used by the model (e.g., 'Llama3', 'GPT4').
+          title: Tokenizer
+          type: string
+      required:
+        - modality
+        - tokenizer
+      title: ModelArchitecture
+      type: object
+    ModelCapabilities:
+      description: Capabilities and features supported by the model.
+      properties:
+        function_calling:
+          default: false
+          description: Indicates if the model supports function calling (tool use).
+          title: Function Calling
+          type: boolean
+        json_mode:
+          default: false
+          description: Indicates if the model supports JSON mode (guaranteed JSON
+            output).
+          title: Json Mode
+          type: boolean
+        parallel_tool_calls:
+          default: false
+          description: Indicates if the model supports parallel tool calls.
+          title: Parallel Tool Calls
+          type: boolean
+        reasoning:
+          default: false
+          description: Indicates if the model supports reasoning/chain-of-thought
+            outputs.
+          title: Reasoning
+          type: boolean
+        response_format:
+          default: false
+          description: Indicates if the model supports the response_format parameter.
+          title: Response Format
+          type: boolean
+        streaming:
+          default: true
+          description: Indicates if the model supports streaming responses via Server-Sent
+            Events (SSE).
+          title: Streaming
+          type: boolean
+        structured_outputs:
+          default: false
+          description: Indicates if the model supports structured outputs (e.g. JSON
+            schema enforcement).
+          title: Structured Outputs
+          type: boolean
+        tool_choice:
+          default: false
+          description: Indicates if the model supports the tool_choice parameter.
+          title: Tool Choice
+          type: boolean
+        tools:
+          default: false
+          description: Indicates if the model supports the tools parameter.
+          title: Tools
+          type: boolean
+        vision:
+          default: false
+          description: Indicates if the model accepts image inputs (vision capabilities).
+          title: Vision
+          type: boolean
+      title: ModelCapabilities
+      type: object
+    ModelFormat:
+      description: Output format for public models endpoint.
+      enum:
+        - default
+        - openrouter
+        - huggingface
+      title: ModelFormat
+      type: string
+    ModelLimits:
+      description: Rate limits and constraints for the model.
+      properties:
+        max_completion_tokens:
+          description: The maximum number of tokens that can be generated in a single
+            completion.
+          exclusiveMinimum: 0.0
+          title: Max Completion Tokens
+          type: integer
+        max_context_length:
+          description: The maximum context window size in tokens.
+          exclusiveMinimum: 0.0
+          title: Max Context Length
+          type: integer
+        requests_per_minute:
+          anyOf:
+            - minimum: 0.0
+              type: integer
+            - type: 'null'
+          description: The default rate limit for requests per minute (RPM).
+          title: Requests Per Minute
+        tokens_per_minute:
+          anyOf:
+            - minimum: 0.0
+              type: integer
+            - type: 'null'
+          description: The default rate limit for tokens per minute (TPM).
+          title: Tokens Per Minute
+      required:
+        - max_context_length
+        - max_completion_tokens
+      title: ModelLimits
+      type: object
+    ModelMetadata:
+      additionalProperties: false
+      properties:
+        created:
+          default: 0
+          title: Created
+          type: integer
+        id:
+          title: Id
+          type: string
+        object:
+          const: model
+          default: model
+          title: Object
+          type: string
+        owned_by:
+          default: ''
+          title: Owned By
+          type: string
+      required:
+        - id
+      title: ModelMetadata
+      type: object
+    ModelMetadataList:
+      additionalProperties: false
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ModelMetadata'
+          title: Data
+          type: array
+        object:
+          const: list
+          default: list
+          title: Object
+          type: string
+      required:
+        - data
+      title: ModelMetadataList
+      type: object
+    ModelPricing:
+      description: Pricing information for a model.
+      example:
+        completion: '0.0000001'
+        prompt: '0.0000001'
+      properties:
+        completion:
+          description: Cost per token for completion (output) tokens in USD.
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Completion
+          type: string
+        prompt:
+          description: Cost per token for prompt (input) tokens in USD.
+          pattern: ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$
+          title: Prompt
+          type: string
+      required:
+        - prompt
+        - completion
+      title: ModelPricing
+      type: object
+    OpenRouterInfo:
+      description: OpenRouter metadata.
+      properties:
+        slug:
+          description: OpenRouter slug for the model
+          title: Slug
+          type: string
+      required:
+        - slug
+      title: OpenRouterInfo
+      type: object
+    OpenRouterModel:
+      description: Model in OpenRouter-compatible format.
+      properties:
+        context_length:
+          title: Context Length
+          type: integer
+        created:
+          description: Unix timestamp when model was created
+          title: Created
+          type: integer
+        datacenters:
+          description: Datacenter locations
+          items:
+            $ref: '#/components/schemas/DatacenterLocation'
+          title: Datacenters
+          type: array
+        description:
+          default: ''
+          description: Model description
+          title: Description
+          type: string
+        hugging_face_id:
+          default: ''
+          description: The corresponding HuggingFace Hub model ID, if available
+          title: Hugging Face Id
+          type: string
+        id:
+          description: Model ID with provider prefix, e.g., 'cerebras/llama3.1-8b'
+          title: Id
+          type: string
+        input_modalities:
+          description: Supported input modalities (text, image, file)
+          items:
+            type: string
+          title: Input Modalities
+          type: array
+        max_output_length:
+          description: Maximum number of output tokens
+          title: Max Output Length
+          type: integer
+        name:
+          title: Name
+          type: string
+        openrouter:
+          anyOf:
+            - $ref: '#/components/schemas/OpenRouterInfo'
+            - type: 'null'
+          description: OpenRouter metadata
+        output_modalities:
+          description: Supported output modalities (text, image, file)
+          items:
+            type: string
+          title: Output Modalities
+          type: array
+        pricing:
+          $ref: '#/components/schemas/OpenRouterPricing'
+        quantization:
+          default: fp16
+          description: Model quantization (fp16 only for Cerebras)
+          title: Quantization
+          type: string
+        supported_features:
+          description: List of supported features
+          items:
+            type: string
+          title: Supported Features
+          type: array
+        supported_sampling_parameters:
+          description: List of supported sampling parameters
+          items:
+            type: string
+          title: Supported Sampling Parameters
+          type: array
+      required:
+        - id
+        - name
+        - created
+        - context_length
+        - max_output_length
+        - pricing
+      title: OpenRouterModel
+      type: object
+    OpenRouterModelsResponse:
+      description: OpenRouter-compatible list of models.
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/OpenRouterModel'
+          title: Data
+          type: array
+      required:
+        - data
+      title: OpenRouterModelsResponse
+      type: object
+    OpenRouterPricing:
+      description: OpenRouter pricing format.
+      properties:
+        completion:
+          description: Cost per output token as string
+          title: Completion
+          type: string
+        image:
+          default: '0'
+          description: Cost per image as string
+          title: Image
+          type: string
+        input_cache_read:
+          default: '0'
+          description: Cost per cached input token read as string
+          title: Input Cache Read
+          type: string
+        input_cache_write:
+          default: '0'
+          description: Cost per cached input token write as string
+          title: Input Cache Write
+          type: string
+        prompt:
+          description: Cost per input token as string
+          title: Prompt
+          type: string
+        request:
+          default: '0'
+          description: Cost per request as string
+          title: Request
+          type: string
+      required:
+        - prompt
+        - completion
+      title: OpenRouterPricing
+      type: object
+    Parameters:
+      additionalProperties: true
+      description: 'Represents the parameters a function accepts.
+
+        This model is designed to be flexible to accommodate any JSON Schema.
+
+        The key-value pairs you provide will define the parameters.'
+      title: Parameters
+      type: object
+    Prediction:
+      additionalProperties: false
+      properties:
+        content:
+          anyOf:
+            - type: string
+            - items:
+                $ref: '#/components/schemas/TextContent'
+              type: array
+          title: Content
+        type:
+          const: content
+          title: Type
+          type: string
+      required:
+        - type
+        - content
+      title: Prediction
+      type: object
+    PromptTokensDetails:
+      additionalProperties: false
+      examples:
+        - cached_tokens: 1020
+          image_tokens: 256
+      properties:
+        cached_tokens:
+          default: 0
+          title: Cached Tokens
+          type: integer
+        image_tokens:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Image Tokens
+      title: PromptTokensDetails
+      type: object
+    PublicModel:
+      description: 'Complete model specification following OpenAI-compatible schema
+
+        with extensions for OpenRouter/HuggingFace compatibility.'
+      properties:
+        architecture:
+          $ref: '#/components/schemas/ModelArchitecture'
+          description: Technical architecture details of the model.
+        capabilities:
+          $ref: '#/components/schemas/ModelCapabilities'
+          description: The capabilities supported by the model.
+        created:
+          description: The Unix timestamp (in seconds) when the model was created.
+          minimum: 0.0
+          title: Created
+          type: integer
+        datacenter_locations:
+          description: List of datacenter locations where this model is deployed (e.g.,
+            ['us-east-1', 'eu-west-1']).
+          items:
+            type: string
+          title: Datacenter Locations
+          type: array
+        deprecated:
+          default: false
+          description: Indicates if the model is deprecated and should not be used
+            for new applications.
+          title: Deprecated
+          type: boolean
+        description:
+          description: A brief description of the model.
+          maxLength: 1000
+          minLength: 1
+          title: Description
+          type: string
+        hugging_face_id:
+          anyOf:
+            - type: string
+            - type: 'null'
+          description: The corresponding HuggingFace Hub model ID, if available (e.g.,
+            'meta-llama/Llama-3.1-8B-Instruct').
+          title: Hugging Face Id
+        id:
+          description: The unique identifier for the model (e.g., 'llama3.1-8b').
+          maxLength: 200
+          minLength: 1
+          title: Id
+          type: string
+        limits:
+          $ref: '#/components/schemas/ModelLimits'
+          description: Usage limits and constraints for the model.
+        name:
+          description: The human-readable name of the model.
+          minLength: 1
+          title: Name
+          type: string
+        object:
+          const: model
+          default: model
+          description: The object type, which is always 'model'.
+          title: Object
+          type: string
+        owned_by:
+          description: The organization that owns or created the model.
+          minLength: 1
+          title: Owned By
+          type: string
+        preview:
+          default: false
+          description: Indicates if the model is in preview or beta status.
+          title: Preview
+          type: boolean
+        pricing:
+          $ref: '#/components/schemas/ModelPricing'
+          description: Pricing details for the model.
+        quantization:
+          anyOf:
+            - type: string
+            - type: 'null'
+          description: Quantization precision (e.g., 'FP16', 'FP16/FP8 (weights only)').
+          title: Quantization
+        supported_parameters:
+          $ref: '#/components/schemas/SupportedParameters'
+      required:
+        - id
+        - created
+        - owned_by
+        - name
+        - description
+        - pricing
+        - capabilities
+        - supported_parameters
+        - architecture
+        - limits
+      title: PublicModel
+      type: object
+    PublicModelsListResponse:
+      description: OpenAI-compatible list of models.
+      properties:
+        data:
+          description: Array of model objects
+          items:
+            $ref: '#/components/schemas/PublicModel'
+          title: Data
+          type: array
+        object:
+          const: list
+          default: list
+          description: Object type (always 'list')
+          title: Object
+          type: string
+      required:
+        - data
+      title: PublicModelsListResponse
+      type: object
+    ReasoningEffort:
+      enum:
+        - none
+        - minimal
+        - low
+        - medium
+        - high
+        - xhigh
+        - max
+      title: ReasoningEffort
+      type: string
+    ReasoningFormat:
+      enum:
+        - none
+        - parsed
+        - text_parsed
+        - raw
+        - hidden
+      title: ReasoningFormat
+      type: string
+    ResponseFormatJSONObject:
+      additionalProperties: false
+      description: A response format for a JSON object.
+      properties:
+        type:
+          const: json_object
+          title: Type
+          type: string
+      required:
+        - type
+      title: ResponseFormatJSONObject
+      type: object
+    ResponseFormatJSONSchema:
+      additionalProperties: false
+      description: A response format for a JSON schema.
+      properties:
+        json_schema:
+          $ref: '#/components/schemas/JSONSchema'
+        type:
+          const: json_schema
+          title: Type
+          type: string
+      required:
+        - json_schema
+        - type
+      title: ResponseFormatJSONSchema
+      type: object
+    ResponseFormatText:
+      additionalProperties: false
+      description: A response format for text.
+      properties:
+        type:
+          const: text
+          title: Type
+          type: string
+      required:
+        - type
+      title: ResponseFormatText
+      type: object
+    ServiceTier:
+      enum:
+        - auto
+        - default
+        - flex
+        - priority
+      title: ServiceTier
+      type: string
+    StreamOptions:
+      additionalProperties: false
+      description: Options for streaming.
+      properties:
+        include_usage:
+          anyOf:
+            - type: boolean
+            - type: 'null'
+          default: null
+          title: Include Usage
+      title: StreamOptions
+      type: object
+    SupportedParameters:
+      description: Sampling parameters supported by the model.
+      properties:
+        frequency_penalty:
+          default: false
+          description: Supports frequency_penalty parameter.
+          title: Frequency Penalty
+          type: boolean
+        logit_bias:
+          default: false
+          description: Supports logit_bias parameter.
+          title: Logit Bias
+          type: boolean
+        logprobs:
+          default: false
+          description: Supports logprobs output.
+          title: Logprobs
+          type: boolean
+        max_completion_tokens:
+          default: true
+          description: Supports max_completion_tokens parameter.
+          title: Max Completion Tokens
+          type: boolean
+        presence_penalty:
+          default: false
+          description: Supports presence_penalty parameter.
+          title: Presence Penalty
+          type: boolean
+        repetition_penalty:
+          default: false
+          description: Supports repetition_penalty parameter.
+          title: Repetition Penalty
+          type: boolean
+        seed:
+          default: true
+          description: Supports seed for reproducible outputs.
+          title: Seed
+          type: boolean
+        stop:
+          default: true
+          description: Supports stop sequences parameter.
+          title: Stop
+          type: boolean
+        temperature:
+          default: true
+          description: Supports temperature sampling parameter.
+          title: Temperature
+          type: boolean
+        top_logprobs:
+          default: false
+          description: Supports top_logprobs parameter.
+          title: Top Logprobs
+          type: boolean
+        top_p:
+          default: true
+          description: Supports top_p (nucleus) sampling parameter.
+          title: Top P
+          type: boolean
+      title: SupportedParameters
+      type: object
+    SystemMessageRequest:
+      additionalProperties: false
+      description: A message request from the system.
+      properties:
+        content:
+          anyOf:
+            - type: string
+            - items:
+                discriminator:
+                  mapping:
+                    image: '#/components/schemas/ImageContent'
+                    image_url: '#/components/schemas/ImageUrlContent'
+                    text: '#/components/schemas/TextContent'
+                  propertyName: type
+                oneOf:
+                  - $ref: '#/components/schemas/TextContent'
+                  - $ref: '#/components/schemas/ImageUrlContent'
+                  - $ref: '#/components/schemas/ImageContent'
+              type: array
+          title: Content
+        name:
+          anyOf:
+            - type: string
+            - type: 'null'
+          default: null
+          title: Name
+        role:
+          const: system
+          default: system
+          title: Role
+          type: string
+      required:
+        - content
+      title: SystemMessageRequest
+      type: object
+    TextContent:
+      additionalProperties: false
+      description: Text content for a message.
+      properties:
+        text:
+          title: Text
+          type: string
+        type:
+          const: text
+          title: Type
+          type: string
+      required:
+        - type
+        - text
+      title: TextContent
+      type: object
+    TimeInfo:
+      additionalProperties: false
+      description: 'Time information for different phases of request processing.
+
+
+        All times are measured in seconds.'
+      examples:
+        - completion_time: 0.44
+          prompt_time: 0.02
+          queue_time: 0.0
+          total_time: 0.46
+      properties:
+        completion_time:
+          anyOf:
+            - minimum: 0.0
+              type: number
+            - type: 'null'
+          title: Completion Time
+        created:
+          anyOf:
+            - minimum: 0.0
+              type: number
+            - type: 'null'
+          title: Created
+        prompt_time:
+          anyOf:
+            - minimum: 0.0
+              type: number
+            - type: 'null'
+          title: Prompt Time
+        queue_time:
+          anyOf:
+            - minimum: 0.0
+              type: number
+            - type: 'null'
+          title: Queue Time
+        total_time:
+          anyOf:
+            - minimum: 0.0
+              type: number
+            - type: 'null'
+          title: Total Time
+      title: TimeInfo
+      type: object
+    Tool:
+      additionalProperties: false
+      description: A tool object
+      properties:
+        function:
+          $ref: '#/components/schemas/FunctionObject'
+        type:
+          title: Type
+          type: string
+      required:
+        - type
+        - function
+      title: Tool
+      type: object
+    ToolChoice:
+      description: A tool choice object.
+      enum:
+        - none
+        - auto
+        - required
+      title: ToolChoice
+      type: string
+    ToolMessageRequest:
+      additionalProperties: false
+      description: A message request from a tool.
+      properties:
+        content:
+          anyOf:
+            - type: string
+            - items:
+                discriminator:
+                  mapping:
+                    image: '#/components/schemas/ImageContent'
+                    image_url: '#/components/schemas/ImageUrlContent'
+                    text: '#/components/schemas/TextContent'
+                  propertyName: type
+                oneOf:
+                  - $ref: '#/components/schemas/TextContent'
+                  - $ref: '#/components/schemas/ImageUrlContent'
+                  - $ref: '#/components/schemas/ImageContent'
+              type: array
+          title: Content
+        name:
+          anyOf:
+            - type: string
+            - type: 'null'
+          default: null
+          title: Name
+        role:
+          const: tool
+          default: tool
+          title: Role
+          type: string
+        tool_call_id:
+          title: Tool Call Id
+          type: string
+      required:
+        - content
+        - tool_call_id
+      title: ToolMessageRequest
+      type: object
+    TopLogProbs:
+      additionalProperties: false
+      properties:
+        bytes:
+          anyOf:
+            - items:
+                type: integer
+              type: array
+            - type: 'null'
+          title: Bytes
+        logprob:
+          title: Logprob
+          type: number
+        token:
+          title: Token
+          type: string
+      required:
+        - token
+        - logprob
+      title: TopLogProbs
+      type: object
+    Usage:
+      additionalProperties: false
+      examples:
+        - completion_tokens: 1020
+          prompt_tokens: 40
+          prompt_tokens_details:
+            cached_tokens: 1020
+          total_tokens: 1060
+      properties:
+        completion_tokens:
+          default: 0
+          title: Completion Tokens
+          type: integer
+        completion_tokens_details:
+          anyOf:
+            - $ref: '#/components/schemas/CompletionTokensDetails'
+            - type: 'null'
+        prompt_tokens:
+          default: 0
+          title: Prompt Tokens
+          type: integer
+        prompt_tokens_details:
+          anyOf:
+            - $ref: '#/components/schemas/PromptTokensDetails'
+            - type: 'null'
+        total_tokens:
+          default: 0
+          title: Total Tokens
+          type: integer
+      title: Usage
+      type: object
+    UserMessageRequest:
+      additionalProperties: false
+      description: A message request from the user.
+      properties:
+        content:
+          anyOf:
+            - type: string
+            - items:
+                discriminator:
+                  mapping:
+                    image: '#/components/schemas/ImageContent'
+                    image_url: '#/components/schemas/ImageUrlContent'
+                    text: '#/components/schemas/TextContent'
+                  propertyName: type
+                oneOf:
+                  - $ref: '#/components/schemas/TextContent'
+                  - $ref: '#/components/schemas/ImageUrlContent'
+                  - $ref: '#/components/schemas/ImageContent'
+              type: array
+          title: Content
+        name:
+          anyOf:
+            - type: string
+            - type: 'null'
+          default: null
+          title: Name
+        role:
+          const: user
+          default: user
+          title: Role
+          type: string
+      required:
+        - content
+      title: UserMessageRequest
+      type: object
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
+      type: object
+  securitySchemes:
+    HTTPBearer:
+      scheme: bearer
+      type: http
+info:
+  title: Cerebras Cloud API
+  version: 0.2.0
+openapi: 3.1.0
+paths:
+  /public/v1/models:
+    get:
+      description: List all publicly available models (modelVisibility='PUBLIC' only).
+        Use the `format` parameter to get responses compatible with OpenRouter or
+        HuggingFace APIs.
+      operationId: list_public_models_endpoint_public_v1_models_get
+      parameters:
+        - description: 'Output format: ''default'' (Cerebras schema), ''openrouter'',
+            or ''huggingface'''
+          in: query
+          name: format
+          required: false
+          schema:
+            $ref: '#/components/schemas/ModelFormat'
+            default: default
+            description: 'Output format: ''default'' (Cerebras schema), ''openrouter'',
+              or ''huggingface'''
+        - in: header
+          name: X-Amz-Cf-Id
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: X-Amz-Cf-Id
+        - in: header
+          name: CF-RAY
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: Cf-Ray
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/PublicModelsListResponse'
+                  - $ref: '#/components/schemas/OpenRouterModelsResponse'
+                  - $ref: '#/components/schemas/HuggingFaceModelsResponse'
+                title: Response List Public Models Endpoint Public V1 Models Get
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: List all available models
+      tags:
+        - Public Models
+  /public/v1/models/{model_id}:
+    get:
+      description: Retrieve a specific publicly available model by ID (modelVisibility='PUBLIC'
+        only). Use the `format` parameter to get responses compatible with OpenRouter
+        or HuggingFace APIs.
+      operationId: get_public_model_public_v1_models__model_id__get
+      parameters:
+        - in: path
+          name: model_id
+          required: true
+          schema:
+            title: Model Id
+            type: string
+        - description: 'Output format: ''default'' (Cerebras schema), ''openrouter'',
+            or ''huggingface'''
+          in: query
+          name: format
+          required: false
+          schema:
+            $ref: '#/components/schemas/ModelFormat'
+            default: default
+            description: 'Output format: ''default'' (Cerebras schema), ''openrouter'',
+              or ''huggingface'''
+        - in: header
+          name: X-Amz-Cf-Id
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: X-Amz-Cf-Id
+        - in: header
+          name: CF-RAY
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: Cf-Ray
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/PublicModel'
+                  - $ref: '#/components/schemas/OpenRouterModel'
+                  - $ref: '#/components/schemas/HuggingFaceModel'
+                title: Response Get Public Model Public V1 Models  Model Id  Get
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Retrieve a specific model
+      tags:
+        - Public Models
+  /v1/chat/completions:
+    post:
+      operationId: chat_v1_chat_completions_post
+      parameters:
+        - in: header
+          name: X-Amz-Cf-Id
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: X-Amz-Cf-Id
+        - in: header
+          name: CF-RAY
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: Cf-Ray
+        - in: header
+          name: X-delay-time
+          required: false
+          schema:
+            anyOf:
+              - type: number
+              - type: 'null'
+            title: X-Delay-Time
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatCompletionRequest'
+          application/msgpack:
+            schema:
+              $ref: '#/components/schemas/ChatCompletionRequest'
+          application/vnd.msgpack:
+            schema:
+              $ref: '#/components/schemas/ChatCompletionRequest'
+          application/x-msgpack:
+            schema:
+              $ref: '#/components/schemas/ChatCompletionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateChatCompletionResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+        - HTTPBearer: []
+      summary: Chat
+  /v1/completions:
+    post:
+      operationId: completions_v1_completions_post
+      parameters:
+        - in: header
+          name: X-Amz-Cf-Id
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: X-Amz-Cf-Id
+        - in: header
+          name: CF-RAY
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: Cf-Ray
+        - in: header
+          name: X-delay-time
+          required: false
+          schema:
+            anyOf:
+              - type: number
+              - type: 'null'
+            title: X-Delay-Time
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompletionRequest'
+          application/msgpack:
+            schema:
+              $ref: '#/components/schemas/CompletionRequest'
+          application/vnd.msgpack:
+            schema:
+              $ref: '#/components/schemas/CompletionRequest'
+          application/x-msgpack:
+            schema:
+              $ref: '#/components/schemas/CompletionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCompletionResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+        - HTTPBearer: []
+      summary: Completions
+  /v1/models:
+    get:
+      operationId: list_models_v1_models_get
+      parameters:
+        - description: 'Output format: ''default'' (OpenAI-compatible), ''openrouter'',
+            or ''huggingface'''
+          in: query
+          name: format
+          required: false
+          schema:
+            $ref: '#/components/schemas/ModelFormat'
+            default: default
+            description: 'Output format: ''default'' (OpenAI-compatible), ''openrouter'',
+              or ''huggingface'''
+        - in: header
+          name: X-Amz-Cf-Id
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: X-Amz-Cf-Id
+        - in: header
+          name: CF-RAY
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: Cf-Ray
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/ModelMetadataList'
+                  - $ref: '#/components/schemas/OpenRouterModelsResponse'
+                  - $ref: '#/components/schemas/HuggingFaceModelsResponse'
+                title: Response List Models V1 Models Get
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+        - HTTPBearer: []
+      summary: List Models
+  /v1/models/{model_id}:
+    get:
+      operationId: get_model_v1_models__model_id__get
+      parameters:
+        - in: path
+          name: model_id
+          required: true
+          schema:
+            title: Model Id
+            type: string
+        - description: 'Output format: ''default'' (OpenAI-compatible), ''openrouter'',
+            or ''huggingface'''
+          in: query
+          name: format
+          required: false
+          schema:
+            $ref: '#/components/schemas/ModelFormat'
+            default: default
+            description: 'Output format: ''default'' (OpenAI-compatible), ''openrouter'',
+              or ''huggingface'''
+        - in: header
+          name: X-Amz-Cf-Id
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: X-Amz-Cf-Id
+        - in: header
+          name: CF-RAY
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: Cf-Ray
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/ModelMetadata'
+                  - $ref: '#/components/schemas/OpenRouterModel'
+                  - $ref: '#/components/schemas/HuggingFaceModel'
+                  - $ref: '#/components/schemas/PublicModel'
+                title: Response Get Model V1 Models  Model Id  Get
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+        - HTTPBearer: []
+      summary: Get Model
+  /v1/tcp_warming:
+    get:
+      operationId: tcp_warming_v1_tcp_warming_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Tcp Warming
+security:
+  - HTTPBearer: []

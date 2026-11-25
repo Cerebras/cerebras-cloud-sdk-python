@@ -1,6 +1,6 @@
 [project]
 name = "cerebras_cloud_sdk"
-version = "1.91.0"
+version = "2.0.0"
 description = "The official Python library for the cerebras API"
 dynamic = ["readme"]
 license = "Apache-2.0"
@@ -9,7 +9,7 @@ authors = [
 ]
 
 dependencies = [
-  "httpx[http2]>=0.23.0, <1",
+  "httpx2[http2]>=2, <3",
   "pydantic>=1.9.0, <3",
   "typing-extensions>=4.14, <5",
   "anyio>=3.5.0, <5",
@@ -17,11 +17,10 @@ dependencies = [
   "sniffio",
 ]
 
-requires-python = ">= 3.9"
+requires-python = ">= 3.10"
 classifiers = [
   "Typing :: Typed",
   "Intended Audience :: Developers",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -41,7 +40,7 @@ Homepage = "https://github.com/Cerebras/cerebras-cloud-sdk-python"
 Repository = "https://github.com/Cerebras/cerebras-cloud-sdk-python"
 
 [project.optional-dependencies]
-aiohttp = ["aiohttp", "httpx_aiohttp>=0.1.9"]
+aiohttp = ["aiohttp", "httpx_aiohttp[httpx2]>=0.2.0"]
 
 [tool.rye]
 managed = true
@@ -50,6 +49,7 @@ dev-dependencies = [
     "pyright==1.1.399",
     "mypy==1.17",
     "respx",
+    "pytest-httpx2",
     "pytest",
     "pytest-asyncio",
     "ruff",
@@ -137,6 +137,10 @@ addopts = "--tb=short -n auto"
 xfail_strict = true
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "session"
+# pytest-httpx2's entry point doesn't register its marker, so declare it here.
+markers = [
+  "httpx2(*, assert_all_called=..., assert_all_mocked=..., base_url=...): configure the httpx2_mock fixture",
+]
 filterwarnings = [
   "error"
 ]
@@ -146,7 +150,7 @@ filterwarnings = [
 # there are a couple of flags that are still disabled by
 # default in strict mode as they are experimental and niche.
 typeCheckingMode = "strict"
-pythonVersion = "3.9"
+pythonVersion = "3.10"
 
 exclude = [
     "_dev",
@@ -164,6 +168,7 @@ reportPrivateUsage = false
 [tool.mypy]
 pretty = true
 show_error_codes = true
+python_version = "3.10"
 
 # Exclude _files.py because mypy isn't smart enough to apply
 # the correct type narrowing and as this is an internal module

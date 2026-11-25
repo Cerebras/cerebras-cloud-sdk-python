@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Any, Dict, Union, Iterable, Optional, cast
 from typing_extensions import Literal
 
-import httpx
+import httpx2
 
 from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import is_given, maybe_transform, strip_not_given, async_maybe_transform
@@ -87,7 +87,7 @@ class CompletionsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+        timeout: float | httpx2.Timeout | None | NotGiven = not_given,
     ) -> ChatCompletion | Stream[ChatCompletion]:
         """
         Chat
@@ -327,7 +327,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+        timeout: float | httpx2.Timeout | None | NotGiven = not_given,
     ) -> ChatCompletion | AsyncStream[ChatCompletion]:
         """
         Chat

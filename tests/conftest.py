@@ -6,7 +6,7 @@ import os
 import logging
 from typing import TYPE_CHECKING, Iterator, AsyncIterator
 
-import httpx
+import httpx2
 import pytest
 from pytest_asyncio import is_async_test
 
@@ -29,10 +29,10 @@ def pytest_collection_modifyitems(items: list[pytest.Function]) -> None:
     for async_test in pytest_asyncio_tests:
         async_test.add_marker(session_scope_marker, append=False)
 
-    # We skip tests that use both the aiohttp client and respx_mock as respx_mock
+    # We skip tests that use both the aiohttp client and httpx2_mock as httpx2_mock
     # doesn't support custom transports.
     for item in items:
-        if "async_client" not in item.fixturenames or "respx_mock" not in item.fixturenames:
+        if "async_client" not in item.fixturenames or "httpx2_mock" not in item.fixturenames:
             continue
 
         if not hasattr(item, "callspec"):
@@ -40,7 +40,7 @@ def pytest_collection_modifyitems(items: list[pytest.Function]) -> None:
 
         async_client_param = item.callspec.params.get("async_client")
         if is_dict(async_client_param) and async_client_param.get("http_client") == "aiohttp":
-            item.add_marker(pytest.mark.skip(reason="aiohttp client is not compatible with respx_mock"))
+            item.add_marker(pytest.mark.skip(reason="aiohttp client is not compatible with httpx2_mock"))
 
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -64,7 +64,7 @@ async def async_client(request: FixtureRequest) -> AsyncIterator[AsyncCerebras]:
 
     # defaults
     strict = True
-    http_client: None | httpx.AsyncClient = None
+    http_client: None | httpx2.AsyncClient = None
 
     if isinstance(param, bool):
         strict = param

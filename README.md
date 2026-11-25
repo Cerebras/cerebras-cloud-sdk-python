@@ -3,9 +3,9 @@
 <!-- prettier-ignore -->
 [![PyPI version](https://img.shields.io/pypi/v/cerebras_cloud_sdk.svg?label=pypi%20(stable))](https://pypi.org/project/cerebras_cloud_sdk/)
 
-The Cerebras Python library provides convenient access to the Cerebras REST API from any Python 3.9+
+The Cerebras Python library provides convenient access to the Cerebras REST API from any Python 3.10+
 application. The library includes type definitions for all request params and response fields,
-and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
+and offers both synchronous and asynchronous clients powered by [httpx2](https://github.com/pydantic/httpx2).
 
 It is generated with [Stainless](https://www.stainless.com/).
 
@@ -129,7 +129,7 @@ Functionality between the synchronous and asynchronous clients is otherwise iden
 
 ### With aiohttp
 
-By default, the async client uses `httpx` for HTTP requests. However, for improved concurrency performance you may also use `aiohttp` as the HTTP backend.
+By default, the async client uses `httpx2` for HTTP requests. However, for improved concurrency performance you may also use `aiohttp` as the HTTP backend.
 
 You can enable this by installing `aiohttp`:
 
@@ -318,7 +318,7 @@ try:
     )
 except cerebras.cloud.sdk.APIConnectionError as e:
     print("The server could not be reached")
-    print(e.__cause__)  # an underlying Exception, likely raised within httpx.
+    print(e.__cause__)  # an underlying Exception, likely raised within httpx2.
 except cerebras.cloud.sdk.RateLimitError as e:
     print("A 429 status code was received; we should back off a bit.")
 except cerebras.cloud.sdk.APIStatusError as e:
@@ -373,12 +373,12 @@ client.with_options(max_retries=5).chat.completions.create(
 ### Timeouts
 
 By default requests time out after 1 minute. You can configure this with a `timeout` option,
-which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:
+which accepts a float or an [`httpx2.Timeout`](https://httpx2.pydantic.dev/advanced/timeouts/#fine-tuning-the-configuration) object:
 
 <!-- RUN TEST: Timeout -->
 ```python
 from cerebras.cloud.sdk import Cerebras
-import httpx
+import httpx2
 
 # Configure the default for all requests:
 client = Cerebras(
@@ -388,7 +388,7 @@ client = Cerebras(
 
 # More granular control:
 client = Cerebras(
-    timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
+    timeout=httpx2.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
 )
 
 # Override per-request:
@@ -497,11 +497,11 @@ To make requests to undocumented endpoints, you can make requests using `client.
 http verbs. Options on the client will be respected (such as retries) when making this request.
 
 ```py
-import httpx
+import httpx2
 
 response = client.post(
     "/foo",
-    cast_to=httpx.Response,
+    cast_to=httpx2.Response,
     body={"my_param": True},
 )
 
@@ -521,14 +521,14 @@ can also get all the extra fields on the Pydantic model as a dict with
 
 ### Configuring the HTTP client
 
-You can directly override the [httpx client](https://www.python-httpx.org/api/#client) to customize it for your use case, including:
+You can directly override the [httpx2 client](https://httpx2.pydantic.dev/api/#client) to customize it for your use case, including:
 
-- Support for [proxies](https://www.python-httpx.org/advanced/proxies/)
-- Custom [transports](https://www.python-httpx.org/advanced/transports/)
-- Additional [advanced](https://www.python-httpx.org/advanced/clients/) functionality
+- Support for [proxies](https://httpx2.pydantic.dev/advanced/proxies/)
+- Custom [transports](https://httpx2.pydantic.dev/advanced/transports/)
+- Additional [advanced](https://httpx2.pydantic.dev/advanced/clients/) functionality
 
 ```python
-import httpx
+import httpx2
 from cerebras.cloud.sdk import Cerebras, DefaultHttpxClient
 
 client = Cerebras(
@@ -536,7 +536,7 @@ client = Cerebras(
     base_url="http://my.test.server.example.com:8083",
     http_client=DefaultHttpxClient(
         proxy="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+        transport=httpx2.HTTPTransport(local_address="0.0.0.0"),
     ),
 )
 ```

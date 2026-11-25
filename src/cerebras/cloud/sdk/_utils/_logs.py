@@ -2,7 +2,7 @@ import os
 import logging
 
 logger: logging.Logger = logging.getLogger("cerebras.cloud.sdk")
-httpx_logger: logging.Logger = logging.getLogger("httpx")
+httpx_logger: logging.Logger = logging.getLogger("httpx2")
 
 
 def _basic_config() -> None:

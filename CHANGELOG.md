@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.0.0 (2026-09-02)
+
+Full Changelog: [v1.91.0...v2.0.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.91.0...v2.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** replace `httpx` with `httpx2` as the HTTP backend
+* drop support for Python 3.9 (`httpx2` requires Python >= 3.10)
+
+### Migration
+
+* The SDK is now powered by [`httpx2`](https://github.com/pydantic/httpx2). If you customize the HTTP client or reference httpx types, switch `httpx` to `httpx2` — e.g. `httpx.Client`/`httpx.AsyncClient` → `httpx2.Client`/`httpx2.AsyncClient`, `httpx.Timeout` → `httpx2.Timeout`, `cast_to=httpx.Response` → `cast_to=httpx2.Response`, and catch `httpx2.*` exceptions instead of `httpx.*`.
+* Python 3.9 is no longer supported; upgrade to Python 3.10 or newer.
+* The `aiohttp` backend now requires `httpx2`: install `cerebras_cloud_sdk[aiohttp]` as before (it pulls `httpx_aiohttp[httpx2]`); `DefaultAioHttpClient` continues to work.
+
 ## 1.91.0 (2026-07-08)
 
 Full Changelog: [v1.79.0...v1.91.0](https://github.com/Cerebras/cerebras-cloud-sdk-python-private/compare/v1.79.0...v1.91.0)

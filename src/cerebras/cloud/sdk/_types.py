@@ -31,9 +31,9 @@ from typing_extensions import (
     runtime_checkable,
 )
 
-import httpx
+import httpx2
 import pydantic
-from httpx import URL, Proxy, Timeout, Response, BaseTransport, AsyncBaseTransport
+from httpx2 import URL, Proxy, Timeout, Response, BaseTransport, AsyncBaseTransport
 
 if TYPE_CHECKING:
     from ._models import BaseModel
@@ -51,7 +51,7 @@ ArrayFormat = Literal["comma", "repeat", "indices", "brackets"]
 NestedFormat = Literal["dots", "brackets"]
 
 
-# Approximates httpx internal ProxiesTypes and RequestFiles types
+# Approximates httpx2 internal ProxiesTypes and RequestFiles types
 # while adding support for `PathLike` instances
 ProxiesDict = Dict["str | URL", Union[None, str, URL, Proxy]]
 ProxiesTypes = Union[str, Proxy, ProxiesDict]
@@ -245,7 +245,7 @@ class _GenericAlias(Protocol):
 
 
 class HttpxSendArgs(TypedDict, total=False):
-    auth: httpx.Auth
+    auth: httpx2.Auth
     follow_redirects: bool
 
 

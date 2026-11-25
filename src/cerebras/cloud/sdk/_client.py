@@ -7,7 +7,7 @@ import logging
 from typing import TYPE_CHECKING, Any, Mapping
 from typing_extensions import Self, override
 
-import httpx
+import httpx2
 
 from . import _exceptions
 from ._qs import Querystring
@@ -65,15 +65,15 @@ class Cerebras(SyncAPIClient):
         self,
         *,
         api_key: str | None = None,
-        base_url: str | httpx.URL | None = None,
+        base_url: str | httpx2.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
         default_headers: Mapping[str, str] | None = None,
         default_query: Mapping[str, object] | None = None,
-        # Configure a custom httpx client.
+        # Configure a custom httpx2 client.
         # We provide a `DefaultHttpxClient` class that you can pass to retain the default values we use for `limits`, `timeout` & `follow_redirects`.
-        # See the [httpx documentation](https://www.python-httpx.org/api/#client) for more details.
-        http_client: httpx.Client | None = None,
+        # See the [httpx2 documentation](https://www.python-httpx2.org/api/#client) for more details.
+        http_client: httpx2.Client | None = None,
         # Enable or disable schema validation for data returned by the API.
         # When enabled an error APIResponseValidationError is raised
         # if the API responds with invalid data for the expected schema.
@@ -182,9 +182,9 @@ class Cerebras(SyncAPIClient):
         self,
         *,
         api_key: str | None = None,
-        base_url: str | httpx.URL | None = None,
+        base_url: str | httpx2.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
-        http_client: httpx.Client | None = None,
+        http_client: httpx2.Client | None = None,
         max_retries: int | NotGiven = not_given,
         default_headers: Mapping[str, str] | None = None,
         set_default_headers: Mapping[str, str] | None = None,
@@ -237,7 +237,7 @@ class Cerebras(SyncAPIClient):
         err_msg: str,
         *,
         body: object,
-        response: httpx.Response,
+        response: httpx2.Response,
     ) -> APIStatusError:
         # Need to do it this way so the linter doesn't complain about the type of the status code.
         body_status_code = body.get("status_code") if is_mapping(body) else None
@@ -277,15 +277,15 @@ class AsyncCerebras(AsyncAPIClient):
         self,
         *,
         api_key: str | None = None,
-        base_url: str | httpx.URL | None = None,
+        base_url: str | httpx2.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
         default_headers: Mapping[str, str] | None = None,
         default_query: Mapping[str, object] | None = None,
-        # Configure a custom httpx client.
+        # Configure a custom httpx2 client.
         # We provide a `DefaultAsyncHttpxClient` class that you can pass to retain the default values we use for `limits`, `timeout` & `follow_redirects`.
-        # See the [httpx documentation](https://www.python-httpx.org/api/#asyncclient) for more details.
-        http_client: httpx.AsyncClient | None = None,
+        # See the [httpx2 documentation](https://www.python-httpx2.org/api/#asyncclient) for more details.
+        http_client: httpx2.AsyncClient | None = None,
         # Enable or disable schema validation for data returned by the API.
         # When enabled an error APIResponseValidationError is raised
         # if the API responds with invalid data for the expected schema.
@@ -388,9 +388,9 @@ class AsyncCerebras(AsyncAPIClient):
         self,
         *,
         api_key: str | None = None,
-        base_url: str | httpx.URL | None = None,
+        base_url: str | httpx2.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
-        http_client: httpx.AsyncClient | None = None,
+        http_client: httpx2.AsyncClient | None = None,
         max_retries: int | NotGiven = not_given,
         default_headers: Mapping[str, str] | None = None,
         set_default_headers: Mapping[str, str] | None = None,
@@ -443,7 +443,7 @@ class AsyncCerebras(AsyncAPIClient):
         err_msg: str,
         *,
         body: object,
-        response: httpx.Response,
+        response: httpx2.Response,
     ) -> APIStatusError:
         # Need to do it this way so the linter doesn't complain about the type of the status code.
         body_status_code = body.get("status_code") if is_mapping(body) else None

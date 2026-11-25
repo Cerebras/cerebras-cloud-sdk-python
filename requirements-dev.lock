@@ -9,28 +9,25 @@
 #   generate-hashes: false
 
 -e file:.
-aiohappyeyeballs==2.6.1
+aiohappyeyeballs==2.7.1
     # via aiohttp
-aiohttp==3.13.3
+aiohttp==3.14.5
     # via cerebras-cloud-sdk
     # via httpx-aiohttp
 aiosignal==1.4.0
     # via aiohttp
 annotated-types==0.7.0
     # via pydantic
-anyio==4.12.1
+anyio==4.16.0
     # via cerebras-cloud-sdk
     # via httpx
+    # via httpx2
 argcomplete==3.6.3
     # via nox
-async-timeout==5.0.1
-    # via aiohttp
 attrs==25.4.0
     # via aiohttp
     # via nox
-backports-asyncio-runner==1.2.0
-    # via pytest-asyncio
-certifi==2026.1.4
+certifi==2026.11.20
     # via httpcore
     # via httpx
 colorlog==6.10.1
@@ -38,41 +35,45 @@ colorlog==6.10.1
 dependency-groups==1.3.1
     # via nox
 dirty-equals==0.11
-distlib==0.4.0
+distlib==0.4.4
     # via virtualenv
 distro==1.9.0
     # via cerebras-cloud-sdk
-exceptiongroup==1.3.1
-    # via anyio
-    # via pytest
 execnet==2.1.2
     # via pytest-xdist
-filelock==3.19.1
+filelock==4.3.1
+    # via python-discovery
     # via virtualenv
 frozenlist==1.8.0
     # via aiohttp
     # via aiosignal
 h11==0.16.0
     # via httpcore
-h2==4.3.0
-    # via httpx
-hpack==4.1.0
+    # via httpcore2
+h2==4.4.1
+    # via httpx2
+hpack==4.2.0
     # via h2
 httpcore==1.0.9
     # via httpx
+httpcore2==2.12.0
+    # via httpx2
 httpx==0.28.1
-    # via cerebras-cloud-sdk
     # via httpx-aiohttp
     # via respx
-httpx-aiohttp==0.1.12
+httpx-aiohttp==0.2.0
     # via cerebras-cloud-sdk
+httpx2==2.12.0
+    # via cerebras-cloud-sdk
+    # via httpx-aiohttp
 humanize==4.13.0
     # via nox
 hyperframe==6.1.0
     # via h2
-idna==3.11
+idna==3.19
     # via anyio
     # via httpx
+    # via httpx2
     # via yarl
 importlib-metadata==8.7.1
 iniconfig==2.1.0
@@ -81,7 +82,7 @@ markdown-it-py==3.0.0
     # via rich
 mdurl==0.1.2
     # via markdown-it-py
-multidict==6.7.0
+multidict==7.2.1
     # via aiohttp
     # via yarl
 mypy==1.17.0
@@ -90,35 +91,40 @@ mypy-extensions==1.1.0
 nodeenv==1.10.0
     # via pyright
 nox==2025.11.12
-packaging==25.0
+packaging==26.3
     # via dependency-groups
     # via nox
     # via pytest
+    # via virtualenv
 pathspec==1.0.3
     # via mypy
 platformdirs==4.4.0
     # via virtualenv
 pluggy==1.6.0
     # via pytest
-propcache==0.4.1
+propcache==0.5.2
     # via aiohttp
     # via yarl
 pydantic==2.12.5
     # via cerebras-cloud-sdk
 pydantic-core==2.41.5
     # via pydantic
-pygments==2.19.2
+pygments==2.21.0
     # via pytest
     # via rich
 pyright==1.1.399
-pytest==8.4.2
+pytest==9.2.0
     # via pytest-asyncio
     # via pytest-xdist
-pytest-asyncio==1.2.0
+pytest-asyncio==1.5.0
+pytest-httpx2==1.0.0
 pytest-xdist==3.8.0
 python-dateutil==2.9.0.post0
     # via time-machine
+python-discovery==1.9.7
+    # via virtualenv
 respx==0.22.0
+    # via pytest-httpx2
 rich==14.2.0
 ruff==0.14.13
 six==1.17.0
@@ -126,29 +132,26 @@ six==1.17.0
 sniffio==1.3.1
     # via cerebras-cloud-sdk
 time-machine==2.19.0
-tomli==2.4.0
-    # via dependency-groups
-    # via mypy
-    # via nox
-    # via pytest
-typing-extensions==4.15.0
+truststore==0.10.4
+    # via httpcore2
+    # via httpx2
+typing-extensions==4.16.0
+    # via aiohttp
     # via aiosignal
     # via anyio
     # via cerebras-cloud-sdk
-    # via exceptiongroup
-    # via multidict
+    # via httpx2
     # via mypy
     # via pydantic
     # via pydantic-core
     # via pyright
     # via pytest-asyncio
     # via typing-inspection
-    # via virtualenv
 typing-inspection==0.4.2
     # via pydantic
-virtualenv==20.36.1
+virtualenv==21.15.12
     # via nox
-yarl==1.22.0
+yarl==1.25.1
     # via aiohttp
 zipp==3.23.0
     # via importlib-metadata

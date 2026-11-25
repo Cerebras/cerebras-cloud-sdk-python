@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Any, Dict, Union, Iterable, Optional, cast
 from typing_extensions import Literal
 
-import httpx
+import httpx2
 
 from ..types import completion_create_params
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
@@ -79,7 +79,7 @@ class CompletionsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+        timeout: float | httpx2.Timeout | None | NotGiven = not_given,
     ) -> Completion | Stream[Completion]:
         """
         Completions
@@ -285,7 +285,7 @@ class AsyncCompletionsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+        timeout: float | httpx2.Timeout | None | NotGiven = not_given,
     ) -> Completion | AsyncStream[Completion]:
         """
         Completions
